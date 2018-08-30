@@ -43,4 +43,14 @@ $(function () {
     },function () {
         $(this).hide(300);
     })
+    //点击刪除箭头弹框
+    $(".c_blog_del").click(function () {
+        layer.msg('确认要删除这条微博吗？', {
+            time: 5000, //5s后自动关闭
+            btn: ['确定', '取消']
+        });
+    })
 })
+layui.use('layer', function(){
+    var layer = layui.layer;
+});

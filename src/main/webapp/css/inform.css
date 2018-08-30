@@ -1,0 +1,101 @@
+#y_table{
+    width: 980px;height: 1000px;
+    margin: auto;
+    background: white;
+}
+.y_input{ width: 85%;}
+.y_list{
+    width: 980px;height: 60px;
+    background-color: red;
+    margin: auto;
+    float: left;
+}
+.y_back1{
+    width: 822px;height: 60px;margin: auto;
+
+}
+.y_person_image{
+font-size: larger;text-align: center;line-height: 60px;
+    color: white;background-color:#87c4db ;
+
+}
+
+.y_head_img{
+    font-size: larger;text-align: center;line-height: 60px;
+    color: white;background-color:cornflowerblue ;
+}
+
+#y_back2{
+    width: 980px;height: 600px;
+    background-color: #f9f9f9;
+}
+.y_inform {
+    width: 790px;
+    height: 700px;
+    margin: auto;
+    border:#87c4db solid 1px ;
+
+
+
+}
+
+.y_sex{
+    width: 50px;height: 15px;
+    display: block!important;float: left;
+    position: relative;top: 8px;
+}
+.y_sex_value_man{
+    width: 50px;
+    position: relative;top: 6px;left: -55px;
+}
+.y_sex_value_woman{
+    width: 50px;
+    position: relative;top: 6px;left: -25px;
+}
+
+.y_head {
+    width: 790px;
+    height: 700px;
+    margin: auto;
+border:#87c4db solid 1px ;
+
+    display: none;
+
+}
+
+.y_headback{
+    width: 150px;height: 150px;
+    border-radius: 50%;
+    position: relative;top: 170px;left: 100px;
+    border:#87c4db solid 1px ;
+}
+.y_headp{
+    width: 150px;height: 150px;
+    border-radius: 50%;
+
+
+
+}
+
+.y_headp_chance{
+
+    width: 300px;height: 30px;
+    position: relative;top: 68px;left: 320px;
+
+}
+.y_headp_button{
+
+    width: 87px;height: 30px;
+    position: relative;top: 65px;left: 320px;
+    z-index: 2;
+
+}
+
+.y_headp_li{
+    position: relative;top: 80px;left: 280px;
+}
+.y_headp_hold{
+    width: 63px;height: 35px;position: relative;top: 100px;left: 320px;
+}
+.y_input_birthday{margin-bottom: 15px}
+.y_pad{padding-top: 20px}
