@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+    <link href="../css/base.css" rel="stylesheet" type="text/css">
+    <link href="../layui/css/layui.css" rel="stylesheet" type="text/css">
+    <!--<link href="css/layui/css/layui.mobile.css" rel="stylesheet" type="text/css">-->
+    <link href="../css/inform.css" rel="stylesheet" type="text/css">
+
+    <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+    <script src="../layui/layui.js" type="application/javascript"></script>
+    <script src="../js/jquery.validate.js" type="application/javascript"></script>
+    <script src="../js/jquery.validate.regex.js" type="application/javascript"></script>
+    <script src="../js/xiangmu.js" type="application/javascript"></script>
+
+
+</head>
+<body>
+<div id="y_table">
+    <div class="layui-container y_back1">
+
+        <div class="layui-row">
+            <div class="layui-col-md6 y_person_image y_person_color">
+                个人资料
+            </div>
+            <div class="layui-col-md6 y_head_img y_head_color">
+                头像
+            </div>
+        </div>
+    </div>
+
+    <div id="inform" class="y_inform">
+        <form class="layui-form" action="" method="post">
+
+            <div class="layui-form-item y_pad">
+                <label class="layui-form-label">昵称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="nickName" required lay-verify="required"
+                           autocomplete="off" class="layui-input y_input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="telNumber" required lay-verify="required"
+                           autocomplete="off" class="layui-input y_input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" placeholder="未输入邮箱"
+                           autocomplete="off" class="layui-input y_input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="男" title="男" class="y_sex"><span
+                        class="y_sex_value_man">男</span>
+                    <input type="radio" name="sex" value="女" title="女" checked class="y_sex"><span
+                        class="y_sex_value_woman">女</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">毕业院校</label>
+                <div class="layui-input-block">
+                    <input type="text" name="school" placeholder="未输入学校"
+                           autocomplete="off" class="layui-input y_input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">注册时间</label>
+                <div class="layui-input-block">
+
+                    <input type="" name="regTime" required lay-verify="required"
+                           autocomplete="off" class="layui-input y_input" disabled="disabled">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">签名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sign" placeholder="未输入签名"
+                           autocomplete="off" class="layui-input y_input">
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <label class="layui-form-label">生日</label>
+                <div class="layui-inline">
+                    <input type="text" class="layui-input y_input_birthday" id="test1" autocomplete="off"
+                           placeholder="未选择生日">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">所在地</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" placeholder="未输入地址"
+                           autocomplete="off" class="layui-input y_input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="y_head">
+        <div class="y_headback">
+            <img src="logo.png" class="y_headp">
+        </div>
+
+        <div>
+
+            <input type="file" name="" class="y_headp_chance">
+
+
+        </div>
+
+        <li class="y_headp_li">请选择jpg、gif格式，小于2M的图片（使用高质量图片，可生成高清头像）</li>
+        <button class="layui-btn layui-btn-normal y_headp_hold">保存</button>
+
+    </div>
+</div>
+</div>
+
+
+</body>
+
+</html>
