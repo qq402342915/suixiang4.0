@@ -1,10 +1,9 @@
 package servlet;
 
-import dao.*;
-import entity.Transpond;
+import dao.UserInfoDao;
+import dao.UserInfoDaoImpl;
 import entity.User;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,23 +17,12 @@ import java.util.List;
 @WebServlet("/ShowUser")
 public class ShowUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("utf-8");
-        response.setCharacterEncoding("utf-8");
-//        不好用
-        UserInfoDaoImpl userdao = new UserInfoDaoImpl();
-        List<User> userList = userdao.getAllUser();
-//        System.out.println(userList.get(1).getHeadP());
-        JSONArray users = JSONArray.fromObject(userList);
-//        JSONObject users = JSONObject.fromObject(userList.get(8));
-        //转发 好使
-//        TranspondInfoDao transImpl = new TranspondInfoDaoImpl();
-//        Transpond transpond = new Transpond(1,2);
-//        int a = transImpl.insertTranspond(transpond);
-//        int a = 4;
-//        PraiseInfoDao aaa = new PraiseInfoDaoImpl();
-//        int b = aaa.getPraiseCount(a);
+        response.setHeader("Access-Control-Allow-Origin","*");
+        UserInfoDao userInfoDao = new UserInfoDaoImpl();
+        List<User> userList = userInfoDao.getAllUser();
+        JSONArray array = JSONArray.fromObject(userList);
         PrintWriter out = response.getWriter();
-        out.println(users);
+        out.print(array);
         out.flush();
         out.close();
     }

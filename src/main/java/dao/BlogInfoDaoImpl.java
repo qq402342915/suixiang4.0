@@ -36,12 +36,12 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     }
 
     @Override
-    public List<Blog> getBlogByKey(int UserId, String key) {
-        return null;
+    public List<Blog> getBlogByKey(int userId, String key) {
+        return executeQuery("select * from t_blog where userId = ? and context like ？",new Object[]{userId,"%"+key+"%"});
     }
 
     @Override
     public int getTransCount(int blogId) {
-        return 0;
+        return getRecordCount("select count(*) where blogId = ?",new Object[]{blogId});
     }
 }
