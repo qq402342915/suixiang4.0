@@ -4,9 +4,9 @@
     <default-config>
         <!--mysql数据库连接的各项参数-->
         <property name="driverClass">com.mysql.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://123.206.85.224:3306/suixiang_project?characterEncoding=utf-8</property>
+        <property name="jdbcUrl">jdbc:mysql://58.87.118.174:3306/suixiang_project?characterEncoding=utf-8</property>
         <property name="user">root</property>
-        <property name="password">123456</property>
+        <property name="password">Root!2018</property>
         <!--配置数据库连接池的最小链接数、最大连接数、初始连接数-->
         <property name="maxPoolSize">15</property>
         <property name="minPoolSize">5</property>

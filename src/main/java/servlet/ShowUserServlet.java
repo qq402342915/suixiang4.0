@@ -1,8 +1,6 @@
 package servlet;
 
-import dao.TranspondInfoDao;
-import dao.TranspondInfoDaoImpl;
-import dao.UserInfoDaoImpl;
+import dao.*;
 import entity.Transpond;
 import entity.User;
 import net.sf.json.JSONArray;
@@ -27,11 +25,14 @@ public class ShowUserServlet extends HttpServlet {
         List<User> userList = userdao.getAllUser();
 //        System.out.println(userList.get(1).getHeadP());
         JSONArray users = JSONArray.fromObject(userList);
-//        JSONObject users = JSONObject.fromObject(userList.get(5));
+//        JSONObject users = JSONObject.fromObject(userList.get(8));
         //转发 好使
 //        TranspondInfoDao transImpl = new TranspondInfoDaoImpl();
 //        Transpond transpond = new Transpond(1,2);
 //        int a = transImpl.insertTranspond(transpond);
+//        int a = 4;
+//        PraiseInfoDao aaa = new PraiseInfoDaoImpl();
+//        int b = aaa.getPraiseCount(a);
         PrintWriter out = response.getWriter();
         out.println(users);
         out.flush();

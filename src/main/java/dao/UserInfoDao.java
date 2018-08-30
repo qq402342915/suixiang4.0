@@ -8,9 +8,9 @@ public interface UserInfoDao {
     //获取用户列表
     List<User> getAllUser();
     //根据主键查看用户信息
-    User getUser(int userId);
+    List<User> getUser(int userId);
     //根据手机号和密码验证用户是否登录成功
-    boolean getUser(int telNum,String password);
+    List<User> getUser(int telNum,String password);
     //添加用户信息
     int insertUser(User user);
     //更新用户信息
