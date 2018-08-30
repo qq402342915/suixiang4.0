@@ -15,10 +15,10 @@ public class User {
     private Date birthday;
     private String address;
     private String headP;
-    private String picPath;
+    private int bgId;
     private Date lockDate;
     public User(){}
-    public User(int userId, String userName, int telNum, String password, String email, String sex, String school, Date regDate, String sign, Date birthday, String address, String headP, String picPath, Date lockDate) {
+    public User(int userId, String userName, int telNum, String password, String email, String sex, String school, Date regDate, String sign, Date birthday, String address, String headP, int bgId, Date lockDate) {
         this.userId = userId;
         this.userName = userName;
         this.telNum = telNum;
@@ -31,7 +31,7 @@ public class User {
         this.birthday = birthday;
         this.address = address;
         this.headP = headP;
-        this.picPath = picPath;
+        this.bgId = bgId;
         this.lockDate = lockDate;
     }
 
@@ -131,12 +131,12 @@ public class User {
         this.headP = headP;
     }
 
-    public String getPicPath() {
-        return picPath;
+    public int getPicPath() {
+        return bgId;
     }
 
-    public void setPicPath(String picPath) {
-        this.picPath = picPath;
+    public void setPicPath(int picPath) {
+        this.bgId = bgId;
     }
 
     public Date getLockDate() {
