@@ -26,12 +26,12 @@ public class Blog {
         this.tsNum = tsNum;
     }
 
-    public int getBlodId() {
+    public int getBlogId() {
         return blogId;
     }
 
-    public void setBlodId(int blodId) {
-        this.blogId = blodId;
+    public void setBlogId(int blogId) {
+        this.blogId = blogId;
     }
 
     public String getContext() {

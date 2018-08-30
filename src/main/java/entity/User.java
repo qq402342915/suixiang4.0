@@ -131,11 +131,11 @@ public class User {
         this.headP = headP;
     }
 
-    public int getPicPath() {
+    public int getBgId() {
         return bgId;
     }
 
-    public void setPicPath(int bgId) {
+    public void setBgId(int bgId) {
         this.bgId = bgId;
     }
 

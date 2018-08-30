@@ -4,6 +4,7 @@ import dao.BlogInfoDao;
 import dao.BlogInfoDaoImpl;
 import entity.Blog;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,8 @@ public class ShowBlogServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin","*");
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
         List<Blog> blogList = blogInfoDao.getAllBlog();
-        JSONArray array = JSONArray.fromObject(blogList);
+//        System.out.println(blogList.get(0).getblogId());
+        JSONObject array = JSONObject.fromObject(blogList.get(0));
         PrintWriter out = response.getWriter();
         out.print(array);
         out.flush();
