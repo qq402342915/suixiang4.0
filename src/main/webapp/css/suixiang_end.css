@@ -1,0 +1,48 @@
+
+/*.w_end_logo{*/
+    /*margin-left: 50px;*/
+
+    /*width: 70px;*/
+    /*height: 70px;*/
+    /*background: url("../img/logo.png");*/
+    /*background-size: 100% 100%;*/
+
+/*}*/
+.w_end_head_text{
+    color: #cccccc;
+    font-size: 25px;
+    margin-left: 300px;
+    line-height: 60px;
+}
+.w_end_foot{
+    position: fixed;
+    left: 200px;
+    right: 0;
+    bottom: 0;
+    height: 70px;
+    line-height: 44px;
+    padding-left: 200px;
+    box-sizing: border-box;
+    background-color: #eee;
+}
+.w_padding{
+    padding: 15px;
+}
+.w_banner{
+    width: 1300px;
+    height: 480px;
+    background: url("../images/end_banner.jpg") -200px -50px;
+    position: relative;
+}
+.w_banner span{
+    width: 500px;
+    color: #e8e8e8;
+    font-size:40px;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    margin-left: -250px;
+    font-weight: 100;
+
+}
+

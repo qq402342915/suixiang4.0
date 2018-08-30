@@ -9,7 +9,7 @@ public class Blog {
     private String sendAddr;
     private int userId;
     private int trId;
-    private String Ip;
+    private String ip;
     private int tsNum;
 
     public Blog() {
@@ -22,7 +22,7 @@ public class Blog {
         this.sendAddr = sendAddr;
         this.userId = userId;
         this.trId = trId;
-        this.Ip = ip;
+        this.ip = ip;
         this.tsNum = tsNum;
     }
 
@@ -75,11 +75,11 @@ public class Blog {
     }
 
     public String getIp() {
-        return Ip;
+        return ip;
     }
 
     public void setIp(String ip) {
-        Ip = ip;
+        ip = ip;
     }
 
     public int getTsNum() {

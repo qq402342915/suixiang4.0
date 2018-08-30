@@ -2,8 +2,10 @@ package dao;
 
 import entity.Background;
 
+import java.util.List;
+
 public interface BackInfoDao {
     //根据蹄片ID获取图片
-    Background getBackById(int id);
+    List<Background> getBackById(int id);
 
 }
