@@ -6,12 +6,12 @@ public class Inform {
     private int informId;
     private int userId;
     private String informContent;
-    private Data warnDate;
+    private Date warnDate;
     private int informStatus;
     private int  reporterId;
 
     public Inform(){}
-    public Inform(int informId, int userId, String informContent, Data warnDate, int informStatus, int reporterId) {
+    public Inform(int informId, int userId, String informContent, Date warnDate, int informStatus, int reporterId) {
         this.informId = informId;
         this.userId = userId;
         this.informContent = informContent;
@@ -44,11 +44,11 @@ public class Inform {
         this.informContent = informContent;
     }
 
-    public Data getWarnDate() {
+    public Date getWarnDate() {
         return warnDate;
     }
 
-    public void setWarnDate(Data warnDate) {
+    public void setWarnDate(Date warnDate) {
         this.warnDate = warnDate;
     }
 

@@ -6,11 +6,11 @@ public class Praise {
     private int praId;
     private int blogId;
     private int userId;
-    private Data praDate;
+    private Date praDate;
 
     public Praise(){}
 
-    public Praise(int praId, int blogId, int userId, Data praDate) {
+    public Praise(int praId, int blogId, int userId, Date praDate) {
         this.praId = praId;
         this.blogId = blogId;
         this.userId = userId;
@@ -41,11 +41,11 @@ public class Praise {
         this.userId = userId;
     }
 
-    public Data getPraDate() {
+    public Date getPraDate() {
         return praDate;
     }
 
-    public void setPraDate(Data praDate) {
+    public void setPraDate(Date praDate) {
         this.praDate = praDate;
     }
 }

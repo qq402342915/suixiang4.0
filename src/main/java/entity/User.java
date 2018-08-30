@@ -10,15 +10,15 @@ public class User {
     private String email;
     private String sex;
     private String school;
-    private Data regDate;
+    private Date regDate;
     private String sign;
-    private Data birthday;
+    private Date birthday;
     private String address;
     private String headP;
     private String picPath;
-    private Data lockDate;
+    private Date lockDate;
     public User(){}
-    public User(int userId, String userName, int telNum, String password, String email, String sex, String school, Data regDate, String sign, Data birthday, String address, String headP, String picPath, Data lockDate) {
+    public User(int userId, String userName, int telNum, String password, String email, String sex, String school, Date regDate, String sign, Date birthday, String address, String headP, String picPath, Date lockDate) {
         this.userId = userId;
         this.userName = userName;
         this.telNum = telNum;
@@ -91,11 +91,11 @@ public class User {
         this.school = school;
     }
 
-    public Data getRegDate() {
+    public Date getRegDate() {
         return regDate;
     }
 
-    public void setRegDate(Data regDate) {
+    public void setRegDate(Date regDate) {
         this.regDate = regDate;
     }
 
@@ -107,11 +107,11 @@ public class User {
         this.sign = sign;
     }
 
-    public Data getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Data birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -139,11 +139,11 @@ public class User {
         this.picPath = picPath;
     }
 
-    public Data getLockDate() {
+    public Date getLockDate() {
         return lockDate;
     }
 
-    public void setLockDate(Data lockDate) {
+    public void setLockDate(Date lockDate) {
         this.lockDate = lockDate;
     }
 }
