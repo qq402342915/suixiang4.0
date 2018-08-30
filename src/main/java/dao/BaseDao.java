@@ -119,6 +119,7 @@ public abstract class BaseDao<T> {
                     } else {
                         f.set(t, rs.getObject(i + 1));//将rs列中的值赋给属性
                     }
+                    f.set(t, rs.getObject(i + 1));//将rs列中的值赋给属性
                 }
                 list.add(t);
             }
@@ -176,6 +177,34 @@ public abstract class BaseDao<T> {
             // 3、创建传输对象statmemnt
             stat = conn.prepareStatement(sql);// ？不确定:类型、数量
             // 3+、绑定替换数据
+            // 4、发送sql语句，并且接收返回结果 : DML -> executeUpdate ; DQL -> executeQuery
+            rs = stat.executeQuery();
+            // 5、如果返回rs类型的数据，需要将数据转换成list
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeAll(conn, stat, rs);
+        }
+        return count;
+    }
+
+    // DQL
+    public int getRecordCount(String sql,Object[] obj) {//select count(*) from msg;
+        Connection conn = null;
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            conn = getConnection();
+            // 3、创建传输对象statmemnt
+            stat = conn.prepareStatement(sql);// ？不确定:类型、数量
+            // 3+、绑定替换数据
+            for (int i = 0; i < obj.length; i++) {
+                stat.setObject(i + 1, obj[i]);
+            }
             // 4、发送sql语句，并且接收返回结果 : DML -> executeUpdate ; DQL -> executeQuery
             rs = stat.executeQuery();
             // 5、如果返回rs类型的数据，需要将数据转换成list
