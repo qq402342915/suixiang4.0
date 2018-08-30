@@ -2,20 +2,22 @@ package dao;
 
 import entity.Praise;
 
+import java.util.List;
+
 public class PraiseInfoDaoImpl extends BaseDao<Praise> implements PraiseInfoDao{
     @Override
     public int insertPraise(Praise praise) {
-        return 0;
+        return executeUpdate("insert into t_praise(blogId,userId,praDate)values(?,?,?)",new Object[]{praise.getBlogId(),praise.getUserId(),praise.getPraDate()});
     }
 
     @Override
     public int deletePraise(int praId) {
-        return 0;
+        return executeUpdate("delete from t_praise where praId=?",new Object[]{praId});
     }
 
     @Override
-    public Praise getPraiseById(int praId) {
-        return null;
+    public List<Praise> getPraiseById(int praId) {
+        return executeQuery("select * from t_praise where praId = ?",new Object[]{praId});
     }
     //查看点赞数
     @Override

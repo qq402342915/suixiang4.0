@@ -9,7 +9,7 @@ public class CommentInfoDaoImpl extends BaseDao<Comment> implements CommentInfoD
     @Override
     public int insertComment(Comment comment) {
 
-        return executeUpdate("insert into t_comment (commentId,blogId,userId,comDate,comContent,num) values(?,?,?,?,?,?)",new Object[]{comment.getCommentId(),comment.getBlogId(),comment.getUserId(),comment.getComDate(),comment.getComContent(),comment.getNum()});
+        return executeUpdate("insert into t_comment (blogId,userId,comDate,comContent,num) values(?,?,?,?,?)",new Object[]{comment.getBlogId(),comment.getUserId(),comment.getComDate(),comment.getComContent(),comment.getNum()});
     }
 
     @Override
