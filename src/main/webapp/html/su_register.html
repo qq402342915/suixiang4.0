@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>随想注册页面</title>
+    <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+    <script src="../js/jquery.validate.js" type="text/javascript"></script>
+    <script src="../js/jquery.validate.regex.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../css/su_register.css" type="text/css">
+</head>
+<style>
+
+</style>
+<body>
+<form action="#" id="share_register" method="post" onsubmit="">
+    <div id="su_share">
+        <div id="su_top">
+            <div id="su_top_left">
+                <img src="../images/shareLOGO.png" width="50" height="50">
+                <font color="white" size="5" face="微软雅黑">随 享</font>
+            </div>
+            <div id="su_top_right">
+                <font color="white" size="6"><i>随时随地，分享你的生活！</i></font>
+            </div>
+        </div>
+        <div id="su_title">
+            <font>注册随享账号</font>
+            <P class="space"></P>
+        </div>
+        <div id="su_register">
+            <div id="su_regi_left">
+                <div id="su_userName"><font color="black">用 户 名</font>
+                    <input type="text" name="userName" class="required" id="kuang1" placeholder="请设置用户名">
+                </div>
+                <div id="su_phone">
+                    <font color="black">手 机 号 </font>
+                    <input type="text" name="phoneNum" id="kuang2" class="required"  placeholder="登录">
+                    <br>
+                    <label class="su_email">或使用<a class="su_emailregi">邮箱注册</a></label>
+                </div>
+                <div id="su_password"><font color="black">密 &nbsp; 码&nbsp;&nbsp; </font>
+                    <input type="password" id="kuang3" name="password" class="required"  placeholder="请设置登录密码"></div>
+                <div id="su_repassword">
+                    <font color="black">确认密码&nbsp;&nbsp;</font>
+                    <input type="password" id="kuang4" name="repassword" class="required"  placeholder="请重新输入密码">
+                    <span style="color: red" class="su_repsd">两次密码不一致</span>
+                </div>
+                <div id="su_active">
+                    <label id="yan"><font color="black">验 证 码&nbsp;</font></label>
+                    <input type="text" name="code" class="required" id="code" placeholder="请输入验证码">
+                    <input type="button" name="btn" class="required" id="btn" disabled="disabled" value="获取短信验证码">
+                </div>
+                <div id="su_agree">
+                    <input type="checkbox" name="agree" class="required" id="isAgree">
+                    <label><font color="black">阅读并接受</font></label>
+                    <a href="su_protocol.html">《随享用户协议》</a>
+                </div>
+                <div id="su_ok">
+                    <strong><input type="submit" class="su_submit" value="注&nbsp;&nbsp;册" ></strong>
+                </div>
+            </div>
+            <div id="su_regi_right">
+                <div id="su_regi_right_top">
+                    <font>已有账号？<a href="#" >直接登录...</a></font>
+                </div>
+                <div id="su_regi_right_bottom">
+                    <img src="../images/su_QRcode.jpg" width="160" height="160">
+                    <br>
+                    <br>
+                    <b><font face="楷体" size="4">扫描二维码关注随享...</font></b>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+.su_repsd{
+    visibility: hidden;
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+#su_share{
+    width: 1350px;
+    height: 630px;
+    float: left;
+}
+#su_top{
+    background-color: #87c4db;
+    width: 1350px;
+    height: 70px;
+    float: left;
+}
+#su_top_left{
+    width: 900px;
+    height: 70px;
+    float: left;
+    position: relative;
+}
+#su_top_left font{
+    margin-left: 460px;
+    float: left;
+    margin-top: -45px;
+}
+#su_top_right{
+    width: 450px;
+    height: 70px;
+    float: left;
+    position: relative;
+    margin-top: 20px;
+}
+#su_top_right font{
+    font-family: 楷体;
+}
+#su_top_left img{
+    margin-left: 400px;
+    margin-top: 10px;
+}
+#su_title{
+    width: 900px;
+    height: 50px;
+    float: left;
+    margin-left: 225px;
+    margin-top: 10px;
+}
+.space{
+    width: 600px;
+    height: 1px;
+    background-color:#c3c3c3 ;
+    box-shadow: 2px 3px 5px #3f89ec;
+
+}
+#su_title font{
+    font-family:宋体;
+    font-size: 40px;
+    font-style: unset;
+}
+#su_register{
+    width: 900px;
+    height: 430px;
+    margin: 0 auto;
+}
+#su_regi_left{
+    width: 630px;
+    height: 430px;
+    float:left;
+}
+#su_userName{
+    width: 630px;
+    height: 60px;
+    float: left;
+    color: red;
+}
+#su_phone{
+    width: 630px;
+    height: 60px;
+    float: left;
+    color: red;
+}
+#su_password{
+    width: 630px;
+    height: 60px;
+    float: left;
+    color: red;
+}
+#su_repassword{
+    width: 630px;
+    height: 60px;
+    float: left;
+    color: red;
+}
+#su_active{
+    width: 630px;
+    height: 60px;
+    float: left;
+    position: relative;
+    top: 10px;
+    color: red;
+}
+#su_agree{
+    width: 630px;
+    height: 30px;
+    float: left;
+    font-size: 12px;
+    margin-left: 90px;
+    margin-top: 10px;
+    color: red;
+}
+
+#su_ok{
+    width: 630px;
+    height: 60px;
+    float: left;
+    font-size: 30px;
+    font-family: 微软雅黑;
+    color: white;
+}
+.su_submit{
+    width: 350px;
+    height: 50px;
+    margin-left: 75px;
+    margin-top: 15px;
+    color: white;
+    font-family: 新宋体;
+    font-size: 20px;
+    background-color:#87c4db;
+}
+#kuang1{
+    width: 350px;
+    height: 35px;
+    margin-top: 15px;
+    margin-left: 34px;
+}
+#kuang2{
+    width: 350px;
+    height: 35px;
+    margin-top: 15px;
+    margin-left: 34px;
+}
+.su_email{
+    font-size: 10px;
+    margin-left: 90px;
+    color: black;
+}
+#kuang3{
+    width: 350px;
+    height: 35px;
+    margin-top: 15px;
+    margin-left: 34px;
+}
+#kuang4{
+    width: 350px;
+    height: 35px;
+    margin-top: 15px;
+    margin-left: 16px;
+}
+#code{
+    width: 180px;
+    height: 35px;
+    margin-left: 25px;
+}
+#btn{
+    height: 35px;
+    width: 150px;
+    position: relative;
+    margin-left: 13px;
+}
+#su_regi_right{
+    width: 270px;
+    height: 430px;
+    float: left;
+    background-color: beige;
+}
+#su_regi_right_top{
+    width: 270px;
+    height: 130px;
+    float: left;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+a{
+    text-decoration: none;
+    color: #3f89ec;
+}
+#su_regi_right_bottom{
+    width: 270px;
+    height: 300px;
+    float: left;
+    margin-left: 55px;
+}
+input:focus.required:focus{
+    border: 1px solid #87c4db;
+    background-color: antiquewhite;
+}
