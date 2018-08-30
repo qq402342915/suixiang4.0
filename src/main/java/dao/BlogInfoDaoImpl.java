@@ -4,10 +4,13 @@ import entity.Blog;
 
 import java.util.List;
 
-public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
+public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao {
+
     @Override
     public List<Blog> getAllBlog() {
-        return executeQuery("select * from t_blog");
+
+        return executeQuery("select blodId,userId,sendDate,sendAddr,trId,tsNum FROM t_blog");
+//        return executeQuery("select * FROM t_blog");
     }
 
     @Override
