@@ -16,6 +16,10 @@ a:hover{
     color: #333 !important;
     cursor: pointer;
 }
+.c_blog_del:hover{
+    color: #fa7d3c;
+    cursor: pointer;
+}
 img:hover{
     cursor: pointer;
 }
@@ -289,10 +293,22 @@ body{
     font-weight: bold;
     line-height: 32px;
 }
+.c_content_name a{
+    display: inline-block;
+}
 .c_content_date {
     color: #808080;
     font-size: 12px;
     line-height: 25px;
+}
+.c_content_date a,.c_content_date i{
+    margin: 0 2px;
+    float: left;
+    display: inline-block;
+}
+.c_blog_del{
+    float: right;
+    margin-right: 10px;
 }
 .c_content_content,.c_content_img{
     width: 532px;
