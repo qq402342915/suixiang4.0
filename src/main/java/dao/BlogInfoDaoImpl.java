@@ -4,28 +4,25 @@ import entity.Blog;
 
 import java.util.List;
 
-public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao {
-
+public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     @Override
     public List<Blog> getAllBlog() {
-
-        return executeQuery("select blodId,userId,sendDate,sendAddr,trId,tsNum FROM t_blog");
-//        return executeQuery("select * FROM t_blog");
+        return executeQuery("select * from t_blog where userId = 10");
     }
 
     @Override
     public int deleteBlog(int blogId) {
-        return 0;
+        return executeUpdate("delete from t_blog where blogId = ?",new Object[]{blogId});
     }
 
     @Override
     public List<Blog> getAllBlog(int userId) {
-        return null;
+        return executeQuery("select * from t_blog where userId = ?",new Object[]{userId});
     }
 
     @Override
     public int insertBlog(Blog blog) {
-        return 0;
+        return executeUpdate("insert into t_blog value(?,?,?,?,?,?,?)",new Object[]{blog.getContext(),blog.getSendDate(),blog.getSendAddr(),blog.getUserId(),blog.getTrId(),blog.getIp(),blog.getTsNum()});
     }
 
     @Override
@@ -35,7 +32,7 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao {
 
     @Override
     public List<Blog> getBlogByKey(String key) {
-        return null;
+        return executeQuery("select * from t_blog where context like ？",new Object[]{"%"+key+"%"});
     }
 
     @Override
