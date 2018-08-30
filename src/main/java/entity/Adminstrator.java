@@ -1,14 +1,14 @@
 package entity;
 
-public class Adminster {
+public class Adminstrator {
     private int amId;
     private String amName;
     private String amPass;
 
-    public Adminster() {
+    public Adminstrator() {
     }
 
-    public Adminster(int amId, String amName, String amPass) {
+    public Adminstrator(int amId, String amName, String amPass) {
         this.amId = amId;
         this.amName = amName;
         this.amPass = amPass;

@@ -1,12 +1,12 @@
 package entity;
 
-public class Transpord {
+public class Transpond {
     private int tsId;
     private int blogId;
     private int userId;
 
-    public Transpord(){}
-    public Transpord(int tsId, int blogId, int userId) {
+    public Transpond(){}
+    public Transpond(int tsId, int blogId, int userId) {
         this.tsId = tsId;
         this.blogId = blogId;
         this.userId = userId;
