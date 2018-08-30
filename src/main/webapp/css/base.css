@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0
+}
+
+em, i {
+    font-style: normal
+}
+
+li {
+    list-style: none
+}
+
+img {
+    border: 0;
+    vertical-align: middle
+}
+a {
+    color: #666;
+    text-decoration: none
+}
+
+a:hover {
+    color: #87c4db
+}
+p{
+    color: #666666;
+}
+body {
+    margin: auto;
+    /*width: 1190px;*/
+    -webkit-font-smoothing: antialiased;
+    font: 12px / 1.5 Microsoft YaHei, tahoma, arial, Hiragino Sans GB, \\5b8b\4f53, sans-serif;
+}

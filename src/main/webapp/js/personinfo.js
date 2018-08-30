@@ -1,0 +1,46 @@
+$(function () {
+    //点击关注，取关
+    $(".guanzhu").click(function () {
+        if($(this).css("background-color") == "rgb(250, 125, 60)"){
+            $(this).css("background-color","#696e78");
+            $(this).html("✔已关注");
+        }else {
+            $(this).css("background-color","#fa7d3c");
+            $(this).html("<strong>+</strong> 关注");
+        }
+    });
+    //点击改变底部border
+    $(".c_top_two a").click(function () {
+        var index = $(this).index() + 1;
+        $(this).css("border-bottom","3px solid #fa7d3c");
+        $(this).siblings().css("border-bottom","0");
+        $(this).css("font-weight","bold")
+        $(this).siblings().css("font-weight","normal");
+        $(".c_content_right_div").hide();
+        $("#c_show_div" + index).show();
+    });
+    //点击改变关注，粉丝背景
+    $(".c_content_left a").click(function () {
+        $(this).css("background-color","#e8e8e8");
+        $(this).siblings().css("background-color","white");
+    });
+    //搜索框聚焦
+    $(".c_search").focus(function () {
+        $(this).val("");
+    });
+    //搜索框失焦
+    $(".c_search").blur(function () {
+        $(this).val("搜索我的微博");
+    });
+    //显示举报
+    $(".jubao").hover(function () {
+        $(".jubao_div").show(300);
+    },function () {
+        $(".jubao_div").hide();
+    })
+    $(".jubao_div").hover(function () {
+        $(this).show();
+    },function () {
+        $(this).hide(300);
+    })
+})
