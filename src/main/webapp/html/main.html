@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/base.css" type="text/css">
+    <link rel="stylesheet" href="../css/css_main.css" type="text/css">
+    <link rel="stylesheet" href="../layui/css/layui.css" type="text/css">
+    <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+    <script src="../layui/layui.js" type="application/javascript"></script>
+    <script src="../js/js_main.js" type="application/javascript"></script>
+    <title>首页</title>
+</head>
+<body>
+    <div class="s_main">
+        <div class="s_header">
+        </div>
+        <div class="s_body">
+            <div class="s_publish">
+                <span class="s_publish_tlogo">有什么新鲜事想告诉大家?</span>
+                <div class="s_publish_content">
+                    <textarea></textarea>
+                </div>
+                <div class="s_publish_footer">
+                    <a href="">
+                        <i class="layui-icon layui-icon-face-smile-b" style="font-size: 30px; color: #87c4db;"></i>
+                        表情
+                    </a>
+                    <a href="">
+                        <i class="layui-icon layui-icon-picture-fine" style="font-size: 30px; color: #87c4db;"></i>
+                        图片
+                    </a>
+                    <a href="">
+                        <i class="layui-icon layui-icon-video" style="font-size: 30px; color: #87c4db;"></i>
+                        视频
+                    </a>
+                    <button class="layui-btn layui-btn-sm layui-btn-normal">发布</button>
+                </div>
+            </div>
+            <div class="s_headphoto">
+                <div class="s_headphoto_photo">
+                    <a href=""><img src="../images/logo.png" alt=""></a>
+                </div>
+                <div class="s_headphoto_nologin">
+                    <button class="layui-btn layui-btn-normal">登录</button>
+                    <button class="layui-btn layui-btn-warm">注册</button>
+                </div>
+                <div class="s_headphoto_login">
+                    <span>你爱吃西红柿</span>
+                    <a href=""><span>1</span><span>关注</span></a>
+                    <a href=""><span>1</span><span>粉丝</span></a>
+                    <a href=""><span>1</span><span>微博</span></a>
+                </div>
+            </div>
+            <div class="s_body_content">
+                <div class="layui-tab layui-tab-brief" lay-filter="content">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">每日精选</li>
+                        <li>关注动态</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <ul class="flow-default" id="LAY_demo1">
+                                <!--<li>-->
+                                    <!--<div class="s_body_content_personinfo"></div>-->
+                                    <!--<div class="s_body_content_text">-->
+                                    <!--</div>-->
+                                    <!--<div class="s_body_content_func">-->
+                                        <!--<div><i class="layui-icon layui-icon-star" style="font-size: 25px"></i><span>1</span></div>-->
+                                        <!--<div><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>3</span></div>-->
+                                        <!--<div><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>2</span></div>-->
+                                    <!--</div>-->
+                                <!--</li>-->
+                            </ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <ul class="flow-default" id="LAY_demo2">
+                                <li>
+                                    <div class="s_body_content_personinfo">
+                                        <img src="../images/logo.png" alt="">
+                                        <div class="s_body_content_personinfo_nt">
+                                            <a href="">你不爱吃西红柿</a>
+                                            <span>2018-08-28 9:30</span>
+                                        </div>
+                                    </div>
+                                    <div class="s_body_content_text">
+                                        6666
+                                        <br>
+                                        666666
+                                        <br>
+                                        6666
+                                        <br>
+                                        666666
+                                        <br>  6666
+                                        <br>
+                                        666666
+                                        <br>
+                                        <img src="../images/logo.png" alt="">
+                                        <img src="../images/logo.png" alt="">
+                                        <img src="../images/logo.png" alt="">
+                                        <img src="../images/logo.png" alt="">
+                                        <img src="../images/logo.png" alt="">
+                                        <img src="../images/logo.png" alt="">
+                                        <img src="../images/logo.png" alt="">
+                                        <img src="../images/logo.png" alt="">
+                                    </div>
+                                    <div class="s_body_content_func">
+                                        <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>1</span></div>
+                                        <div class="s_body_content_func_1"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>3</span></div>
+                                        <div><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>2</span></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="s_body_guanzhu">
+                <div class="s_body_guanzhu_title">
+                    <h2>推荐关注</h2>
+                </div>
+                <div class="s_body_guanzhu_person">
+                    <a href=""><img src="../images/logo.png" alt="">666666</a>
+                    <button class="layui-btn layui-btn-normal layui-btn-xs">+关注</button>
+                </div>
+                <div class="s_body_guanzhu_person">
+                    <a href=""><img src="../images/logo.png" alt="">666666</a>
+                    <button class="layui-btn layui-btn-normal layui-btn-xs">+关注</button>
+                </div>
+                <div class="s_body_guanzhu_person">
+                    <a href=""><img src="../images/logo.png" alt="">666666</a>
+                    <button class="layui-btn layui-btn-normal layui-btn-xs">+关注</button>
+                </div>
+                <div class="s_body_guanzhu_person">
+                    <a href=""><img src="../images/logo.png" alt="">666666</a>
+                    <button class="layui-btn layui-btn-normal layui-btn-xs">+关注</button>
+                </div>
+                <div class="s_body_guanzhu_change">
+                    <span>换一批</span>
+                </div>
+            </div>
+        </div>
+        <div class="s_footer"></div>
+    </div>
+</body>
+</html>

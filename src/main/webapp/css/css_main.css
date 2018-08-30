@@ -1,0 +1,238 @@
+.s_main{
+    background-color: #c81623;
+    background-image: url("../images/body_bg.jpg");
+    background-repeat: no-repeat;
+    background-color: #1f160f;
+    overflow: hidden;
+}
+.s_header{
+    position: fixed;
+    width: 100%;
+    height: 48px;
+    border-top: 2px solid #87c4db;
+    background: #fff;
+}
+.s_body{
+    width: 1000px;
+    /*height: 1000px;*/
+    margin: 50px auto 0px;
+    background: rgba(8,4,1,0.25);
+    overflow: hidden;
+}
+.s_publish{
+    /*position: relative;*/
+    width: 700px;
+    height: 180px;
+    margin-top: 20px;
+    margin-left: 20px;
+    background-color: #FFFFFF;
+    overflow: hidden;
+    float: left;
+}
+.s_publish_tlogo{
+    display: block;
+    height: 30px;
+    margin-left: 50px;
+    line-height: 30px;
+    font-family: STXingkai;
+    font-size: 20px;
+    color: #87c4db;
+}
+.s_publish_content{
+    width: 600px;
+    height: 100px;
+    margin: auto;
+}
+.s_publish_content textarea{
+    display: block;
+    width: 598px;
+    height: 98px;
+    resize: none;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.15) inset;
+}
+.s_publish_footer{
+    width: 600px;
+    height: 30px;
+    margin: 10px auto;
+}
+.s_publish_footer a{
+    display: block;
+    width: 70px;
+    height: 30px;
+    float: left;
+    margin-right: 20px;
+}
+.s_publish_footer a:hover{
+    color: #87c4db;
+}
+.s_publish_footer button{
+    float: right;
+}
+.s_headphoto{
+    width: 240px;
+    height: 180px;
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    background-color: #FFFFFF;
+}
+.s_headphoto_photo{
+    width: 240px;
+    height: 100px;
+}
+.s_headphoto_photo img{
+    display: block;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+    border: 5px solid #F0F3EF;
+    border-radius: 50%;
+    box-shadow: 5px 5px 30px rgba(169, 169, 169, 0.9);
+    position: relative;
+}
+.s_headphoto_nologin{
+    display: none;
+    width: 240px;
+    height: 80px;
+    background-color: #FFFFFF;
+}
+.s_headphoto_nologin button{
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-right: 20px;
+}
+.s_headphoto_login{
+    width: 240px;
+    height: 80px;
+}
+.s_headphoto_login span{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+}
+.s_headphoto_login a{
+    display: block;
+    width: 79px;
+    height: 35px;
+    margin-top: 10px;
+    border-right: 1px solid #CCCCCC;
+    float: left;
+}
+/*.s_headphoto_login a span{*/
+    /*display: block;*/
+/*}*/
+.s_suixiang_content{}
+
+.s_body_content{
+    width: 700px;
+    /*height: 500px;*/
+    margin-top: 20px;
+    margin-left: 20px;
+    float: left;
+}
+#LAY_demo1 li{
+    display: block;
+    margin-top: 20px;
+    width: 640px;
+    /*height: 180px;*/
+    padding: 20px 20px 0px 20px;
+    background-color: #FFFFFF;
+}
+#LAY_demo2 li{
+    display: block;
+    margin-top: 20px;
+    width: 640px;
+    /*height: 180px;*/
+    padding: 20px 20px 0px 20px;
+    background-color: #FFFFFF;
+}
+.s_body_content_personinfo{
+    height: 80px;
+    /*line-height: 80px;*/
+}
+.s_body_content_personinfo img{
+    width: 50px;
+    height: 50px;
+    margin-top: 15px;
+    float: left;
+}
+.s_body_content_personinfo_nt{
+    width: 570px;
+    margin-left: 10px;
+    float: left;
+}
+.s_body_content_personinfo_nt a{
+    display: block;
+    height: 25px;
+    margin-top: 20px;
+}
+.s_body_content_personinfo_nt span{
+    display: block;
+    height: 25px;
+}
+.s_body_content_text{
+    width: 600px;
+    margin-left: 60px;
+}
+.s_body_content_text img{
+    width: 110px;
+    height: 110px;
+}
+.s_body_content_func{
+    height: 40px;
+}
+.s_body_content_func div{
+    display: block;
+    float: left;
+    width: 210px;
+    text-align: center;
+    line-height: 36px;
+}
+.s_body_content_func_1{
+    border-right: 1px solid #CCCCCC;
+}
+.s_body_content_func span{
+    font-size: 25px;
+}
+.s_body_guanzhu{
+    width: 240px;
+    height: 300px;
+    margin-right: 20px;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    float: right;
+}
+.s_body_guanzhu_title{
+    width: 240px;
+    height: 49px;
+    text-align: center;
+    line-height: 49px;
+    border-bottom: 1px solid #CCCCCC;
+}
+.s_body_guanzhu_person{
+    height: 50px;
+}
+.s_body_guanzhu_person img{
+    width: 50px;
+    height: 50px;
+}
+.s_body_guanzhu_person button{
+    float: right;
+    margin-top: 15px;
+    margin-right: 20px;
+}
+.s_body_guanzhu_change{
+    height: 50px;
+}
+.s_body_guanzhu_change span{
+    display: block;
+    text-align: center;
+    line-height: 50px;
+    color: #005ea7;
+    cursor: pointer;
+}
+.s_footer{
+    height: 200px;
+    background-color: #43ffe6;
+}
