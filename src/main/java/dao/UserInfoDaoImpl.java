@@ -4,7 +4,7 @@ import entity.User;
 
 import java.util.List;
 
-public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao{
+public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     @Override
     public List<User> getAllUser() {
         return executeQuery("select * from t_user");

@@ -135,7 +135,7 @@ public class User {
         return bgId;
     }
 
-    public void setPicPath(int picPath) {
+    public void setPicPath(int bgId) {
         this.bgId = bgId;
     }
 

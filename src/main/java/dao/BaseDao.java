@@ -119,6 +119,7 @@ public abstract class BaseDao<T> {
                     } else {
                         f.set(t, rs.getObject(i + 1));//将rs列中的值赋给属性
                     }
+                    f.set(t, rs.getObject(i + 1));//将rs列中的值赋给属性
                 }
                 list.add(t);
             }
