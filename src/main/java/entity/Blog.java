@@ -3,7 +3,7 @@ package entity;
 import java.util.Date;
 
 public class Blog {
-    private int blodId;
+    private int blogId;
     private String context;
     private Date sendDate;
     private String sendAddr;
@@ -15,8 +15,8 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(int blodId, String context, Date sendDate, String sendAddr, int userId, String trId, String ip, int tsNum) {
-        this.blodId = blodId;
+    public Blog(int blogId, String context, Date sendDate, String sendAddr, int userId, String trId, String ip, int tsNum) {
+        this.blogId = blogId;
         this.context = context;
         this.sendDate = sendDate;
         this.sendAddr = sendAddr;
@@ -27,11 +27,11 @@ public class Blog {
     }
 
     public int getBlodId() {
-        return blodId;
+        return blogId;
     }
 
     public void setBlodId(int blodId) {
-        this.blodId = blodId;
+        this.blogId = blodId;
     }
 
     public String getContext() {
