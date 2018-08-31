@@ -11,25 +11,41 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     }
 
     @Override
-    public User getUser(int userId) {
-        return null;
+    public List<User> getUser(int userId) {
+        return executeQuery("select * from t_user where userId = ?", new Object[]{userId});
     }
 
     @Override
-    public boolean getUser(int telNum, String password) {
-        return false;
+    public List<User> getUser(String telNum, String password) {
+        return executeQuery("select * from t_user where telNum = ? and password = ?", new Object[]{telNum, password});
     }
 
     @Override
     public int insertUser(User user) {
-        return 0;
+        return executeUpdate("insert into t_user(userName,telNum,password) values(?,?,?)", new Object[]{user.getUserName(), user.getTelNum(), user.getPassword()});
     }
 
     @Override
-    public int updateUser(User user) { return 0;}
+    public int updateUser(User user) {
+        return executeUpdate("UPDATE t_user set userName = ? ,telNum=? ,password=?,emai=?,sex?,school=?", new Object[]{user.getUserName(), user.getTelNum(), user.getPassword()});
+    }
 
     @Override
-    public int getUserName(String username) {
-        return 0;
+    public boolean getUserName(String username) {
+        if (executeQuery("select * from t_user where username = ?", new Object[]{username}) != null)
+            return true;
+        else
+            return false;
     }
+
+    @Override
+    public boolean getUserIsLock(String telNum) {
+        List<User> userList = executeQuery("select lockDate from t_user where telNum = ?", new Object[]{telNum});
+        if (userList.get(0).getLockDate()!=null)
+            //锁定
+            return true;
+        else
+            return false;
+    }
+
 }

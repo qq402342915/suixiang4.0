@@ -3,35 +3,38 @@ package entity;
 import java.util.Date;
 
 public class Blog {
-    private int blodId;
+    private int blogId;
     private String context;
     private Date sendDate;
     private String sendAddr;
     private int userId;
-    private int trId;
-    private String Ip;
+    private String ip;
     private int tsNum;
+    private String blogPic;
+    private String blogVideo;
 
     public Blog() {
     }
 
-    public Blog(int blodId, String context, Date sendDate, String sendAddr, int userId, int trId, String ip, int tsNum) {
-        this.blodId = blodId;
+    public Blog(int blogId, String context, Date sendDate, String sendAddr, int userId,  String ip, int tsNum,String blogPic,String blogVideo) {
+        this.blogId = blogId;
         this.context = context;
         this.sendDate = sendDate;
         this.sendAddr = sendAddr;
         this.userId = userId;
-        this.trId = trId;
-        Ip = ip;
+
+        this.ip = ip;
         this.tsNum = tsNum;
+        this.blogPic=blogPic;
+        this.blogVideo=blogVideo;
     }
 
-    public int getBlodId() {
-        return blodId;
+    public int getBlogId() {
+        return blogId;
     }
 
-    public void setBlodId(int blodId) {
-        this.blodId = blodId;
+    public void setBlogId(int blogId) {
+        this.blogId = blogId;
     }
 
     public String getContext() {
@@ -66,20 +69,12 @@ public class Blog {
         this.userId = userId;
     }
 
-    public int getTrId() {
-        return trId;
-    }
-
-    public void setTrId(int trId) {
-        this.trId = trId;
-    }
-
     public String getIp() {
-        return Ip;
+        return ip;
     }
 
     public void setIp(String ip) {
-        Ip = ip;
+        ip = ip;
     }
 
     public int getTsNum() {
@@ -88,5 +83,22 @@ public class Blog {
 
     public void setTsNum(int tsNum) {
         this.tsNum = tsNum;
+    }
+
+    public String getBlogVideo() {
+        return blogVideo;
+    }
+
+    public void setBlogVideo(String blogVideo) {
+        this.blogVideo = blogVideo;
+    }
+
+    public String getBlogPic() {
+
+        return blogPic;
+    }
+
+    public void setBlogPic(String blogPic) {
+        this.blogPic = blogPic;
     }
 }

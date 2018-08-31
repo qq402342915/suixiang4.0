@@ -5,7 +5,7 @@ import java.util.Date;
 public class User {
     private int userId;
     private String userName;
-    private int telNum;
+    private String telNum;
     private String password;
     private String email;
     private String sex;
@@ -18,7 +18,7 @@ public class User {
     private int bgId;
     private Date lockDate;
     public User(){}
-    public User(int userId, String userName, int telNum, String password, String email, String sex, String school, Date regDate, String sign, Date birthday, String address, String headP, int bgId, Date lockDate) {
+    public User(int userId, String userName, String telNum, String password, String email, String sex, String school, Date regDate, String sign, Date birthday, String address, String headP, int bgId, Date lockDate) {
         this.userId = userId;
         this.userName = userName;
         this.telNum = telNum;
@@ -51,11 +51,11 @@ public class User {
         this.userName = userName;
     }
 
-    public int getTelNum() {
+    public String getTelNum() {
         return telNum;
     }
 
-    public void setTelNum(int telNum) {
+    public void setTelNum(String telNum) {
         this.telNum = telNum;
     }
 
@@ -131,11 +131,11 @@ public class User {
         this.headP = headP;
     }
 
-    public int getPicPath() {
+    public int getBgId() {
         return bgId;
     }
 
-    public void setPicPath(int bgId) {
+    public void setBgId(int bgId) {
         this.bgId = bgId;
     }
 
