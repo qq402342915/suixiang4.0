@@ -31,7 +31,11 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     }
 
     @Override
-    public int getUserName(String username) {
-        return 0;
+    public boolean getUserName(String username) {
+        if (executeQuery("select * form t_user where username = ?", new Object[]{username}) != null)
+            return true;
+        else
+            return false;
     }
+
 }

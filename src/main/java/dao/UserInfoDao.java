@@ -16,5 +16,5 @@ public interface UserInfoDao {
     //更新用户信息
     int updateUser(User user);
     //查看用户名是否存在
-    int getUserName(String username);
+    boolean getUserName(String username);
 }

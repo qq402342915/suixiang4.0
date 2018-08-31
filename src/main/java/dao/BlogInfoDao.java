@@ -20,5 +20,5 @@ public interface BlogInfoDao {
     //模糊查询自己的微博
     List<Blog> getBlogByKey(int UserId,String key);
     //查看转发数
-    int getTransCount(int blogId);
+    List<Blog> getTransCount(int blogId);
 }
