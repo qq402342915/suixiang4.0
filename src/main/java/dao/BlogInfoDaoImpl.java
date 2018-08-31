@@ -32,7 +32,7 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
 
     @Override
     public List<Blog> getBlogByKey(String key) {
-        return executeQuery("select * from t_blog where context like ？",new Object[]{"%"+key+"%"});
+        return executeQuery("select * from t_blog where context like ?",new Object[]{"%" + key + "%"});
     }
 
     @Override
