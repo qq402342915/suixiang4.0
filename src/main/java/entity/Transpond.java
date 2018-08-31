@@ -6,8 +6,7 @@ public class Transpond {
     private int userId;
 
     public Transpond(){}
-    public Transpond(int tsId, int blogId, int userId) {
-        this.tsId = tsId;
+    public Transpond(int blogId, int userId) {
         this.blogId = blogId;
         this.userId = userId;
     }

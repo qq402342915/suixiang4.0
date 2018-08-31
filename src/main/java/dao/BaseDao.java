@@ -113,12 +113,13 @@ public abstract class BaseDao<T> {
                     Field f = clazz.getDeclaredField(rsmd.getColumnName(i + 1));//列名->属性名->属性对象
                     f.setAccessible(true);
                     //对日期类型进行处理
-                    String typeName = f.getType().getName();
-                    if (typeName.equals("java.sql.Timestamp") || typeName.equals("java.util.Date") || typeName.equals("java.sql.Date")) {
-                        f.set(t, rs.getDate(i + 1));
-                    } else {
-                        f.set(t, rs.getObject(i + 1));//将rs列中的值赋给属性
-                    }
+//                    String typeName = f.getType().getName();
+//                    if (typeName.equals("java.sql.Timestamp") || typeName.equals("java.util.Date") || typeName.equals("java.sql.Date")) {
+//                        f.set(t, rs.getDate(i + 1));
+//                    } else {
+//                        f.set(t, rs.getObject(i + 1));//将rs列中的值赋给属性
+//                    }
+                    f.set(t, rs.getObject(i + 1));//将rs列中的值赋给属性
                 }
                 list.add(t);
             }
