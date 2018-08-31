@@ -27,11 +27,11 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
 
     @Override
     public int updateUser(User user) {
-        return executeUpdate("UPDATE t_user set userName = ? ,telNum=? ,password=?,emai=?,sex?,school=?",new Object[]{user.getUserName(),user.getTelNum(),user.getPassword()});
+        return executeUpdate("UPDATE t_user set userName = ? ,telNum=? ,password=?,emai=?,sex?,school=?,sign=?,birthday=?,address=?",new Object[]{user.getUserName(),user.getTelNum(),user.getPassword(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),user.getBirthday(),user.getAddress()});
     }
 
     @Override
-    public int getUserName(String username) {
-        return 0;
+    public List<User> getUserName(String username) {
+        return executeQuery("select * form t_user where username = ?",new Object[]{username});
     }
 }

@@ -20,7 +20,7 @@ public class ShowBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin","*");
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
-        List<Blog> blogList = blogInfoDao.getBlogByKey("sss");
+        List<Blog> blogList = blogInfoDao.getBlogByKey("hello");
         JSONArray array = JSONArray.fromObject(blogList);
         PrintWriter out = response.getWriter();
         out.print(array);
