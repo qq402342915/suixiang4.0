@@ -17,4 +17,6 @@ public interface UserInfoDao {
     int updateUser(User user);
     //查看用户名是否存在
     boolean getUserName(String username);
+    //查看用户是否被锁定
+    boolean getUserIsLock(String telNum);
 }
