@@ -7,7 +7,7 @@ import java.util.List;
 public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     @Override
     public List<Blog> getAllBlog() {
-        return executeQuery("select * from t_blog where blogId = 10");
+        return executeQuery("select * from t_blog");
     }
 
     @Override

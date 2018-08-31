@@ -8,7 +8,6 @@ public class Blog {
     private Date sendDate;
     private String sendAddr;
     private int userId;
-    private int trId;
     private String ip;
     private int tsNum;
     private String blogPic;
@@ -17,13 +16,13 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(int blogId, String context, Date sendDate, String sendAddr, int userId, int trId, String ip, int tsNum,String blogPic,String blogVideo) {
+    public Blog(int blogId, String context, Date sendDate, String sendAddr, int userId,  String ip, int tsNum,String blogPic,String blogVideo) {
         this.blogId = blogId;
         this.context = context;
         this.sendDate = sendDate;
         this.sendAddr = sendAddr;
         this.userId = userId;
-        this.trId = trId;
+
         this.ip = ip;
         this.tsNum = tsNum;
         this.blogPic=blogPic;
@@ -68,14 +67,6 @@ public class Blog {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getTrId() {
-        return trId;
-    }
-
-    public void setTrId(int trId) {
-        this.trId = trId;
     }
 
     public String getIp() {
