@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="../css/base.css" type="text/css">
     <link rel="stylesheet" href="../css/css_main.css" type="text/css">
     <link rel="stylesheet" href="../layui/css/layui.css" type="text/css">
+    <link rel="stylesheet" href="../css/jquery.emoji.css">
     <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
     <script src="../layui/layui.js" type="application/javascript"></script>
     <script src="../js/js_main.js" type="application/javascript"></script>
@@ -15,28 +16,27 @@
         <div class="s_header">
             <img src="../images/logo.png" alt="">
             <span class="s_header_name">随想</span>
-            <input type="text">
+            <input type="text" class="s_header_search">
+            <i class="layui-icon layui-icon-search"></i>
+
         </div>
         <div class="s_body">
             <div class="s_publish">
                 <span class="s_publish_tlogo">有什么新鲜事想告诉大家?</span>
                 <div class="s_publish_content">
-                    <textarea></textarea>
+                    <textarea id="s_publish_test"></textarea>
                 </div>
                 <div class="s_publish_footer">
-                    <a href="">
-                        <i class="layui-icon layui-icon-face-smile-b" style="font-size: 30px; color: #87c4db;"></i>
-                        表情
-                    </a>
-                    <a href="">
-                        <i class="layui-icon layui-icon-picture-fine" style="font-size: 30px; color: #87c4db;"></i>
-                        图片
-                    </a>
-                    <a href="">
-                        <i class="layui-icon layui-icon-video" style="font-size: 30px; color: #87c4db;"></i>
-                        视频
-                    </a>
-                    <button class="layui-btn layui-btn-sm layui-btn-normal">发布</button>
+                    <button type="button" class="layui-btn" id="s_emoji">
+                        <i class="layui-icon">&#xe650;</i>图标
+                    </button>
+                    <button type="button" class="layui-btn" id="s_picture">
+                        <i class="layui-icon">&#xe64a;</i>图片
+                    </button>
+                    <button type="button" class="layui-btn" id="s_video">
+                        <i class="layui-icon">&#xe6ed;</i>视频
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-normal" id="publish">发布</button>
                 </div>
             </div>
             <div class="s_headphoto">
@@ -144,5 +144,7 @@
         </div>
     </div>
     <script src="../js/foot.js"></script>
+    <script src="../js/jquery.emoji.min.js"></script>
+    <script src="../js/emoji.list.js"></script>
 </body>
 </html>

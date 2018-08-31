@@ -1,5 +1,5 @@
-layui.use('flow', function() {
-    var flow = layui.flow;
+layui.use(['flow','upload'], function() {
+    var flow = layui.flow,upload = layui.upload;
 
     flow.load({
         elem: '#LAY_demo1' //流加载容器
@@ -17,6 +17,18 @@ layui.use('flow', function() {
             }, 500);
         }
     });
+
+    //执行实例
+    var uploadInst = upload.render({
+        elem: '#s_picture,#s_video' //绑定元素
+        ,url: '/upload/' //上传接口
+        ,done: function(res){
+            //上传完毕回调
+        }
+        ,error: function(){
+            //请求异常回调
+        }
+    });
 })
 // layui.use('element', function(){
 //     var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -29,6 +41,13 @@ layui.use('flow', function() {
 // });
 $(function () {
     // $("#LAY_demo1").hide();
+        $("#s_publish_test").emoji({
+            button:"#s_emoji",
+            showTab: true,
+            animation: 'fade',
+            basePath: '../images/emoji',
+            icons: emojiLists   // 注：详见 js/emoji.list.js
+        });
 
 })
 

@@ -10,7 +10,7 @@ public interface UserInfoDao {
     //根据主键查看用户信息
     List<User> getUser(int userId);
     //根据手机号和密码验证用户是否登录成功
-    List<User> getUser(int telNum,String password);
+    List<User> getUser(String telNum,String password);
     //添加用户信息
     int insertUser(User user);
     //更新用户信息
