@@ -1,15 +1,29 @@
 body{
     width: 100%;
     height: auto;
+    background-image: url("../images/bigBackgroud.jpg");
+    background-size:cover;
+    background-attachment: fixed;
 }
 #l_big{
     width:1200px;
-    height: 5000px;
+    height: 1000px;
     margin: 0 auto;
 }
 .layui-nav{
    width: 1150px;
    margin-left: 20px;
+}
+#l_save{
+    width: 40px;
+    height: 20px;
+    float: left;
+    margin-left: 1085px;
+    position: relative;
+    top: -30px;
+    text-align: center;
+    border: solid 2px white;
+    border-radius:8px;
 }
 .l_left{
      width: 600px;
@@ -19,8 +33,11 @@ body{
      margin-left: 20px;
      border: solid white 3px;
     -webkit-box-shadow: -2px 20px 20px rgba(0,0,0,0.4);
-     background-color: olivedrab;
  }
+.l_left1{
+    width: 600px;
+    height: 200px;
+}
 .l_right{
     width: 500px;
     height: 200px;
@@ -29,7 +46,10 @@ body{
     margin-left: 20px;
     border: solid white 3px;
     -webkit-box-shadow: -2px 20px 20px rgba(0,0,0,0.4);
-    background-color: blue;
+}
+.l_right1{
+    width: 500px;
+    height: 200px;
 }
 .l_row1{
     width: 1200px;
@@ -44,12 +64,15 @@ body{
 .l_col{
     width: 320px;
     height: 400px;
-    background-color: red;
     float: left;
     margin-left: 30px;
     margin-top: 15px;
-    border: solid white 10px;
+    border: solid white 5px;
     -webkit-box-shadow: -2px 20px 20px rgba(0,0,0,0.4);
+}
+.l_c{
+    width: 320px;
+    height: 400px;
 }
 .l_row3{
     width: 1200px;
@@ -66,15 +89,22 @@ body{
     border: solid white 5px;
     -webkit-box-shadow: -2px 10px 10px rgba(0,0,0,0.4);
 }
+.l_h1{
+    width: 400px;
+    height: 280px;
+}
 .l_ht2{
     width: 300px;
     height: 280px;
     float: left;
     margin-left:12px;
     margin-top: 10px;
-    background-color: green;
     border: solid white 5px;
     -webkit-box-shadow: -2px 10px 10px rgba(0,0,0,0.4);
+}
+.l_h2{
+    width: 300px;
+    height: 280px;
 }
 .l_ht3{
     width:420px;
@@ -85,6 +115,10 @@ body{
     background-color: green;
     border: solid white 5px;
     -webkit-box-shadow: -2px 10px 10px rgba(0,0,0,0.4);
+}
+.l_h3{
+    width:420px;
+    height: 280px;
 }
 .pic{
     width: 500px;
