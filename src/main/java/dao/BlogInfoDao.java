@@ -25,6 +25,8 @@ public interface BlogInfoDao {
     List<Blog> searchDayBlog();
     //查询微博总记录数
     int getCountBlog();
+    //查询自己微博总记录数
+    int getCountBlog(int userId);
     //分页查询微博
     List<Blog> getAllBlog(int pageNo,int pageSize);
     //根据用户id分页查询微博

@@ -11,17 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet("/RepostSession")
 public class RepostSessionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        JSONArray user = JSONArray.fromObject(session.getAttribute("user"));
-        PrintWriter out = response.getWriter();
-        out.print(user);
-        out.flush();
-        out.close();
+        User u = (User)session.getAttribute("user");
+        response.getWriter().print(JSONObject.fromObject(u));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
