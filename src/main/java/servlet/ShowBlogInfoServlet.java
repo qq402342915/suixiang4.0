@@ -21,7 +21,6 @@ import java.util.List;
 public class ShowBlogInfoServlet extends HttpServlet {
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
         String method = request.getParameter("method");//得到传入的值下面根据传入的值执行不同的方法！！
         System.out.println("method="+method);
         if(method.equals("showMyBlogCount"))
@@ -48,19 +47,20 @@ public class ShowBlogInfoServlet extends HttpServlet {
 
     private void showMyBlogInfo(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
-        //这里写有关登录的代码
-
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        int userId = user.getUserId();
+        BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
+        List<Blog> myBlogInfoList = blogInfoDao.getAllBlog(userId);
+        JSONArray array = JSONArray.fromObject(myBlogInfoList);
+        PrintWriter out = response.getWriter();
+        out.print(array.get(0));
+        out.flush();
+        out.close();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin","*");
-        BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
-        List<Blog> blogList = blogInfoDao.getBlogByKey(8,"hello");
-        JSONArray array = JSONArray.fromObject(blogList);
-        PrintWriter out = response.getWriter();
-        out.print(array);
-        out.flush();
-        out.close();
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

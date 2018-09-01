@@ -57,8 +57,8 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
 
     @Override
     public int getCountBlog(int userId) {
-        int count1 = getRecordCount("select count(*) where userId = ? from t_blog",new Object[]{userId});
-        int count2 = getRecordCount("select count(*) where userId = ? from t_transpond",new Object[]{userId});
+        int count1 = getRecordCount("select count(*) from t_blog where userId = ?",new Object[]{userId});
+        int count2 = getRecordCount("select count(*) from t_transpond where userId = ?",new Object[]{userId});
         return count1 + count2;
     }
 
