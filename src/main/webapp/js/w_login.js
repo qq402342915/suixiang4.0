@@ -105,10 +105,20 @@ $(function () {
                             }
                             //登录成功
                             $("#w_wrongInfo span").css("display","none");
-                            // layer.closeAll();
-                            // $(".s_headphoto_nologin").hide();
-                            // $(".s_headphoto_login").show();
-                            // $("#s_header_right").show();
+                            layer.closeAll();
+                            layer.msg("登录成功");
+                            $.ajax({
+                                url:"/ShowMy",
+                                type:"post",
+                                data:{"w_tel":$("#w_telId").val()},
+                                dataType:"json",
+                                success:function (result) {
+
+                                }
+                            })
+                            $(".s_headphoto_nologin").hide();
+                            $(".s_headphoto_login").show();
+                            $("#s_header_right").show();
                         }else if(res=="false"){
                             $("#w_wrongInfo span").text("您输入的用户名或密码不正确");
                             $("#w_wrongInfo span").css("display","inline-block");
