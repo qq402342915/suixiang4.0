@@ -5,11 +5,19 @@ $(function () {
         type:"post",
         dataType:"json",
         success:function (user) {
-            $(".c_head_img").prop("src",user[0].headP);
-            $(".c_top_one_name h2").html(user[0].userName);
-            if(user[0].sex == '女')  $(".c_top_one_name img").prop("src","../images/woman.png");
+            $(".c_head_img").prop("src",user.headP);
+            $(".c_top_one_name h2").html(user.userName);
+            if(user.sex == '女')  $(".c_top_one_name img").prop("src","../images/woman.png");
             else $(".c_top_one_name img").prop("src","../images/man.png");
-            $(".intro").html(user[0].sign);
+            $(".intro").html(user.sign);
+        }
+    });
+    $.ajax({
+        url:"/ShowBlogInfo?method=showMyBlogCount",
+        type:"post",
+        dataType:"json",
+        success:function (result) {
+            $(".c_content_right1 strong").text(result);
         }
     });
 
@@ -65,6 +73,7 @@ $(function () {
         });
     })
 })
-layui.use('layer', function(){
-    var layer = layui.layer;
+layui.use(['layer','element'], function(){
+    var layer = layui.layer,
+        element = layui.element;
 });
