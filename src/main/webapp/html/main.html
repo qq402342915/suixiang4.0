@@ -6,12 +6,15 @@
     <link rel="stylesheet" href="../css/css_main.css" type="text/css">
     <link rel="stylesheet" href="../layui/css/layui.css" type="text/css">
     <link rel="stylesheet" href="../css/jquery.emoji.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
     <script src="../layui/layui.js" type="application/javascript"></script>
     <script src="../js/js_main.js" type="application/javascript"></script>
-    <script src="../js/jquery.ui.widget.js"></script>
-    <script src="../js/jquery.iframe-transport.js"></script>
-    <script src="../js/jquery.fileupload.js"></script>
+    <script src="../js/jquery.ui.widget.js" type="application/javascript"></script>
+    <script src="../js/jquery.iframe-transport.js" type="application/javascript"></script>
+    <script src="../js/jquery.fileupload.js" type="application/javascript"></script>
+    <script src="../js/jquery.cookie.js" type="application/javascript"></script>
+    <script src="../js/w_login.js" type="application/javascript"></script>
     <title>首页</title>
 </head>
 <body>
@@ -21,7 +24,7 @@
             <span class="s_header_name">随享</span>
             <input type="text" class="s_header_search">
             <span class="s_header_searchp"><i class="layui-icon layui-icon-search" style="font-size: 30px;"></i></span>
-            <ul class="layui-nav s_header_right" style="background-color: #FFFFFF">
+            <ul class="layui-nav s_header_right" id="s_header_right" style="background-color: #FFFFFF">
                 <li class="layui-nav-item">
                     <a href=""><i class="layui-icon" style="font-size: 30px;color: #87c4db" id="s_header_right_shouye">&#xe68e;</i></a>
                 </li>
@@ -51,7 +54,7 @@
                 </div>
                 <div class="s_publish_footer">
                     <button type="button" class="layui-btn" id="s_emoji">
-                        <i class="layui-icon">&#xe650;</i>图标
+                        <i class="layui-icon">&#xe650;</i>表情
                     </button>
                     <button type="button" class="layui-btn" id="s_picture">
                         <i class="layui-icon">&#xe64a;</i>图片
@@ -60,6 +63,10 @@
                         <i class="layui-icon">&#xe6ed;</i>视频
                     </button>
                     <button class="layui-btn layui-btn-sm layui-btn-normal" id="publish">发布</button>
+                    <!--上传图片视频-->
+                    <div class="preview_div">
+                        <div class="preview" style="margin-top:20px;"></div>
+                    </div>
                 </div>
             </div>
             <div class="s_headphoto">
@@ -67,7 +74,7 @@
                     <a href=""><img src="../images/logo.png" alt=""></a>
                 </div>
                 <div class="s_headphoto_nologin">
-                    <button class="layui-btn layui-btn-normal">登录</button>
+                    <button class="layui-btn layui-btn-normal" id="s_login">登录</button>
                     <button class="layui-btn layui-btn-warm">注册</button>
                 </div>
                 <div class="s_headphoto_login">

@@ -1,3 +1,8 @@
+/*图片预览*/
+.preview_div{
+    width:530px;
+    margin: 10px auto;
+}
 .s_main{
     background-color: #c81623;
     background-image: url("../images/body_bg.jpg");
@@ -59,6 +64,7 @@
     height: 68px;
     margin-left: 20px;
     line-height: 68px;
+    display: none;
 }
 /*.s_header_right {*/
     /*margin-left: 40px;*/
@@ -102,9 +108,10 @@
     border: 1px solid #CCCCCC;
     box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.15) inset;
 }
+/*图片*/
 .s_publish_footer{
     width: 600px;
-    height: 40px;
+    /*height: 600px;*/
     margin: 10px auto;
 }
 #s_emoji,#s_picture,#s_video{
