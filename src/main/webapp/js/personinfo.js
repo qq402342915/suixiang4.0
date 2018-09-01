@@ -13,6 +13,14 @@ $(function () {
         }
     });
     $.ajax({
+        url:"/ShowBlogInfo?method=showMyBlogInfo",
+        type:"post",
+        dataType:"json",
+        success:function (result) {
+            alert("666")
+        }
+    });
+    $.ajax({
         url:"/ShowBlogInfo?method=showMyBlogCount",
         type:"post",
         dataType:"json",
