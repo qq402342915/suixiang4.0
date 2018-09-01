@@ -35,11 +35,20 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
 
     @Override
     public boolean getUserName(String username) {
-        return false;
+        if (executeQuery("select * from t_user where username = ?", new Object[]{username}) != null)
+            return true;
+        else
+            return false;
     }
 
     @Override
     public boolean getUserIsLock(String telNum) {
-        return false;
+        List<User> userList = executeQuery("select lockDate from t_user where telNum = ?", new Object[]{telNum});
+        if (userList.get(0).getLockDate() != null)
+            //锁定
+            return true;
+        else
+            return false;
     }
+
 }

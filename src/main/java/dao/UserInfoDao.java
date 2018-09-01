@@ -21,4 +21,7 @@ public interface UserInfoDao {
     boolean getUserName(String username);
     //查看用户是否被锁定
     boolean getUserIsLock(String telNum);
+//    //获取string类型时间
+//    String getStringReg(Date regDate);
+//    String getStringBir(Date birthday);
 }

@@ -105,30 +105,44 @@ $(function () {
         },
 
     })
+
+    // //String->Date
+    // function getDate(strDate) {
+    //     //strDate为需要转换成日期格式的字符串
+    //     var date = eval('new Date(' + strDate.replace(/\d+(?=-[^-]+$)/,
+    //         function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');
+    //     return date;
+    // }
+   // tlogDate=getDate(tlogDate);
+
     //展示用户信息
     $.ajax({
         url: "/ShowInformation",
         type: "post",
-        // date:"telNumber"
-        dateType: "json",
+        // data:"telNumber"
+        dataType: "json",
         success:function(res){
-            alert(res[0].userName);
-            // $('input[name="nickName"]').text(res[0].nickName);
-            // $('input[name="telNumber"]').text(res[0].telNumber);
-            // $('input[name="email"]').text(res[0].email);
-            // $('input[name="sex"]').text(res[0].sex);
-            // $('input[name="school"]').text(res[0].school);
-            // // $('input[name="regTime"]').text(res[0].regTime);
-            // $('input[name="sign"]').text(res[0].sign);
-            // // $('input[name="birthday"]').text(res[0].birthday);
-            // $('input[name="address"]').text(res[0].address);
+
+            $('input[name="userName"]').val(res[0].userName);
+            $('input[name="telNumber"]').val(res[0].telNum);
+            $('input[name="email"]').val(res[0].email);
+            $('input[name="sex"]').val(res[0].sex);
+            $('input[name="school"]').val(res[0].school);
+            $('input[name="regDate"]').val(res[0].regDate);
+            $('input[name="sign"]').val(res[0].sign);
+            $('input[name="birthday"]').val(res[0].birthday);
+            $('input[name="address"]').val(res[0].address);
 
 
         }
     })
 
+
+
+
+//更换头像
     $('.y_headp_chance').fileupload({
-        url: "/UploadFile",
+        url: "/uploadFile",
         Type: 'POST',//请求方式 ，可以选择POST，PUT或者PATCH,默认POST
         dataType: 'json',//服务器返回的数据类型
         // singleFileUploads: false,//不设置多个文件循环提交，设置后一起提交
@@ -137,7 +151,6 @@ $(function () {
         add: function (e, data) {
             //获取图片路径并显示预览
             var url = getUrl(data.files[0]);
-
             $(".y_headp").prop("src", url)
 
         },
@@ -151,6 +164,7 @@ $(function () {
                         fileSrc + " allowscriptaccess='always' " +
                         "allowfullscreen='true' wmode='opaque' width='280' height='200'>" +
                         "</embed></div>");
+
                 });
             } else {
                 alert("上传失败");
