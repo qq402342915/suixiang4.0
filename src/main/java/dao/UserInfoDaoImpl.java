@@ -11,12 +11,12 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     }
 
     @Override
-    public List<User> getUser(int userId) {
-        return executeQuery("select * form t_user where userId = ?",new Object[]{userId});
+    public List<User> getUser(String telNum) {
+        return executeQuery("select * form t_user where telNum = ?",new Object[]{telNum});
     }
 
     @Override
-    public List<User> getUser(int telNum, String password) {
+    public List<User> getUser(String telNum, String password) {
         return executeQuery("select * form t_user where telNum = ? and password = ?",new Object[]{telNum,password});
     }
 
@@ -27,7 +27,7 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
 
     @Override
     public int updateUser(User user) {
-        return executeUpdate("UPDATE t_user set userName = ? ,telNum=? ,password=?,emai=?,sex?,school=?",new Object[]{user.getUserName(),user.getTelNum(),user.getPassword()});
+        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,emai=?,sex=?,school=?,sign=?,birthday=?,address=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),user.getBirthday(), user.getAddress()});
     }
 
     @Override

@@ -6,7 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="suixiang4.0" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="suixiang4.0" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
