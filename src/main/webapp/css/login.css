@@ -1,0 +1,139 @@
+.w_login{
+    width: 400px;
+    height: 340px;
+    /*background: silver;*/
+    position: relative;
+
+
+}
+.w_login .w_loginHead{
+    width: 100%;
+    height: 60px;
+    /*background: salmon;*/
+    position: relative;
+}
+.w_login .w_loginHead span:nth-child(1){
+    position: absolute;
+    color:#87C4DB;
+    font-size: 24px;
+    font-weight: 800;
+    left: 110px;
+    top: 20px;
+
+}
+.w_login .w_loginHead span:nth-child(2){
+    position: absolute;
+    font-size: 16px;
+    color: #cccccc;
+    top: 30px;
+    left: 210px;
+}
+.w_login .w_line{
+    width: 90px;
+    height: 1px;
+    border-top: 1px solid #cccccc;
+    position: absolute;
+    top: 70px;
+}
+.w_login .w_lineLeft{
+
+    left: 30px;
+}
+.w_login .w_lineRight{
+    right: 30px;
+}
+.w_login .w_loginText{
+    /*padding-top: 5px;*/
+    font-size: 14px;
+    color: #666666;
+    /*background: #000;*/
+    text-align: center;
+}
+.w_login .w_loginUser,.w_login .w_loginPass{
+    width: 100%;
+    height: 50px;
+    /*background: #ffffff;*/
+    position: relative;
+    padding-left: 30px;
+    box-sizing: border-box;
+    padding-top: 15px;
+}
+.w_login .w_loginUser span,.w_login .w_loginPass span{
+    font-size: 20px;
+    position: absolute;
+    color: #999999;
+    top: 18px;
+    /*left: 5px;*/
+    left: 35px;
+}
+.w_login .w_loginUser input,.w_login .w_loginPass input{
+    width: 340px;
+    height: 30px;
+    padding-left: 25px;
+    box-sizing: border-box;
+}
+.w_login .w_remMe{
+    /*background: #e4b9b9;*/
+    padding-left: 30px;
+    box-sizing: border-box;
+    position: relative;
+}
+.w_login .w_remMe span{
+    color: #666666;
+    font-size: 12px;
+    position: absolute;
+    /*top: 1px;*/
+    top: -2px;
+}
+.w_login .w_loginBottom{
+    width: 100%;
+    height: 50px;
+    /*background: #e4b9b9;*/
+    padding-left: 30px;
+    box-sizing: border-box;
+    padding-top: 10px;
+
+}
+.w_login .w_loginBottom .w_validationCode{
+    width: 200px;
+    height: 30px;
+    /*background: #e38d13;*/
+    float: left;
+}
+.w_login .w_loginBottom .w_validationCode input{
+    width: 100%;
+    height: 100%;
+}
+.w_login .w_loginBottom .w_validationImg{
+    width: 70px;
+    height: 33px;
+    float: left;
+    margin-left: 20px;
+}
+.w_login .w_loginBtn{
+    /*width: 340px;*/
+    /*margin-top: 20px;*/
+    width: 100%;
+    height: 30px;
+    /*background: skyblue;*/
+    padding-left: 30px;
+    box-sizing: border-box;
+
+}
+.w_login .w_loginBtn input{
+    width: 340px;
+    height: 100%;
+    line-height: 30px;
+    /*background: #87C4DB;*/
+}
+.w_wrong{
+    width: 400px;
+    height: 20px;
+    /*background: aquamarine;*/
+    text-align: center;
+    line-height: 20px;
+}
+.w_wrong span{
+    color: red;
+    display: none;
+}

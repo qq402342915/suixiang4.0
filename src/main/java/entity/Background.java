@@ -13,7 +13,6 @@ public class Background {
         this.bgType = bgType;
         this.bgPath = bgPath;
     }
-
     public int getBgId() {
         return bgId;
     }
