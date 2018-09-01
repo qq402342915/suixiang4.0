@@ -1,4 +1,18 @@
 $(function () {
+    /*显示用户信息*/
+    $.ajax({
+        url:"/RepostSession",
+        type:"post",
+        dataType:"json",
+        success:function (user) {
+            $(".c_head_img").prop("src",user[0].headP);
+            $(".c_top_one_name h2").html(user[0].userName);
+            if(user[0].sex == '女')  $(".c_top_one_name img").prop("src","../images/woman.png");
+            else $(".c_top_one_name img").prop("src","../images/man.png");
+            $(".intro").html(user[0].sign);
+        }
+    });
+
     //点击关注，取关
     $(".guanzhu").click(function () {
         if($(this).css("background-color") == "rgb(250, 125, 60)"){
