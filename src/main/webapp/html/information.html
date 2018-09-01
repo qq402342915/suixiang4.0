@@ -6,19 +6,57 @@
     <link href="../css/base.css" rel="stylesheet" type="text/css">
     <link href="../layui/css/layui.css" rel="stylesheet" type="text/css">
     <link href="../css/inform.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/css_main.css" type="text/css">
+    <link rel="stylesheet" href="../layui/css/layui.css" type="text/css">
+    <link rel="stylesheet" href="../css/jquery.emoji.css">
+    <link rel="stylesheet" href="../css/login.css">
+
     <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
     <script src="../layui/layui.js" type="application/javascript"></script>
     <script src="../js/jquery.validate.js" type="application/javascript"></script>
     <script src="../js/jquery.validate.regex.js" type="application/javascript"></script>
+    <script src="../js/jquery.ui.widget.js"></script>
+    <script src="../js/jquery.iframe-transport.js"></script>
+    <script src="../js/jquery.fileupload.js"></script>
     <script src="../js/xiangmu.js" type="application/javascript"></script>
 
 
 </head>
 <body>
+<div class="s_main">
+    <div class="s_header">
+        <img src="../images/logo.png" alt="">
+        <span class="s_header_name">随享</span>
+        <input type="text" class="s_header_search">
+        <span class="s_header_searchp"><i class="layui-icon layui-icon-search" style="font-size: 30px;"></i></span>
+        <ul class="layui-nav s_header_right" id="s_header_right" style="background-color: #FFFFFF">
+            <li class="layui-nav-item">
+                <a href=""><i class="layui-icon" style="font-size: 30px;color: #87c4db" id="s_header_right_shouye">&#xe68e;</i></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href=""><i class="layui-icon" style="font-size: 30px;color: #87c4db" id="s_header_right_xiaoxi">&#xe645;</i></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">评论</a></dd>
+                    <dd><a href="javascript:;">点赞</a></dd>
+                    <dd><a href="javascript:;">私信</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href=""><i class="layui-icon" style="font-size: 30px;color: #87c4db" id="s_header_right_shezhi">&#xe716;</i></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">更换背景</a></dd>
+                    <dd><a href="javascript:;">退出</a></dd>
+                    <dd><a href="javascript:;">账号设置</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+            <!--标题-->
 <div id="y_table">
     <div class="layui-container y_back1">
 
-        <div class="layui-row">
+        <div class="layui-row y_back1-2">
             <div class="layui-col-md6 y_person_image y_person_color">
                 个人资料
             </div>
@@ -27,7 +65,7 @@
             </div>
         </div>
     </div>
-
+            <!--信息表-->
     <div id="inform" class="y_inform">
         <form class="layui-form" action="/UpdateInformation" method="post">
 
@@ -90,7 +128,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">生日</label>
                 <div class="layui-inline">
-                    <input type="text" class="layui-input y_input_birthday" id="test1" autocomplete="off"
+                    <input name="birthday" type="text" class="layui-input y_input_birthday" id="test1" autocomplete="off"
                            placeholder="未选择生日">
                 </div>
             </div>
@@ -111,7 +149,7 @@
             </div>
         </form>
     </div>
-
+            <!--//头像表-->
     <div class="y_head">
         <div class="y_headback">
             <img src="../images/logo.png" class="y_headp">
@@ -119,19 +157,21 @@
 
         <div>
 
-            <input type="file" name="" class="y_headp_chance">
+            <input type="file"  class="y_headp_chance">
 
 
         </div>
 
         <li class="y_headp_li">请选择jpg、gif格式，小于2M的图片（使用高质量图片，可生成高清头像）</li>
-        <button class="layui-btn layui-btn-normal y_headp_hold">保存</button>
+        <button type="submit" class="layui-btn layui-btn-normal y_headp_hold">保存</button>
 
     </div>
 </div>
 </div>
 
-
+<script src="../js/foot.js"></script>
+<script src="../js/jquery.emoji.min.js"></script>
+<script src="../js/emoji.list.js"></script>
 </body>
 
 </html>

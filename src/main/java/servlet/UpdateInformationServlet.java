@@ -37,6 +37,7 @@ public class UpdateInformationServlet extends HttpServlet {
         }
 
         String address = request.getParameter("address");
+        String telNum = "13444444444";
         User user = new User();
 
         user.setUserName(nickName);
@@ -45,9 +46,9 @@ public class UpdateInformationServlet extends HttpServlet {
         user.setSex(sex);
         user.setSchool(school);
         user.setSign(sign);
-        user.setBirthday(birthday);
+//        user.setBirthday(birthday);
         user.setAddress(address);
-        userInfoDao.updateUser(user);
+        userInfoDao.updateUser(user,telNum);
 
 
     }
