@@ -1,5 +1,7 @@
 package servlet;
 
+import entity.User;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -14,7 +16,10 @@ import java.io.IOException;
 public class RepostSessionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        JSONObject user = JSONObject.fromObject(session.getAttribute("user"));
+//        System.out.println(session.getAttribute("user"));
+//        User userObj = (User) session.getAttribute("user");
+//        JSONObject user = JSONObject.fromObject(session.getAttribute("user"));
+        JSONArray user = JSONArray.fromObject(session.getAttribute("user"));
         System.out.println(user.toString());
     }
 

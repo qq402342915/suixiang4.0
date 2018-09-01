@@ -103,8 +103,8 @@ $(function () {
                                 $.removeCookie('cookieUserName',{ path: '/' });
                                 $.removeCookie('cookiePass',{path: '/' });
                             }
+                            //登录成功
                             $("#w_wrongInfo span").css("display","none");
-                            alert("登录成功");
                             layer.closeAll();
                             $(".s_headphoto_nologin").hide();
                             $(".s_headphoto_login").show();
