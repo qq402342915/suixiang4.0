@@ -10,6 +10,6 @@ public class BackInfoDaoImpl extends BaseDao<Background> implements BackInfoDao{
         return executeQuery("select * from t_background where bgId = ?",new Object[]{id});
     }
     public List<Background> getBackByPath(String bgPath){
-        return executeQuery("select *from t_background where bgPath=?",new Object[]{bgPath});
+        return executeQuery("select bgId from t_background where bgPath=?",new Object[]{bgPath});
     }
 }
