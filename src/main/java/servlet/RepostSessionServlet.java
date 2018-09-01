@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/RepostSession")
 public class RepostSessionServlet extends HttpServlet {
@@ -19,9 +20,10 @@ public class RepostSessionServlet extends HttpServlet {
 //        System.out.println(session.getAttribute("user"));
 //        User userObj = (User) session.getAttribute("user");
 //        JSONObject user = JSONObject.fromObject(session.getAttribute("user"));
-        JSONArray user = JSONArray.fromObject(session.getAttribute("user"));
+//        JSONArray user = JSONArray.fromObject();
 //        System.out.println(user.toString());
-
+        User u = (User)session.getAttribute("user");
+        response.getWriter().print(u.getUserId());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

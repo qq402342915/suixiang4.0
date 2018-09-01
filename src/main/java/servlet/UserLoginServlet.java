@@ -44,7 +44,7 @@ public class UserLoginServlet extends HttpServlet {
             //将用户信息保存在session里
             HttpSession session = request.getSession();
             UserInfoDao userDao = new UserInfoDaoImpl();
-            session.setAttribute("user",oneUser);
+            session.setAttribute("user",oneUser.get(0));
             response.getWriter().write("true");
         }
 
