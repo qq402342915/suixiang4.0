@@ -23,4 +23,12 @@ public interface BlogInfoDao {
     List<Blog> getTransCount(int blogId);
     //显示热门微博，查看当天的微博，并以发表时间顺序排序
     List<Blog> searchDayBlog();
+    //查询微博总记录数
+    int getCountBlog();
+    //分页查询微博
+    List<Blog> getAllBlog(int pageNo,int pageSize);
+    //根据用户id分页查询微博
+    List<Blog> getBlogByUserId(int userId,int pageNo,int pageSize);
+
+
 }
