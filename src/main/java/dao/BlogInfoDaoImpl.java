@@ -45,4 +45,9 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     public List<Blog> getTransCount(int blogId) {
         return executeQuery("select tsNum from t_blog where blogId = ?",new Object[]{blogId});
     }
+
+    @Override
+    public List<Blog> searchDayBlog() {
+        return executeQuery("select * from t_blog where sendDate >= DATE(now()) ORDER BY sendDate");
+    }
 }
