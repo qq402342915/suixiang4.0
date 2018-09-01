@@ -8,21 +8,50 @@
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="../layui/layui.js"></script>
     <script type="text/javascript" src="../js/personinfo.js"></script>
-    <script type="text/javascript" src="../js/psersoninfoAjax.js"></script>
 </head>
 </head>
 <body>
+<div class="c_main">
+    <!--头部-->
+    <div class="s_header">
+        <img src="../images/logo.png" alt="">
+        <span class="s_header_name">随享</span>
+        <input type="text" class="s_header_search">
+        <span class="s_header_searchp"><i class="layui-icon layui-icon-search" style="font-size: 30px;"></i></span>
+        <ul class="layui-nav s_header_right" id="s_header_right" style="background-color: #FFFFFF">
+            <li class="layui-nav-item">
+                <a href=""><i class="layui-icon" style="font-size: 30px;color: #87c4db" id="s_header_right_shouye">&#xe68e;</i></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href=""><i class="layui-icon" style="font-size: 30px;color: #87c4db" id="s_header_right_xiaoxi">&#xe645;</i></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">评论</a></dd>
+                    <dd><a href="javascript:;">点赞</a></dd>
+                    <dd><a href="javascript:;">私信</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href=""><i class="layui-icon" style="font-size: 30px;color: #87c4db" id="s_header_right_shezhi">&#xe716;</i></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">更换背景</a></dd>
+                    <dd><a href="javascript:;">退出</a></dd>
+                    <dd><a href="javascript:;">账号设置</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
 <!--顶部-->
 <div class="c_top">
     <div class="c_top_one">
         <div class="c_top_one_img">
             <p class="c_head_p">
-                <a><img src="../images/logo.png" alt="无头像" class="c_head_img"></a>
+                <a><img alt="头像未找到" class="c_head_img" src="../images/logo.png"></a>
             </p>
         </div>
         <div class="c_top_one_name">
-            <h2>666666</h2>
-            <img src="../images/man.png">
+            <h2>欢迎您</h2>
+            <img src="../images/woman.png">
         </div>
         <div class="c_top_one_intro">
             <a class="intro">一句话介绍一下自己吧，让别人更了解你</a>
@@ -115,6 +144,7 @@
         </div>
     </div>
     <div class="c_content_right_div" id="c_show_div2"></div>
+</div>
 </div>
 </body>
 </html>
