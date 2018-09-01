@@ -69,36 +69,12 @@
 
     </div>
     <div class="w_end_foot">
-        <div id="demo" ></div>
+        <div id="demo"></div>
     </div>
 </div>
 <script src="../js/jquery-3.3.1.js"></script>
 <script src="../layer/layer.js"></script>
 <script src="../layui/layui.js"></script>
-
-<script>
-    //JavaScript代码区域
-    layui.use('laypage', function(){
-        var laypage = layui.laypage
-            ,layer = layui.layer;
-        laypage.render({
-            elem: 'demo'
-            ,count: 10
-            ,layout: [ 'prev', 'page', 'next', 'skip']
-            ,jump: function(obj){
-                console.log(obj)
-            }
-        });
-
-    });
-    layui.use('element', function(){
-        var element = layui.element;
-
-    });
-
-
-
-</script>
 <script src="../js/test.js"></script>
 </body>
 </html>

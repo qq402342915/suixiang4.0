@@ -18,6 +18,8 @@
     position: fixed;
     left: 200px;
     right: 0;
+    padding-top: 20px;
+    box-sizing: border-box;
     bottom: 0;
     height: 70px;
     line-height: 44px;
@@ -30,8 +32,8 @@
 }
 .w_banner{
     width: 1300px;
-    height: 480px;
-    background: url("../images/end_banner.jpg") -200px -50px;
+    height: 550px;
+    background: url("../images/end_banner.jpg") -200px -10px;
     position: relative;
 }
 .w_banner span{

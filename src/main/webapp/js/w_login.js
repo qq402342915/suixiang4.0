@@ -113,7 +113,7 @@ $(function () {
                                 data:{"w_tel":$("#w_telId").val()},
                                 dataType:"json",
                                 success:function (result) {
-
+                                    $("#s_userName").html(result[0].userName);
                                 }
                             })
                             $(".s_headphoto_nologin").hide();
