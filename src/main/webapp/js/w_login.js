@@ -103,9 +103,19 @@ $(function () {
                                 $.removeCookie('cookieUserName',{ path: '/' });
                                 $.removeCookie('cookiePass',{path: '/' });
                             }
+                            //登录成功
                             $("#w_wrongInfo span").css("display","none");
-                            alert("登录成功");
                             layer.closeAll();
+                            layer.msg("登录成功");
+                            $.ajax({
+                                url:"/ShowMy",
+                                type:"post",
+                                data:{"w_tel":$("#w_telId").val()},
+                                dataType:"json",
+                                success:function (result) {
+                                    $("#s_userName").html(result[0].userName);
+                                }
+                            })
                             $(".s_headphoto_nologin").hide();
                             $(".s_headphoto_login").show();
                             $("#s_header_right").show();

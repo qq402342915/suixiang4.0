@@ -8,9 +8,9 @@
         <property name="user">root</property>
         <property name="password">Root!2018</property>
         <!--配置数据库连接池的最小链接数、最大连接数、初始连接数-->
-        <property name="maxPoolSize">15</property>
-        <property name="minPoolSize">5</property>
-        <property name="initialSize">5</property>
+        <property name="maxPoolSize">10</property>
+        <property name="minPoolSize">2</property>
+        <property name="initialSize">2</property>
         <property name="maxIdleTime">10</property>
     </default-config>
 </c3p0-config>
