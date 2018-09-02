@@ -12,8 +12,8 @@ public class InformDaoImpl extends BaseDao<Inform> implements InformDao {
     }
 
     @Override
-    public List<Inform> getInformById(int userId) {
-        return executeQuery("select * from t_inform where userId=?",new Object[]{userId});
+    public List<Inform> getInformById(int informId) {
+        return executeQuery("select * from t_inform where informId=?",new Object[]{informId});
     }
 
     @Override
