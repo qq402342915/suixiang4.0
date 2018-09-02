@@ -1,6 +1,7 @@
 package servlet;
 
-import service.EndUserBlogService;
+import dao.BlogInfoDao;
+import dao.BlogInfoDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "EndUserBlogServlet",urlPatterns = "/EndUserBlogServlet")
-//返回指定用户的所有微博
-public class EndUserBlogServlet extends HttpServlet {
+@WebServlet(name = "EndDeleteOneBlogServlet",urlPatterns = "/EndDeleteOneBlogServlet")
+//删除某一行微博记录
+public class EndDeleteOneBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userId=request.getParameter("userId");
-        String pageNoStr=request.getParameter("pageNo");
-        String pageSizeStr=request.getParameter("pageSize");
+        String blogIdStr=request.getParameter("id");
+        int blogId=Integer.parseInt(blogIdStr);
 
-        EndUserBlogService endUserBlogService=new EndUserBlogService();
-        response.getWriter().write(endUserBlogService.selectUserBlog(userId,pageNoStr,pageSizeStr));
+        BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
+        int res= blogInfoDao.deleteBlog(blogId);
+        response.getWriter().write(String.valueOf(res));
 
     }
 

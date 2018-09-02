@@ -1,12 +1,16 @@
 $(function () {
+
+
+    //获得所有记录总数,第一个值为servlet地址，第二个值为userId的值
+    //如果传入第二个值，则根据第二个值的id查询总数
+
     //定义一个全局变量表示总数
     var Count = 0;
-
-    //获得所有记录总数
-    function getCount(url){
+    function getCount(url,userId){
         $.ajax({
             async: false,
             url: url,
+            data:{"userId":userId},
             type: "post",
             dataType: "text",
             success: function (res) {
@@ -14,6 +18,25 @@ $(function () {
             }
         });
         return Count;
+    }
+    //根据指定id删除某一行记录
+    var delInt=-1;
+    function delRow(url,id){
+        $.ajax({
+            async: false,
+            url:url,
+            data:{"id":id},
+            type:"post",
+            dataType:"text",
+            success:function (res) {
+                if(res!=null){
+                    delInt=res;
+                }else{
+                    delInt=-1;
+                }
+            }
+        });
+        return delInt;
     }
 
 
@@ -237,6 +260,8 @@ $(function () {
     //点击删除按钮删除个人信息
     $("body").on("click", ".del", function () {
         var $id = $(this).closest('tr');
+        var userId=$(this).closest('tr').children().eq(0).text();
+        alert(userId);
 
         layer.confirm('确定要删除吗？', {
             btn: ['确定', '取消'] //按钮
@@ -301,7 +326,8 @@ $(function () {
         $(".w_demo").prepend($head);
 
 
-        //分页
+        //分页，第一第二位的值为分页数据，第三个为url地址
+        //若要根据查询指定值分页，则传入第四个参数
         function limit(pageNo, pageSize,url,id) {
             $.ajax({
                 url: url,
@@ -312,13 +338,15 @@ $(function () {
                 dataType: "json",
                 success: function (res) {
                     getBlogJson(res);
+
                 }
             });
         }
 
 
 
-        //分页
+        //分页，count后面写传入数据的总数
+        //jump中写回调函数
         layui.use('laypage', function () {
             var laypage = layui.laypage
                 , layer = layui.layer;
@@ -331,14 +359,13 @@ $(function () {
                     var pageNo = obj.curr;
                     var pageSize = obj.limit;
                     limit(pageNo, pageSize,"/ShowAllBlogServlet");
-
                 }
             });
 
         });
 
         //得到微博
-        function getBlogJson(res) {
+       function getBlogJson(res) {
             $table.children("tbody").children().remove();
             $.each(res, function (index, obj) {
                 var $tr = $('    <tr>\n' +
@@ -364,6 +391,11 @@ $(function () {
 
         //2.2查看详细信息
         $("body").on("click", ".w_blog_see", function () {
+            var blogId=$(this).closest('tr').children().eq(0).text();
+            alert(blogId);
+            //发送ajax请求评论表
+            limit(0,0,"/EndShowCommentServlet",blogId);
+
             layer.open({
                 type: 1 //Page层类型
                 , area: ['500px', '300px']
@@ -371,7 +403,46 @@ $(function () {
                 , shade: 0.6 //遮罩透明度
                 , maxmin: true //允许全屏最小化
                 , anim: 1 //0-6的动画形式，-1不开启
-                , content: '<div style="padding:50px;">这是一个非常普通的页面层，传入了自定义的html</div>'
+                , content: '<div style="padding:0 10px; height: 200px">' +'<table class="layui-table">\n' +
+                '        <colgroup>\n' +
+                '            <col width="50">\n' +
+                '            <col width="200">\n' +
+                '        </colgroup>\n' +
+                '        <thead>\n' +
+                '        <tr>\n' +
+                '            <td>用户昵称</td>\n' +
+                '            <td>评论内容</td>\n' +
+                '        </tr>\n' +
+                '        <tbody>\n' +
+                '        <tr>\n' +
+                '            <td>hahaha</td>\n' +
+                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
+                '        </tr>\n' +
+                '        <tr>\n' +
+                '            <td>hahaha</td>\n' +
+                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
+                '        </tr>\n' +
+                '        <tr>\n' +
+                '            <td>hahaha</td>\n' +
+                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
+                '        </tr>\n' +
+                '        <tr>\n' +
+                '            <td>hahaha</td>\n' +
+                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
+                '        </tr>\n' +
+                '        <tr>\n' +
+                '            <td>hahaha</td>\n' +
+                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
+                '        </tr>\n' +
+                '        <tr>\n' +
+                '            <td>hahaha</td>\n' +
+                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
+                '        </tr>\n' +
+                '        </tbody>\n' +
+                '\n' +
+                '        </thead>\n' +
+                '    </table>\n'+
+                '</div>'
             });
         });
 
@@ -379,12 +450,20 @@ $(function () {
         //点击删除按钮删除个人信息
         $("body").on("click", ".w_blog_del", function () {
             var $id = $(this).closest('tr');
-
+            //获取当前微博id
+            var blogId=$(this).closest('tr').children().eq(0).text();
             layer.confirm('确定要删除吗？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
-                $id.remove();
-                layer.msg('删除成功', {icon: 1});
+
+                if(delRow("/EndDeleteOneBlogServlet",blogId)!=-1){
+                    $id.remove();
+                    layer.msg('删除成功', {icon: 1});
+                }else{
+                    layer.msg('删除失败',{icon:2})
+                }
+
+
             }, function () {
                 layer.msg('取消操作');
             });
@@ -393,7 +472,6 @@ $(function () {
         //2.4
         //点击搜索搜索指定用户ID发过的所有微博
         $("body").on("click","#w_blogSelect",function () {
-           layer.msg("hahah");
            //获取input信息
             var userId=$("#demoReload").val();
             // 把input信息通过ajax发送到后端 "/EndUserBlogServlet"
@@ -404,12 +482,12 @@ $(function () {
                 laypage.render({
                     elem: 'demo'
                     , limit: 7
-                    , count: getCount("/GetBlogCountServlet")
+                    , count: getCount("/EndBlogCountServlet",userId)
                     , layout: ['prev', 'page', 'next', 'skip']
                     , jump: function (obj) {
                         var pageNo = obj.curr;
                         var pageSize = obj.limit;
-                        limit(pageNo, pageSize,"/ShowAllBlogServlet");
+                        limit(pageNo, pageSize,"/EndUserBlogServlet",userId);
 
                     }
                 });

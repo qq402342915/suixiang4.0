@@ -70,4 +70,8 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     public List<Blog> getBlogByUserId(int userId,int pageNo,int pageSize){
         return executeQuery("select * from t_blog where userId = ? limit ? , ?",new Object[]{userId,(pageNo-1)*pageSize,pageSize});
     }
+    @Override
+    public int getCountBlog(String column,Object condition){
+        return getRecordCount("select count(*) from t_blog where "+column+"= ?",new Object[]{condition});
+    }
 }

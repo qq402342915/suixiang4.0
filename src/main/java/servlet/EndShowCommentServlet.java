@@ -1,7 +1,5 @@
 package servlet;
 
-import service.EndUserBlogService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,16 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "EndUserBlogServlet",urlPatterns = "/EndUserBlogServlet")
-//返回指定用户的所有微博
-public class EndUserBlogServlet extends HttpServlet {
+@WebServlet(name = "EndShowCommentServlet",urlPatterns = "/EndShowCommentServlet")
+//显示微博的评论数
+public class EndShowCommentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userId=request.getParameter("userId");
-        String pageNoStr=request.getParameter("pageNo");
-        String pageSizeStr=request.getParameter("pageSize");
+        //获取微博id
+        String blogIdStr=request.getParameter("userId");
 
-        EndUserBlogService endUserBlogService=new EndUserBlogService();
-        response.getWriter().write(endUserBlogService.selectUserBlog(userId,pageNoStr,pageSizeStr));
+
 
     }
 

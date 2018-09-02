@@ -31,6 +31,8 @@ public interface BlogInfoDao {
     List<Blog> getAllBlog(int pageNo,int pageSize);
     //根据用户id分页查询微博
     List<Blog> getBlogByUserId(int userId,int pageNo,int pageSize);
+    //重载记录总数查询指定条件微博的记录数
+    int getCountBlog(String column,Object condition);
 
 
 }
