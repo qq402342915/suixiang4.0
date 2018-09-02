@@ -26,21 +26,32 @@ public class ShowBlogInfoServlet extends HttpServlet {
         if(method.equals("showMyBlogCount"))
         {
             showMyBlogCount(request, response);//执行blogCount代码
-        } else if(method.equals("showBlogInfo")){
-            showMyBlogInfo(request, response);//执行allBlogInfo代码
+        } else if(method.equals("showMyBlogInfo")){
+            showMyBlogInfo(request, response);//执行BlogInfo代码
         }
 
     }
 
     private void showMyBlogCount(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         int userId = user.getUserId();
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
         int myBlogCount = blogInfoDao.getCountBlog(userId);
         PrintWriter out = response.getWriter();
-        out.print(myBlogCount);
+        System.out.println(ip);
+        out.print(myBlogCount+","+ip);
         out.flush();
         out.close();
     }
@@ -54,10 +65,11 @@ public class ShowBlogInfoServlet extends HttpServlet {
         List<Blog> myBlogInfoList = blogInfoDao.getAllBlog(userId);
         JSONArray array = JSONArray.fromObject(myBlogInfoList);
         PrintWriter out = response.getWriter();
-        out.print(array.get(0));
+        out.print(array);
         out.flush();
         out.close();
     }
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

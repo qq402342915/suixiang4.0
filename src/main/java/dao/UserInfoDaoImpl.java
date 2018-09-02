@@ -30,7 +30,7 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
 
     @Override
     public int updateUser(User user, String telNum) {
-        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,email=?,sex=?,school=?,sign=?,address=? where telNum=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(), user.getAddress(),telNum});
+        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,email=?,sex=?,school=?,sign=?,birthday=?,address=? where telNum=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),user.getBirthday(), user.getAddress(),telNum});
     }
 
     @Override
@@ -49,6 +49,17 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
             return true;
         else
             return false;
+    }
+    @Override
+    public List<User> getAllUser(int pageNo,int pageSize){
+        return executeQuery("select * from t_user limit ?,?",new Object[]{(pageNo-1)*pageSize,pageSize});
+    }
+    public int getCountUser(){
+        return getRecordCount("select count(*) from t_user");
+    }
+    @Override
+    public int delOneUser(int userId){
+        return executeUpdate("delete from t_user where userId = ?",new Object[]{userId});
     }
 
 }

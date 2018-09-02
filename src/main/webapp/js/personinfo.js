@@ -13,14 +13,6 @@ $(function () {
         }
     });
     $.ajax({
-        url:"/ShowBlogInfo?method=showMyBlogInfo",
-        type:"post",
-        dataType:"json",
-        success:function (result) {
-            alert("666")
-        }
-    });
-    $.ajax({
         url:"/ShowBlogInfo?method=showMyBlogCount",
         type:"post",
         dataType:"json",
@@ -28,7 +20,14 @@ $(function () {
             $(".c_content_right1 strong").text(result);
         }
     });
-
+    /*$.ajax({
+        url:"/ShowBlogInfo?method=showMyBlogInfo",
+        type:"post",
+        dataType:"json",
+        success:function (result) {
+            alert("666")
+        }
+    });*/
     //点击关注，取关
     $(".guanzhu").click(function () {
         if($(this).css("background-color") == "rgb(250, 125, 60)"){
