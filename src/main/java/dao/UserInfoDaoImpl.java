@@ -2,6 +2,7 @@ package dao;
 
 import entity.User;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
@@ -30,7 +31,7 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
 
     @Override
     public int updateUser(User user, String telNum) {
-        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,email=?,sex=?,school=?,sign=?,birthday=?,address=? where telNum=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),user.getBirthday(), user.getAddress(),telNum});
+        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,email=?,sex=?,school=?,sign=?,birthday=?,address=? where telNum=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),new Timestamp(user.getBirthday().getTime()), user.getAddress(),telNum});
     }
 
     @Override
