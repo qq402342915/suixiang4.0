@@ -47,8 +47,9 @@ public class UpdateInformationServlet extends HttpServlet {
 
             user.setBirthday(birth);
             user.setAddress(address);
+
             userInfoDao.updateUser(user,telNum);
-            System.out.println(birth);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }

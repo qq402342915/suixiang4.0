@@ -21,7 +21,7 @@ import java.util.List;
 public class ShowInformationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin","*");
-        String telNumber="13777777777"/**/;
+        String telNumber="13333333333"/**/;
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
 
         //获取当前用户信息

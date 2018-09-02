@@ -63,4 +63,9 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
         return executeUpdate("delete from t_user where userId = ?",new Object[]{userId});
     }
 
+    @Override
+    public int UpdateHeadP(String headp,String telNum) {
+        return executeUpdate("update t_user set headP=? where telNum = ?",new Object[]{headp,telNum});
+    }
+
 }
