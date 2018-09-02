@@ -6,92 +6,10 @@
     <link href="../css/base.css" rel="stylesheet" type="text/css">
     <link href="../css/back.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../layui/css/layui.css">
-    <script type="application/javascript" src="../layui/layui.js"></script>
-    <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+
+
 </head>
-<script>
-    //注意：导航 依赖 element 模块，否则无法进行功能性操作
-    layui.use('element', function(){
-        var element = layui.element;
-    });
 
-    $(function () {
-        $(".l_style2").hide();
-        $(".l_style3").hide();
-        $(".pic").hide();
-        // $(".l_style1").hide();
-        $(document).on("click",".layui-nav li>a:contains('文艺')",function(e){
-            $(".l_style1").hide();
-            $(".l_style3").hide();
-            $(".pic").hide();
-            $(".l_style2").show();
-            e.preventDefault();
-        });
-        $(document).on("click",".layui-nav li>a:contains('卡通')",function(e){
-            $(".l_style2").hide();
-            $(".l_style3").hide();
-            $(".pic").hide();
-            $(".l_style1").show();
-            e.preventDefault();
-        });
-        $(document).on("click",".layui-nav li>a:contains('简约')",function(e){
-            $(".l_style1").hide();
-            $(".l_style2").hide();
-            $(".pic").hide();
-            $(".l_style3").show();
-            e.preventDefault();
-        });
-        $(document).on("click",".layui-nav li>a:contains('自定义')",function(e){
-            $(".l_style1").hide();
-            $(".l_style2").hide();
-            $(".l_style3").hide();
-            $(".pic").show();
-            e.preventDefault();
-        });
-        //更换背景
-        $(document).ready(function () {
-            $("img").click(function(){
-                var addr=$(this).attr("src");
-                $("#l_tu").css("background-image",'url('+addr+')');
-            });
-        });
-        // $(".l_right1").click(function () {
-        //     var addr=$(this).val(src="?")
-        //     $('body').css("background-image","addr");
-        // })
-    })
-        layui.use('upload', function() {
-            var $ = layui.jquery,
-                upload = layui.upload;
-            //普通图片上传
-            var uploadInst = upload.render({
-                elem: '#test1',
-                url: '/upload/',
-                before: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
-                        $('#demo1').attr('src', result); //图片链接（base64）
-                    });
-                },
-                done: function (res) {
-                    //如果上传失败
-                    if (res.code > 0) {
-                        return layer.msg('上传失败');
-                    }
-                    //上传成功
-                }
-                , error: function () {
-                    //演示失败状态，并实现重传
-                    var demoText = $('#demoText');
-                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                    demoText.find('.demo-reload').on('click', function () {
-                        uploadInst.upload();
-                    });
-                },
-            })
-        })
-
-</script>
 <body id="l_tu">
     <div id="l_big">
         <ul class="layui-nav  layui-bg-green" lay-filter="">
@@ -99,9 +17,9 @@
             <li class="layui-nav-item"><a href="">文艺</a></li>
             <li class="layui-nav-item"><a href="">简约</a></li>
             <li class="layui-nav-item"><a href="">自定义</a></li>
-            <li id="l_save">保存</li>
+            <li id="l_save"><input type="button" value="保存"> </li>
         </ul>
-        <div>
+        <div >
         <div class="l_style1">
             <div class="l_row1">
              <div class="l_right"><img class="l_right1" src="http://img1.qq.com/gamezone/pics/14806/14806961.jpg"></div>
@@ -170,5 +88,106 @@
         </div>
         </div>
     </div>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script type="application/javascript" src="../layui/layui.js"></script>
+    <script>
+        //注意：导航 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function(){
+            var element = layui.element;
+        });
+
+        $(function () {
+            $(".l_style2").hide();
+            $(".l_style3").hide();
+            $(".pic").hide();
+            // $(".l_style1").hide();
+            $(document).on("click", ".layui-nav li>a:contains('文艺')", function (e) {
+                $(".l_style1").hide();
+                $(".l_style3").hide();
+                $(".pic").hide();
+                $(".l_style2").show();
+                e.preventDefault();
+            });
+            $(document).on("click", ".layui-nav li>a:contains('卡通')", function (e) {
+                $(".l_style2").hide();
+                $(".l_style3").hide();
+                $(".pic").hide();
+                $(".l_style1").show();
+                e.preventDefault();
+            });
+            $(document).on("click", ".layui-nav li>a:contains('简约')", function (e) {
+                $(".l_style1").hide();
+                $(".l_style2").hide();
+                $(".pic").hide();
+                $(".l_style3").show();
+                e.preventDefault();
+            });
+            $(document).on("click", ".layui-nav li>a:contains('自定义')", function (e) {
+                $(".l_style1").hide();
+                $(".l_style2").hide();
+                $(".l_style3").hide();
+                $(".pic").show();
+                e.preventDefault();
+            });
+            //更换背景
+            var addr;
+            $(document).ready(function () {
+                $("img").click(function () {
+                    addr = $(this).attr("src");
+                    alert(addr);
+                    $("#l_tu").css("background-image", 'url(' + addr + ')');
+                });
+            });
+            $(document).on("click","#l_save>input",function () {
+                alert("click");
+                $.ajax({
+                    url: "/bgffServlet",
+                    type: "post",
+                    data: {"bgPath": addr},
+                    success: function () {
+                        alert("成功");
+                        // layer.msg("成功", {time: 1000});
+                        // if (backgroundList!=null) {
+                        //     layer.msg("成功", {time: 1000}, function () {
+                        //         location.reload();
+                        //     });
+                        // }
+                    }
+                })
+
+            })
+        })
+        layui.use('upload', function() {
+            var $ = layui.jquery,
+                upload = layui.upload;
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1',
+                url: '/upload/',
+                before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                },
+                done: function (res) {
+                    //如果上传失败
+                    if (res.code > 0) {
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                },
+            })
+        })
+
+    </script>
 </body>
 </html>

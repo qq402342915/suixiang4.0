@@ -2,6 +2,7 @@ package dao;
 
 import entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
@@ -27,9 +28,8 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
 
     @Override
     public int updateUser(User user) {
-        return executeUpdate("UPDATE t_user set userName = ? ,telNum=? ,password=?,email=?,sex=?,school=?,sign=?,birthday=?,address=?,headP=?,bgId=?,lockDate=?", new Object[]{user.getUserName(), user.getTelNum(), user.getPassword(),user.getEmail(),user.getSex(),user.getSchool(),user .getSign(),user.getBirthday(),user.getAddress(),user.getHeadP(),user.getBgId(),user.getLockDate()});
+       return executeUpdate("UPDATE t_user set userName = ? ,telNum=? ,password=?,email=?,sex=?,school=?,sign=?,birthday=?,address=?,headP=?,bgId=?,lockDate=?", new Object[]{user.getUserName(), user.getTelNum(), user.getPassword(),user.getEmail(),user.getSex(),user.getSchool(),user .getSign(),user.getBirthday(),user.getAddress(),user.getHeadP(),user.getBgId(),user.getLockDate()});
     }
-
     @Override
     public boolean getUserName(String username) {
         if (executeQuery("select * from t_user where username = ?", new Object[]{username}) != null)

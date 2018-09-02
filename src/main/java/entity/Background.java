@@ -7,7 +7,6 @@ public class Background {
 
     public Background() {
     }
-
     public Background(int bgId, String bgType, String bgPath) {
         this.bgId = bgId;
         this.bgType = bgType;
