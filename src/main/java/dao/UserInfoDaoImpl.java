@@ -2,6 +2,7 @@ package dao;
 
 import entity.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
@@ -21,23 +22,23 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     }
 
     @Override
+    //注册插入用户信息
     public int insertUser(User user) {
         return executeUpdate("insert into t_user(userName,telNum,password) values(?,?,?)", new Object[]{user.getUserName(), user.getTelNum(), user.getPassword()});
     }
 
     @Override
+    public boolean getUserName(String username) {
+        if (executeQuery("select * from t_user where username = ?", new Object[]{username}) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    @Override
     public int updateUser(User user) {
         return executeUpdate("UPDATE t_user set userName = ? ,telNum=? ,password=?,email=?,sex=?,school=?,sign=?,birthday=?,address=?,headP=?,bgId=?,lockDate=?", new Object[]{user.getUserName(), user.getTelNum(), user.getPassword()});
     }
-
-    @Override
-    public boolean getUserName(String username) {
-        if (executeQuery("select * from t_user where username = ?", new Object[]{username}) != null)
-            return true;
-        else
-            return false;
-    }
-
     @Override
     public boolean getUserIsLock(String telNum) {
         List<User> userList = executeQuery("select lockDate from t_user where telNum = ?", new Object[]{telNum});

@@ -17,18 +17,14 @@
     float: left;
 }
 #su_top_left{
-    width: 900px;
+    width: 800px;
     height: 70px;
     float: left;
     position: relative;
 }
-#su_top_left font{
-    margin-left: 460px;
-    float: left;
-    margin-top: -45px;
-}
+
 #su_top_right{
-    width: 450px;
+    width: 550px;
     height: 70px;
     float: left;
     position: relative;
@@ -38,14 +34,19 @@
     font-family: 楷体;
 }
 #su_top_left img{
-    margin-left: 400px;
-    margin-top: 10px;
+    margin-left: -129px;
+    margin-top: 14px;
+}
+#su_top_left font{
+    margin-left: 280px;
+    float: left;
+    margin-top: 18px;
 }
 #su_title{
     width: 900px;
     height: 50px;
     float: left;
-    margin-left: 225px;
+    margin-left: 175px;
     margin-top: 10px;
 }
 .space{
@@ -61,7 +62,7 @@
     font-style: unset;
 }
 #su_register{
-    width: 900px;
+    width: 1000px;
     height: 430px;
     margin: 0 auto;
 }
@@ -70,29 +71,27 @@
     height: 430px;
     float:left;
 }
+
 #su_userName{
     width: 630px;
     height: 60px;
     float: left;
-    color: red;
 }
+
 #su_phone{
     width: 630px;
     height: 60px;
     float: left;
-    color: red;
 }
 #su_password{
     width: 630px;
     height: 60px;
     float: left;
-    color: red;
 }
 #su_repassword{
     width: 630px;
     height: 60px;
     float: left;
-    color: red;
 }
 #su_active{
     width: 630px;
@@ -100,7 +99,6 @@
     float: left;
     position: relative;
     top: 10px;
-    color: red;
 }
 #su_agree{
     width: 630px;
@@ -109,7 +107,6 @@
     font-size: 12px;
     margin-left: 90px;
     margin-top: 10px;
-    color: red;
 }
 
 #su_ok{
@@ -171,9 +168,9 @@
     margin-left: 13px;
 }
 #su_regi_right{
-    width: 270px;
+    width: 350px;
     height: 430px;
-    float: left;
+    float: right;
     background-color: beige;
 }
 #su_regi_right_top{
@@ -197,3 +194,18 @@ input:focus.required:focus{
     border: 1px solid #87c4db;
     background-color: antiquewhite;
 }
+#isExist{
+    font-size: 10px;
+    color: red;
+}
+
+em.error{
+    color: red;
+    font-size: 12px;
+    font-family: 新宋体;
+    padding-left:16px ;
+}
+em.success{
+    padding-left: 16px;
+}
+

@@ -6,13 +6,101 @@
     <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
     <script src="../js/jquery.validate.js" type="text/javascript"></script>
     <script src="../js/jquery.validate.regex.js" type="text/javascript"></script>
+    <script src="../layui/layui.all.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../css/su_register.css" type="text/css">
+    <link rel="stylesheet" href="../css/layer.css" type="text/css">
 </head>
-<style>
+<script>
+    $(function () {
+        //用户名查重
+        $("#kuang1").blur(function () {
+        $S=$(this);
+        var name=$(this).val();
+        $.ajax({
+            url:"/checkUserServlet",
+            type:"POST",
+            dataType:"json",
+            success:function(array){
+                var tip = false;
+                for(var i=0;i<array.length;i++){
+                    if(name==array[i].userName){
+                        if($('#isExist').length>0){
+                            tip=true;
+                            break;
+                        }else{
+                            $S.after("<span id='isExist'>此用户名太受欢迎,请更换一个</span>")
+                            tip=true;
+                            break;
+                        }
+                    }
+                }
+                if(tip==false){
+                    $("#isExist").remove();
+                }
+            }
+        });
+    })
+        //手机号查重
+        // $("#kuang2").keyup(function () {
+        //
+        // })
 
-</style>
+
+
+        //短信验证
+        $("#btn").click(function () {
+            $.ajax({
+                    url: "/MessageServlet",
+                    type: "post",
+                    data: {"telNum": $('#kuang2').val()},
+                    dataType: "text",
+                    success: function () {
+                        layer.msg("验证码已发送！", {time: 2000});
+                        getcode();
+                    }
+                })
+        });
+    });
+    function getcode() {
+        $('.su_submit').click(function (e) {
+            $.ajax({
+                url: "/suServlet",
+                type: "post",
+                data: {"str": $('#code').val()},
+                dataType: "text",
+                success: function (rest) {
+                    if (rest == 1) {
+                        insert();
+                    } else {
+                        layer.msg('验证码错误！')
+                    }
+                }
+            })
+        })
+    }
+    function insert() {
+            $.ajax({
+                url:"/addUserServlet",
+                type:"post",
+                data:{"userName":$("input[name='userName']").val(),
+                    "telNum":$("input[name='phoneNum']").val(),
+                    "password":$("input[name='password']").val()},
+                dataType:"text",
+                success:function (ret) {
+                    if(ret=="1") {
+                        layer.msg('注册成功！', {time: 5000}, function () {
+                                location.reload();
+                            }
+                        );
+                    } else {
+                        layer.msg('用户名为空或已存在，请重新注册！',{time:5000})
+                    }
+                }
+            });
+    }
+</script>
 <body>
-<form action="#" id="share_register" method="post" onsubmit="">
+<form action="/addUserServlet" id="share_register" method="post" onsubmit="">
     <div id="su_share">
         <div id="su_top">
             <div id="su_top_left">
@@ -30,25 +118,24 @@
         <div id="su_register">
             <div id="su_regi_left">
                 <div id="su_userName"><font color="black">用 户 名</font>
-                    <input type="text" name="userName" class="required" id="kuang1" placeholder="请设置用户名">
+                    <input type="text" name="userName" class="required" id="kuang1" placeholder="&nbsp;&nbsp;请设置用户名">
                 </div>
                 <div id="su_phone">
                     <font color="black">手 机 号 </font>
-                    <input type="text" name="phoneNum" id="kuang2" class="required"  placeholder="登录">
+                    <input type="text" name="phoneNum" id="kuang2" class="required"  placeholder="&nbsp;&nbsp;登录">
                     <br>
-                    <label class="su_email">或使用<a class="su_emailregi">邮箱注册</a></label>
+                    <!--<label class="su_email">或使用<a class="su_emailregi">邮箱注册</a></label>-->
                 </div>
                 <div id="su_password"><font color="black">密 &nbsp; 码&nbsp;&nbsp; </font>
-                    <input type="password" id="kuang3" name="password" class="required"  placeholder="请设置登录密码"></div>
+                    <input type="password" id="kuang3" name="password" class="required"  placeholder="&nbsp;&nbsp;请设置登录密码"></div>
                 <div id="su_repassword">
-                    <font color="black">确认密码&nbsp;&nbsp;</font>
-                    <input type="password" id="kuang4" name="repassword" class="required"  placeholder="请重新输入密码">
-                    <span style="color: red" class="su_repsd">两次密码不一致</span>
+                    <font color="black">确认密码&nbsp;</font>
+                    <input type="password" id="kuang4" name="repassword" class="required"  placeholder="&nbsp;&nbsp;请重新输入密码">
                 </div>
                 <div id="su_active">
                     <label id="yan"><font color="black">验 证 码&nbsp;</font></label>
-                    <input type="text" name="code" class="required" id="code" placeholder="请输入验证码">
-                    <input type="button" name="btn" class="required" id="btn" disabled="disabled" value="获取短信验证码">
+                    <input type="text" name="code" class="required" id="code" placeholder="&nbsp;&nbsp;请输入验证码">
+                    <input type="button" name="btn" class="required" id="btn"   value="&nbsp;&nbsp;获取短信验证码">
                 </div>
                 <div id="su_agree">
                     <input type="checkbox" name="agree" class="required" id="isAgree">

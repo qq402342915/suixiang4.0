@@ -35,6 +35,12 @@ public class User {
         this.lockDate = lockDate;
     }
 
+    public User( String userName, String telNum, String password) {
+        this.userName = userName;
+        this.telNum = telNum;
+        this.password = password;
+    }
+
     public int getUserId() {
         return userId;
     }
