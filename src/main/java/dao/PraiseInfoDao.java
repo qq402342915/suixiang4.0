@@ -10,7 +10,7 @@ public interface PraiseInfoDao {
     //取消点赞
     int deletePraise(int praId);
     //查看点赞信息
-    List<Praise> getPraiseById(int praId);
+    List<Praise> getPraiseById(int blogId);
     //查看点赞数
     int getPraiseCount(int blogId);
 }
