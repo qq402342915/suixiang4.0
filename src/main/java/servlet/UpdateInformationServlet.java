@@ -24,12 +24,18 @@ public class UpdateInformationServlet extends HttpServlet {
         String school = request.getParameter("school");
         String sign = request.getParameter("sign");
 
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Date birthday = formatter.parse(request.getParameter("birthday"));;
 
-
+        String birthday =request.getParameter("birthday");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+//        Date birth=new Date();
+//        try {
+//             birth=sdf.parse(birthday);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(birth);
         String address = request.getParameter("address");
-        String telNum = "1355555555";
+        String telNum = "13777777777";
         User user = new User();
 
         user.setUserName(userName);
@@ -39,7 +45,7 @@ public class UpdateInformationServlet extends HttpServlet {
         user.setSchool(school);
         user.setSign(sign);
 
-//        user.setBirthday(birthday);
+        // user.setBirthday(birthday);
         user.setAddress(address);
         userInfoDao.updateUser(user,telNum);
 
