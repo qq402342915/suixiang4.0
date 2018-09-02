@@ -45,4 +45,33 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     public List<Blog> getTransCount(int blogId) {
         return executeQuery("select tsNum from t_blog where blogId = ?",new Object[]{blogId});
     }
+
+    @Override
+    public List<Blog> searchDayBlog() {
+        return executeQuery("select * from t_blog where sendDate >= DATE(now()) ORDER BY sendDate");
+    }
+    @Override
+    public int getCountBlog(){
+        return getRecordCount("select count(*) from t_blog");
+    }
+
+    @Override
+    public int getCountBlog(int userId) {
+        int count1 = getRecordCount("select count(*) from t_blog where userId = ?",new Object[]{userId});
+        int count2 = getRecordCount("select count(*) from t_transpond where userId = ?",new Object[]{userId});
+        return count1 + count2;
+    }
+
+    @Override
+    public List<Blog> getAllBlog(int pageNo,int pageSize){
+        return executeQuery("select * from t_blog limit ?,?",new Object[]{(pageNo-1)*pageSize,pageSize});
+    }
+    @Override
+    public List<Blog> getBlogByUserId(int userId,int pageNo,int pageSize){
+        return executeQuery("select * from t_blog where userId = ? limit ? , ?",new Object[]{userId,(pageNo-1)*pageSize,pageSize});
+    }
+    @Override
+    public int getCountBlog(String column,Object condition){
+        return getRecordCount("select count(*) from t_blog where "+column+"= ?",new Object[]{condition});
+    }
 }

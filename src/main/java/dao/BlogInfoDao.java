@@ -21,4 +21,18 @@ public interface BlogInfoDao {
     List<Blog> getBlogByKey(int UserId,String key);
     //查看转发数
     List<Blog> getTransCount(int blogId);
+    //显示热门微博，查看当天的微博，并以发表时间顺序排序
+    List<Blog> searchDayBlog();
+    //查询微博总记录数
+    int getCountBlog();
+    //查询自己微博总记录数
+    int getCountBlog(int userId);
+    //分页查询微博
+    List<Blog> getAllBlog(int pageNo,int pageSize);
+    //根据用户id分页查询微博
+    List<Blog> getBlogByUserId(int userId,int pageNo,int pageSize);
+    //重载记录总数查询指定条件微博的记录数
+    int getCountBlog(String column,Object condition);
+
+
 }

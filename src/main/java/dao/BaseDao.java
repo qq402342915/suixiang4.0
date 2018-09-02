@@ -1,6 +1,7 @@
 package dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import entity.Blog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

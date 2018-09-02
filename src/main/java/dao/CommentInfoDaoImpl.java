@@ -19,6 +19,6 @@ public class CommentInfoDaoImpl extends BaseDao<Comment> implements CommentInfoD
 
     @Override
     public List<Comment> getAllComment(int blogId) {
-        return executeQuery("select * from t_comment");
+        return executeQuery("select * from t_comment",new Object[]{blogId});
     }
 }

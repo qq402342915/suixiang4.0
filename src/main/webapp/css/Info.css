@@ -31,7 +31,7 @@ body{
 .c_top{
     width: 920px;
     height: 340px;
-    margin: 0 auto;
+    margin: 80px auto 10px auto;
     background-image: url("../images/top_bg.jpg");
 }
 .c_top_one{
@@ -88,7 +88,7 @@ body{
 }
 .guanzhu{
     margin-left: 380px;
-    display: inline-block;
+    display: none;
     height:34px;
     line-height:35px;
     width: 100px;
@@ -101,7 +101,7 @@ body{
     height: 34px;
     float: left;
     background-color: #646973;
-    display: inline-block;
+    display: none;
     line-height: 35px;
 }
 .jubao_div{
@@ -143,7 +143,7 @@ body{
     font-weight: bold;
 }
 .c_contents{
-    margin: 10px auto;
+    margin: 0 auto;
     width: 920px;
 }
 .c_content_left_div{
@@ -344,4 +344,65 @@ body{
     height: 22px;
     line-height: 22px;
     display: inline-block;
+}
+
+
+/*头部*/
+.c_main{
+    overflow: hidden;
+}
+.s_header{
+    position: fixed;
+    width: 100%;
+    height: 68px;
+    border-top: 2px solid #87c4db;
+    background: #fff;
+    z-index:100;
+}
+.s_header img{
+    margin-left: 150px;
+    width: 70px;
+    height: 68px;
+    float: left;
+}
+.s_header_name{
+    display: block;
+    float: left;
+    width: 70px;
+    height: 68px;
+    margin-left: 20px;
+    font-size: 34px;
+    font-weight: 600;
+    color: #87C4DB;
+    line-height: 68px;
+}
+.s_header_search{
+    width: 470px;
+    height: 22px;
+    padding: 6px 12px;
+    margin-top: 15px;
+    margin-left: 50px;
+    border-right: none;
+    border-left: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    float: left;
+}
+.s_header_searchp{
+    display: block;
+    width: 34px;
+    height: 34px;
+    margin-top: 15px;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    float: left;
+}
+.s_header_right{
+    float: left;
+    width: 250px;
+    height: 68px;
+    margin-left: 20px;
+    line-height: 68px;
 }

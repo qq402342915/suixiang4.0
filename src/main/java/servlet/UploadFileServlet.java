@@ -24,10 +24,8 @@ public class UploadFileServlet extends HttpServlet {
     /**
      * 上传数据及保存文件
      */
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<String> fileSrcList = UploadFile.upload(request);
-        //ReadVideo.readVideoTime(request.getServletContext().getRealPath("/")+fileSrcList.get(0));//获得影片时长
         JSONObject obj = new JSONObject();
         obj.put("errno",0);
         obj.put("data", JSONArray.fromObject(fileSrcList));

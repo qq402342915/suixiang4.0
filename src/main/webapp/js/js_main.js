@@ -1,20 +1,36 @@
-layui.use(['flow','upload'], function() {
-    var flow = layui.flow,upload = layui.upload;
+layui.use(['flow','upload',"layer","element"], function() {
+    var flow = layui.flow,
+        upload = layui.upload,
+        layer = layui.layer,
+        element = layui.element;
 
     flow.load({
         elem: '#LAY_demo1' //流加载容器
         , done: function (page, next) { //执行下一页的回调
             //模拟数据插入
-            setTimeout(function () {
-                var lis = [];
-                for (var i = 0; i < 8; i++) {
-                    lis.push('<li> <div class="s_body_content_personinfo"> <img src="../images/logo.png" alt=""> <div class="s_body_content_personinfo_nt"> <a href="">你不爱吃西红柿</a> <span>2018-08-28 9:30</span> </div> </div> <div class="s_body_content_text"> 6666 <br> 666666 <br> 6666 <br> 666666 <br>  6666 <br> 666666 <br> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> </div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>1</span></div> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>3</span></div> <div><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>2</span></div> </div> </li>')
-                }
-
-                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-                next(lis.join(''), page < 10); //假设总页数为 10
-            }, 500);
+            // setTimeout(function () {
+            //     var lis = [];
+            //     for (var i = 0; i < 8; i++) {
+            //         lis.push('<li> <div class="s_body_content_personinfo"> <img src="../images/logo.png" alt=""> <div class="s_body_content_personinfo_nt"> <a href="">你不爱吃西红柿</a> <span>2018-08-28 9:30</span> </div> </div> <div class="s_body_content_text"> 6666 <br> 666666 <br> 6666 <br> 666666 <br>  6666 <br> 666666 <br> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> </div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>1</span></div> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>3</span></div> <div><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>2</span></div> </div> </li>')
+            //     }
+            //
+            //     //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+            //     //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+            //     next(lis.join(''), page < 10); //假设总页数为 10
+            // }, 500);
+            // $.ajax({
+            //     url:"/ShowHotBlog",
+            //     type:"post",
+            //     dataType:"text",
+            //     success:function (blog) {
+            //         // alert(blog)
+            //             // var lis = [];
+            //             // for (var i = 0; i < 1; i++) {
+            //             //     lis.push('<li> <div class="s_body_content_personinfo"> <img src="../images/logo.png" alt=""> <div class="s_body_content_personinfo_nt"> <a href="">你不爱吃西红柿</a> <span>2018-08-28 9:30</span> </div> </div> <div class="s_body_content_text">'+ result[0].context +'<img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> </div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>1</span></div> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>3</span></div> <div><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>2</span></div> </div> </li>')
+            //             // }
+            //             // next(lis.join(''), page < 5);
+            //     }
+            // })
         }
     });
 
@@ -154,12 +170,161 @@ layui.use(['flow','upload'], function() {
 
 })
 
-
-
-
-
 $(function () {
+    //登录成功后，显示用户信息，关注微博等
+    function showUser() {
+        $("#personInfo").prop("href","personinfo.html");
+        $.ajax({
+            url:"/ShowMy",
+            type:"post",
+            data:{"w_tel":$("#w_telId").val()},
+            dataType:"json",
+            success:function (user) {
+                $("#s_headphoto_photo").prop("src",user[0].headP);
+                $("#s_userName").html(user[0].userName);
+            }
+        })
+        $(".s_headphoto_nologin").hide();
+        $(".s_headphoto_login").show();
+        $("#s_header_right").show();
+    }
     // $("#LAY_demo1").hide();
+    $.ajax({
+        url:"/ShowMy",
+        dataType:"json",
+        success:function (result) {
+            // alert(result[0]);
+            if(result[0].userName != null){
+                showUser();
+            }
+        }
+    })
+    $("#s_login").click(function () {
+
+        layer.open({
+            type: 1 //Page层类型
+            , area: ['400px', '390px']
+            , title: '随享，随你所享'
+            , shade: 0.6 //遮罩透明度
+            , maxmin: true //允许全屏最小化
+            , anim: 1 //0-6的动画形式，-1不开启
+            , content: '<div class="w_login">\n' +
+                '    <div class="w_loginHead">\n' +
+                '        <span>用户登录</span>\n' +
+                '        <span>Login User</span>\n' +
+                '    </div>\n' +
+                '    <div class="w_line w_lineLeft"></div>\n' +
+                '    <div class="w_loginText">\n' +
+                '        随时随地分享你的生活\n' +
+                '    </div>\n' +
+                '    <div class="w_line w_lineRight"></div>\n' +
+                '    <div class="w_loginUser">\n' +
+                '        <span class="layui-icon layui-icon-username"></span>\n' +
+                '        <input name="w_tel" id="w_telId" type="text" placeholder="手机号">\n' +
+                '    </div>\n' +
+                '    <div class="w_loginPass">\n' +
+                '        <span class="layui-icon layui-icon-password"></span>\n' +
+                '        <input name="w_pass" id="w_passId" type="password" placeholder="密码">\n' +
+                '    </div>\n' +
+                '    <div class="w_remMe">\n' +
+                '        <input id="w_rememberMe" type="checkbox"><span>记住我</span>\n' +
+                '    </div>\n' +
+                '    <div class="w_loginBottom">\n' +
+                '        <div class="w_validationCode">\n' +
+                '            <input type="text" id="w_codeId" name="w_code" placeholder="请输入验证码">\n' +
+                '        </div>\n' +
+                '        <div class="w_validationImg">\n' +
+                '            <div><img id="w_changeImg" src="/CheckCodeServlet" alt=""></div>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '    <div class="w_wrong" id="w_wrongInfo">\n' +
+                '        <span>您输入的用户名或密码不正确</span>\n' +
+                '    </div>\n' +
+                '    <div class="w_loginBtn">\n' +
+                '        <input type="button" id="w_login_btn" class="layui-btn layui-btn-radius layui-btn-normal" value="登录">\n' +
+                '    </div>\n' +
+                '\n' +
+                '</div>'
+        });
+
+        //图片验证码点击刷新
+        $("#w_changeImg").click(function () {
+            $(this).attr("src","/CheckCodeServlet?time=" + new Date().getTime())
+        });
+
+        //登录时自动添加用户名和密码
+        $(document).ready(function () {
+
+            var username= $.cookie('cookieUserName');
+            var password= $.cookie('cookiePass');
+            $("#w_telId").val(username);
+            $("#w_passId").val(password);
+            if(($("#w_telId").val()==""||$.trim($("#w_telId").val()).length==0)&&($("#w_passId").val()==""||$.trim($("#w_passId").val()).length==0)){
+
+                $("#w_rememberMe").attr("checked",false);
+            }else{
+                $("#w_rememberMe").attr("checked",true);
+            }
+
+
+        });
+
+
+        //点击登录按钮验证
+        $("#w_login_btn").click(function () {
+            //如果用户名为空
+            if($("#w_telId").val()==""||$.trim($("#w_telId").val()).length==0){
+                $("#w_wrongInfo span").text("您还没有输入用户名");
+                $("#w_wrongInfo span").css("display","inline-block");
+            }
+            //如果密码为空
+            else if($("#w_passId").val()==""||$.trim($("#w_passId").val()).length==0){
+                $("#w_wrongInfo span").text("您还没有输入密码");
+                $("#w_wrongInfo span").css("display","inline-block");
+            }
+            //用户名和密码都不为空
+            else{
+                $.ajax({
+                    url:"/UserLoginServlet",
+                    type:"post",
+                    data:{"w_tel":$("#w_telId").val(),"w_pass":$("#w_passId").val(),
+                        "rememberMe":$("#w_rememberMe").is(":checked"),"w_code":$("#w_codeId").val()},
+                    dataType:"text",
+                    success:function (res) {
+                        if(res=="true"){
+                            if($("#w_rememberMe").is(":checked")){
+                                $.cookie('cookieUserName',$("#w_telId").val(), { expires: 7, path: '/' });
+                                $.cookie('cookiePass',$("#w_passId").val(), { expires: 7, path: '/' });
+                            }else{
+                                //删除cookie
+                                $.removeCookie('cookieUserName',{ path: '/' });
+                                $.removeCookie('cookiePass',{path: '/' });
+                            }
+                            //登录成功
+                            $("#w_wrongInfo span").css("display","none");
+                            layer.closeAll();
+                            layer.msg("登录成功");
+                            showUser();
+                        }else if(res=="false"){
+                            $("#w_wrongInfo span").text("您输入的用户名或密码不正确");
+                            $("#w_wrongInfo span").css("display","inline-block");
+                        }else if(res=="codeFalse"){
+                            $("#w_wrongInfo span").text("验证码错误");
+                            $("#w_wrongInfo span").css("display","inline-block");
+                        }else {
+                            layer.msg("您因被举报锁定三个小时");
+                        }
+                    }
+
+                });
+            }
+
+
+        });
+
+    });
+
+
         $("#s_publish_test").emoji({
             button:"#s_emoji",
             showTab: true,
@@ -169,13 +334,3 @@ $(function () {
         });
     });
 
-
-
-layui.use(['element','layer'], function() {
-    var layer = layui.layer //表格
-        ,element = layui.element //元素操作
-
-    // element.on('tab(content)', function(data){
-    //
-    // });
-})

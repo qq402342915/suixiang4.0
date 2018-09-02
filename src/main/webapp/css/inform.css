@@ -1,9 +1,10 @@
 #y_table{
-    width: 980px;height: 1000px;
+    width: 822px;height: 1000px;
     margin: auto;
-    background: white;
+    position: relative;top: 130px;
+
 }
-.y_input{ width: 85%;}
+.y_input{ width: 85%!important;}
 .y_list{
     width: 980px;height: 60px;
     background-color: red;
@@ -11,18 +12,28 @@
     float: left;
 }
 .y_back1{
-    width: 822px;height: 60px;margin: auto;
+     width: 822px!important;
+     height: 60px;margin: auto;
+    /*border: #87c4db solid 1px;*/
+
+ }
+.y_back1-2{
+    width: 792px;
+    height: 60px;margin: auto;
 
 }
 .y_person_image{
+
 font-size: larger;text-align: center;line-height: 60px;
     color: white;background-color:#87c4db ;
+
 
 }
 
 .y_head_img{
     font-size: larger;text-align: center;line-height: 60px;
     color: white;background-color:cornflowerblue ;
+
 }
 
 #y_back2{
@@ -34,7 +45,7 @@ font-size: larger;text-align: center;line-height: 60px;
     height: 700px;
     margin: auto;
     border:#87c4db solid 1px ;
-
+    background-color: white;
 
 
 }
@@ -58,7 +69,7 @@ font-size: larger;text-align: center;line-height: 60px;
     height: 700px;
     margin: auto;
 border:#87c4db solid 1px ;
-
+    background-color: white;
     display: none;
 
 }

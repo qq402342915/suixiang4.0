@@ -1,28 +1,26 @@
 package servlet;
 
-import dao.UserInfoDao;
-import dao.UserInfoDaoImpl;
-import net.sf.json.JSONArray;
+import dao.BlogInfoDao;
+import dao.BlogInfoDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebServlet("/ShowMy")
-public class ShowMyServlet extends HttpServlet {
+@WebServlet(name = "EndDeleteOneBlogServlet",urlPatterns = "/EndDeleteOneBlogServlet")
+//删除某一行微博记录
+public class EndDeleteOneBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        JSONArray user = JSONArray.fromObject(session.getAttribute("user"));
-        PrintWriter out = response.getWriter();
-        out.print(user);
-        out.flush();
-        out.close();
-//        System.out.println(user.toString());
+        String blogIdStr=request.getParameter("id");
+        int blogId=Integer.parseInt(blogIdStr);
+
+        BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
+        int res= blogInfoDao.deleteBlog(blogId);
+        response.getWriter().write(String.valueOf(res));
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
