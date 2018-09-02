@@ -13,8 +13,11 @@
                 type:"post",
                 dataType:"json",
                 data:{"userName":name},
-                success:function () {
-
+                success:function (transpondList) {
+                    $.each(transpondList,function (index,obj) {
+                        var $node=$('<div class="l_fcous"><span>'+obj['userName']+'</span>转发了你的微博</div>');
+                        $("#l_inner2").append($node);
+                    });
                 }
             })
         })
