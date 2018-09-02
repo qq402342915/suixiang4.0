@@ -40,6 +40,14 @@
 }
 #l_inner2{
     height: 448px;
-    line-height: 448px;
+    line-height:30px;
+    /*text-align: center;*/
+}
+#l_inner2 p{
     text-align: center;
+    font-size: 15px;
+}
+.l_fcous{
+    height: 30px;
+    margin-left: 20px;
 }

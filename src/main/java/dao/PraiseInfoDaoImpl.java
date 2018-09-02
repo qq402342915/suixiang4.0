@@ -16,8 +16,8 @@ public class PraiseInfoDaoImpl extends BaseDao<Praise> implements PraiseInfoDao{
     }
 
     @Override
-    public List<Praise> getPraiseById(int praId) {
-        return executeQuery("select * from t_praise where praId = ?",new Object[]{praId});
+    public List<Praise> getPraiseById(int blogId) {
+        return executeQuery("select * from t_praise where blogId = ?",new Object[]{blogId});
     }
     //查看点赞数
     @Override

@@ -32,7 +32,7 @@ public class UpdateInformationServlet extends HttpServlet {
         String telNum = "1355555555";
         User user = new User();
 
-        user.setUserName(userName);
+        user.setUserName("111");
         user.setTelNum(telNumber);
         user.setEmail(email);
         user.setSex(sex);

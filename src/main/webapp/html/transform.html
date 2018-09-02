@@ -5,6 +5,20 @@
     <title>transform</title>
     <link href="../css/base.css" rel="stylesheet">
     <link href="../css/transform.css" rel="stylesheet">
+    <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url:"/TransformServlet",
+                type:"post",
+                dataType:"json",
+                data:{"userName":name},
+                success:function () {
+
+                }
+            })
+        })
+    </script>
 </head>
 <body class="l_border">
 <div id="l_out">
@@ -18,7 +32,9 @@
                 <li class="web"><a href="http://localhost:63342/suixiang4.0/src/main/webapp/html/inform.html?_ijt=hbpgimq16cdom02h9806ki3g4o">系统通知</a></li>
             </ul>
         </div>
-        <p id="l_inner2">这里空荡荡O(∩_∩)O</p>
+        <div id="l_inner2">
+            <p>小主儿，信息全部在这里啦！O(∩_∩)O</p>
+        </div>
     </div>
 </div>
 </body>
