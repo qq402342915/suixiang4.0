@@ -130,7 +130,7 @@ $(function () {
             $('input[name="school"]').val(res[0].school);
             $('input[name="regDate"]').val(res[0].regDate);
             $('input[name="sign"]').val(res[0].sign);
-            $('input[name="birthday"]').val(res[0].birthday).substring(0,10);
+            $('input[name="birthday"]').val((res[0].birthday).substr(0,10));
             $('input[name="address"]').val(res[0].address);
 
 
