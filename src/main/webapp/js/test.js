@@ -95,7 +95,7 @@ $(function () {
             '                        <th>用户昵称</th>\n' +
             '                        <th>头像</th>\n' +
             '                        <th>手机号</th>\n' +
-            '                        <th>密码</th>\n' +
+            '                        <th>邮箱</th>\n' +
             '                        <th>性别</th>\n' +
             '\n' +
             '                        <th>注册时间</th>\n' +
@@ -392,14 +392,36 @@ $(function () {
         //2.2查看详细信息
         $("body").on("click", ".w_blog_see", function () {
             var blogId=$(this).closest('tr').children().eq(0).text();
-            alert(blogId);
+            // alert(blogId);
             //发送ajax请求评论表
-            limit(0,0,"/EndShowCommentServlet",blogId);
+            $.ajax({
+                url: "/EndShowCommentServlet",
+                type: "post",
+                data: {"blogId":blogId},
+                dataType: "json",
+                success: function (res) {
+                    getCommentJson(res);
 
+                }
+            });
+            //得到评论json格式
+            function getCommentJson(res){
+                $.each(res,function (index,obj) {
+                    var $comTr = $('    <tr>\n' +
+                        '        <td>' + obj['userId'] + '</td>\n' +
+                        '        <td>' + obj['comContent'] + '</td>\n' +
+                        '    </tr>');
+                    $("#comId").append($comTr);
+
+                });
+
+            }
+
+            //弹出查看详情页
             layer.open({
                 type: 1 //Page层类型
                 , area: ['500px', '300px']
-                , title: '你好，layer。'
+                , title: '查看评论'
                 , shade: 0.6 //遮罩透明度
                 , maxmin: true //允许全屏最小化
                 , anim: 1 //0-6的动画形式，-1不开启
@@ -410,36 +432,11 @@ $(function () {
                 '        </colgroup>\n' +
                 '        <thead>\n' +
                 '        <tr>\n' +
-                '            <td>用户昵称</td>\n' +
+                '            <td>用户ID</td>\n' +
                 '            <td>评论内容</td>\n' +
                 '        </tr>\n' +
-                '        <tbody>\n' +
-                '        <tr>\n' +
-                '            <td>hahaha</td>\n' +
-                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
-                '        </tr>\n' +
-                '        <tr>\n' +
-                '            <td>hahaha</td>\n' +
-                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
-                '        </tr>\n' +
-                '        <tr>\n' +
-                '            <td>hahaha</td>\n' +
-                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
-                '        </tr>\n' +
-                '        <tr>\n' +
-                '            <td>hahaha</td>\n' +
-                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
-                '        </tr>\n' +
-                '        <tr>\n' +
-                '            <td>hahaha</td>\n' +
-                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
-                '        </tr>\n' +
-                '        <tr>\n' +
-                '            <td>hahaha</td>\n' +
-                '            <td>我是哈哈哈哈哈哈哈哈哈哈</td>\n' +
-                '        </tr>\n' +
+                '        <tbody id="comId">\n' +
                 '        </tbody>\n' +
-                '\n' +
                 '        </thead>\n' +
                 '    </table>\n'+
                 '</div>'
