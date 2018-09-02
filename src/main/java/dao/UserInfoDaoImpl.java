@@ -11,7 +11,7 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     }
     @Override
     public List<User> getUser(int userId) {
-        return executeQuery("select * from t_user where telNum = ?",new Object[]{userId});
+        return executeQuery("select * from t_user where userId = ?",new Object[]{userId});
     }
     @Override
     public List<User> getUser(String telNum) {
@@ -49,6 +49,17 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
             return true;
         else
             return false;
+    }
+    @Override
+    public List<User> getAllUser(int pageNo,int pageSize){
+        return executeQuery("select * from t_user limit ?,?",new Object[]{(pageNo-1)*pageSize,pageSize});
+    }
+    public int getCountUser(){
+        return getRecordCount("select count(*) from t_user");
+    }
+    @Override
+    public int delOneUser(int userId){
+        return executeUpdate("delete from t_user where userId = ?",new Object[]{userId});
     }
 
 }

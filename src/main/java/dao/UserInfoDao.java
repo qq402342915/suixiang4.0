@@ -24,4 +24,10 @@ public interface UserInfoDao {
 //    //获取string类型时间
 //    String getStringReg(Date regDate);
 //    String getStringBir(Date birthday);
+    //分页查询所有用户
+    List<User> getAllUser(int pageNo,int pageSize);
+    //查询用户总记录数
+    int getCountUser();
+    //根据用户id删除单个用户
+    int delOneUser(int userId);
 }
