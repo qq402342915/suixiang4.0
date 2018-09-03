@@ -1,0 +1,44 @@
+#su_our{
+    width: 1350px;
+    height: 800px;
+    background-image: url("../images/top_bg.jpg");
+    background-size: cover;
+}
+#su_top{
+    background-color: white;
+    width: 1350px;
+    height: 60px;
+    float: left;
+    position:fixed;
+    top: 0;
+    left: 0;
+}
+#su_top_left{
+    width: 800px;
+    height: 70px;
+    float: left;
+    position: relative;
+    margin-top: -10px;
+}
+
+#su_top_right{
+    width: 550px;
+    height: 70px;
+    float: left;
+    position: relative;
+    margin-top: 5px;
+}
+#su_top_right font{
+    font-family: 楷体;
+    color: #87c4db;;
+}
+#su_top_left img{
+    margin-left: -129px;
+    margin-top: 14px;
+}
+#su_top_left font{
+    margin-left: 190px;
+    float: left;
+    color: #87c4db;;
+    margin-top: 18px;
+}

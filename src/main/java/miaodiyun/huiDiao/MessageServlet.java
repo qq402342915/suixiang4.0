@@ -1,8 +1,6 @@
-package servlet;
+package miaodiyun.huiDiao;
 
-import dao.*;
-import entity.BlogContext;
-import net.sf.json.JSONArray;
+import miaodiyun.httpApiDemo.IndustrySMS;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,18 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
-@WebServlet("/ShowHotBlog")
-public class ShowHotBlogServlet extends HttpServlet {
+@WebServlet("/MessageServlet")
+public class MessageServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserBlogDao userBlogDao = new UserBlogDaoImpl();
-        List<BlogContext> userblogList= userBlogDao.searchDayBlog();
-        JSONArray userblog = JSONArray.fromObject(userblogList);
-        PrintWriter out = response.getWriter();
-        out.print(userblog);
-        out.flush();
-        out.close();
+        String str = request.getParameter("telNum");
+        IndustrySMS.execute(str);
+
+
+
+
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

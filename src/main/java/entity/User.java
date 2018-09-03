@@ -34,6 +34,17 @@ public class User {
         this.bgId = bgId;
         this.lockDate = lockDate;
     }
+    public User(int userId, String userName, String headP) {
+        this.userId = userId;
+        this.userName = userName;
+        this.headP = headP;
+    }
+
+    public User( String userName, String telNum, String password) {
+        this.userName = userName;
+        this.telNum = telNum;
+        this.password = password;
+    }
 
     public int getUserId() {
         return userId;

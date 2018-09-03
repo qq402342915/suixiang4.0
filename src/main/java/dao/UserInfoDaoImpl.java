@@ -10,6 +10,12 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     public List<User> getAllUser() {
         return executeQuery("select * from t_user");
     }
+
+    /*@Override
+    public List<User> getAllFans(int userId) {
+        return executeQuery("select headP,userName,userId from t_user where userId in(select fansId from t_fansuser where userId = ?)",new Object[]{userId});
+    }*/
+
     @Override
     public List<User> getUser(int userId) {
         return executeQuery("select * from t_user where userId = ?",new Object[]{userId});
