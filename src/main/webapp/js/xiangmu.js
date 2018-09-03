@@ -36,17 +36,17 @@ $(function () {
 
     $(".layui-form").validate({
         rules: {
-            nickName: {
-                required: true,
-                maxlength: 10,
-                regex: "^[\u4e00-\u9fa5a-zA-Z0-9]+$"
-            },
-            telNumber: {
-                required: true,
-                minlength: 11,
-                maxlength: 11,
-                regex: "^1[3|4|5|7|8][0-9][0-9]{8}$",
-            },
+            //     nickName: {
+            //         required: true,
+            //         maxlength: 10,
+            //         regex: "^[\u4e00-\u9fa5a-zA-Z0-9]+$"
+            //     },
+            //     telNumber: {
+            //         required: true,
+            //         minlength: 11,
+            //         maxlength: 11,
+            //         regex: "^1[3|4|5|7|8][0-9][0-9]{8}$",
+            //     },
             //     email: {
             //         required:true ,
             //         regex: "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"
@@ -116,7 +116,7 @@ $(function () {
     // notRequire()
 
 
-    $('input[name="email"]')
+    // $('input[name="email"]')
     // //String->Date
     // function getDate(strDate) {
     //     //strDate为需要转换成日期格式的字符串
@@ -209,19 +209,23 @@ $(function () {
         }
         return url;
     }
+    //
+    // $('#y_hold').click(function () {
+    //     $("#y_information").ajaxSubmit().submit();
+    //
+    //     if ($("#y_information").ajaxSubmit().submit()==true) {
+    //         layer.alert('更新成功', {
+    //             skin: 'layui-layer-lan'
+    //             , closeBtn: 0
+    //         });
+    //     }
+    //     else {
+    //         layer.alert('更新失败', {
+    //             skin: 'layui-layer-lan'
+    //             , closeBtn: 0
+    //         });
+    //     }
+    // })
 
-    function saveReport() {
-// jquery 表单提交
-        $("#y_btn").ajaxSubmit(function (message) {
-// 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
-            layer.alert('更新成功', {
-                skin: 'layui-layer-lan'
-                , closeBtn: 0
-            });
-
-        });
-        return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
-    }
-  
 
 })

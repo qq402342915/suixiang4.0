@@ -67,19 +67,20 @@
     </div>
             <!--信息表-->
     <div id="inform" class="y_inform">
-        <form class="layui-form" action="/UpdateInformation" method="post" onsubmit="return saveReport();">
+        <form id="y_information" class="layui-form" action="/UpdateInformation" method="post" >
 
             <div class="layui-form-item y_pad">
                 <label class="layui-form-label">昵称</label>
                 <div class="layui-input-block">
-                    <input type="text" name="userName" required lay-verify="required"
+                    <input type="text" name="userName"
                            autocomplete="off" class="layui-input y_input">
                 </div>
             </div>
+            <!--required lay-verify="required"-->
             <div class="layui-form-item">
                 <label class="layui-form-label">手机号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="telNumber" required lay-verify="required"
+                    <input type="text" name="telNumber"
                            autocomplete="off" class="layui-input y_input">
                 </div>
             </div>
@@ -144,8 +145,7 @@
 
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <input type="submit">ggggggg
-                    <!--<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>-->
+                    <button id="y_hold" class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -180,12 +180,14 @@
 
 <script src="../layer/layer.js"type="application/javascript"></script>
 <script src="../layui/layui.js" type="application/javascript"></script>
+
 <script src="../js/jquery.validate.js" type="application/javascript"></script>
 <script src="../js/jquery.validate.regex.js" type="application/javascript"></script>
+
 <script src="../js/jquery.ui.widget.js"></script>
 <script src="../js/jquery.iframe-transport.js"></script>
 <script src="../js/jquery.fileupload.js"></script>
-
+<script src="../js/jquery-form.js" type="application/javascript"></script>
 <script src="../js/xiangmu.js" type="application/javascript"></script>
 </body>
 
