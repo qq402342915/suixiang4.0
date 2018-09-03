@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserInfoDao {
     //获取用户列表
     List<User> getAllUser();
+    /*//获取用户粉丝列表
+    List<User> getAllFans(int userId);*/
     //根据主键查看用户信息
     List<User> getUser(int userId);
     //根据手机查看用户信息

@@ -12,8 +12,18 @@ public class FansInfoDaoImpl extends BaseDao<Fansuser> implements FansInfoDao{
     }
 
     @Override
-    public List<Fansuser> getAllFans(int userId) {
-        return executeQuery("select fansId from t_fansuser where userId=?",new Object[]{userId});
+    public List<Fansuser> getAllFansId(int userId) {
+        return executeQuery("select * from t_fansuser where userId=?",new Object[]{userId});
+    }
+
+    @Override
+    public int getFollowCount(int userId) {
+        return getRecordCount("select count(userId) from t_fansuser where fansId=?",new Object[]{userId});
+    }
+
+    @Override
+    public List<Fansuser> getAllFollowId(int userId) {
+        return executeQuery("select * from t_fansuser where fansId=?",new Object[]{userId});
     }
 
     @Override
