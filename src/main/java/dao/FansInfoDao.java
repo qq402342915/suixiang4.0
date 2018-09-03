@@ -15,6 +15,8 @@ public interface FansInfoDao {
     int getFollowCount(int userId);
     //查关注列表Id
     List<Fansuser> getAllFollowId(int userId);
+    //判断是否关注
+    boolean getIfFollow(int userId,int fansId);
     //添加关注
     int addFollow(Fansuser fansuser);
     //取消关注

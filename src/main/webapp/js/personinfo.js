@@ -25,6 +25,7 @@ $(function () {
             $(".c_content_name a").html("src",user.userName);*/
         }
     });
+    //显示我的微博数量
     $.ajax({
         url:"/ShowBlogInfo?method=showMyBlogCount",
         type:"post",
@@ -33,6 +34,7 @@ $(function () {
             $(".c_content_right1 strong").text(result);
         }
     });
+    //显示我的微博信息
     $.ajax({
         url:"/ShowBlogInfo?method=showMyBlogInfo",
         type:"post",
@@ -73,7 +75,7 @@ $(function () {
         type:"post",
         dataType:"json",
         success:function (result) {
-            $("#c_str2").text(result);
+             $("#c_str2").text(result);
         }
     });
     //显示关注数量
@@ -86,29 +88,43 @@ $(function () {
         }
     });
     //显示粉丝列表
-    /*$.ajax({
-        url:"/ShowFans?method=showMyFansInfo",
-        type:"post",
-        dataType:"json",
-        success:function (myfansList) {
-            for (var i = 0; i < myfansList.length; i ++){
-                var $node = $(' <a class="c_list_a"><img src="'+myfansList[i].headP+'"><span class="c_list_name">'+myfansList[i].userName+'</span><span class="c_list_span"><strong>+</strong> 关注</span></a>')
-                $(".c_list").append($node);
+        $.ajax({
+            url:"/ShowFans?method=showMyFansInfo",
+            type:"post",
+            dataType:"json",
+            success:function (myfansList) {
+                $(".c_list").children().remove();
+                for (var i = 0; i < myfansList.length; i ++){
+                    var userId = myfansList[i].userId;
+                    var $node = $(' <a class="c_list_a"><img src="'+myfansList[i].headP+'" id="'+userId+'"><span class="c_list_name">'+myfansList[i].userName+'</span><span class="c_list_span" name="'+userId+'"><strong>+</strong> 关注</span></a>')
+                   $.ajax({
+                        url:"/ShowFans?method=showIfFollow",
+                        type:"post",
+                        async: false,
+                        data:{"fansId":userId},
+                        dataType:"text",
+                        success:function (result) {
+                            if (result == "true"){
+                                $($node).children("span").eq(1).html("✔已关注").css("background-color","rgb(232, 232, 232)");
+                            }
+                        }
+                    });
+                    $(".c_list").append($node);
+                }
             }
+        });
+
+
+/*    //显示是否关注
+    $.ajax({
+        url:"/ShowFans?method=showIfFollow",
+        type:"post",
+        data:{"fansId":$('.c_list_a img').prop("id")},
+        dataType:"json",
+        success:function (result) {
+
         }
     });*/
-    //显示关注列表
-    $.ajax({
-        url:"/ShowFans?method=showMyFollowInfo",
-        type:"post",
-        dataType:"json",
-        success:function (myfansList) {
-            for (var i = 0; i < myfansList.length; i ++){
-                var $node = $(' <a class="c_list_a"><img src="'+myfansList[i].headP+'"><span class="c_list_name">'+myfansList[i].userName+'</span><span class="c_list_span"><strong>+</strong> 关注</span></a>')
-                $(".c_list").append($node);
-            }
-        }
-    });
 
     /*$.ajax({
         url:"http://ip.taobao.com/service/getIpInfo.php?ip=43.247.4.54",
@@ -138,8 +154,38 @@ $(function () {
         $(".c_content_right_div").hide();
         $("#c_show_div" + index).show();
     });
-    //点击改变关注，粉丝背景
+    //点击改变关注，粉丝背景,切换列表
     $(".c_content_left a").click(function () {
+        if($(this).prop("name") == "follow" ) {
+            var method = "showMyFollowInfo";
+        }else {
+            method = "showMyFansInfo"
+        }
+        $.ajax({
+            url:"/ShowFans?method=" + method,
+            type:"post",
+            dataType:"json",
+            success:function (myfdList) {
+                $(".c_list").children().remove();
+                for (var i = 0; i < myfdList.length; i ++){
+                    var userId = myfdList[i].userId;
+                    var $node = $(' <a class="c_list_a"><img src="'+myfdList[i].headP+'" id="'+myfdList[i].userId+'"><span class="c_list_name">'+myfdList[i].userName+'</span><span class="c_list_span"><strong>+</strong> 关注</span></a>')
+                    $.ajax({
+                        url:"/ShowFans?method=showIfFollow",
+                        type:"post",
+                        async: false,
+                        data:{"fansId":userId},
+                        dataType:"text",
+                        success:function (result) {
+                            if (result == "true"){
+                                $($node).children("span").eq(1).html("✔已关注").css("background-color","rgb(232, 232, 232)");
+                            }
+                        }
+                    });
+                    $(".c_list").append($node);
+                }
+            }
+        });
         $(this).css("background-color","#e8e8e8");
         $(this).siblings().css("background-color","white");
     });

@@ -27,6 +27,14 @@ public class FansInfoDaoImpl extends BaseDao<Fansuser> implements FansInfoDao{
     }
 
     @Override
+    public boolean getIfFollow(int userId, int fansId) {
+        if (executeQuery("select * from t_fansuser where fansId = ? and userId = ?", new Object[]{userId,fansId}).isEmpty())
+            return false;
+        else
+            return true;
+    }
+
+    @Override
     public int addFollow(Fansuser fansuser) {
         return executeUpdate("insert into t_fansuser(userId,fansId,followDate) values(?,?,?)",new Object[]{fansuser.getUserId(),fansuser.getFansId(),fansuser.getFollowDate()});
     }
