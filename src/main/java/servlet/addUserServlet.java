@@ -20,45 +20,20 @@ public class addUserServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         //1.获得表单数据
         String userName=request.getParameter("userName");
-        String password=request.getParameter("password");
         String telNum=request.getParameter("telNum");
+//        String telNum="17788654321";
+        String password=request.getParameter("password");
         //2. 封装对象
-        User user=new User(userName,password,telNum);
+        User user=new User(userName,telNum,password);
         //3.dao
-        int ret =new UserInfoDaoImpl().insertUser(user);
+        UserInfoDao userInfoDao=new UserInfoDaoImpl();
+        int ret =userInfoDao.insertUser(user);
         //4.out
         PrintWriter out=response.getWriter();
         out.print(ret);
         out.flush();
         out.close();
 
-
-//        UserServiceImpl service=new UserServiceImpl();
-//        boolean isExist=service.addUserName(userName);
-//        String json="{\"isExist\":"+isExist+"}";
-//        response.getWriter().write(json);
-
-//        isExist=service.addUserName(userName);
-//        response.getWriter().write("{\"isExist\":"+isExist+"}");
-
-//        User userBean=new User();
-//        userBean.setUserName(userName);
-//        userBean.setTelNum(telNum);
-//        userBean.setPassword(password);
-////        //3.调dao操作
-//        UserInfoDaoImpl userInfoDao=new UserInfoDaoImpl();
-//        List<User> list=userInfoDao.getUserName(userBean);
-//        PrintWriter out=response.getWriter();
-//        if(list.size()>0){
-//            System.out.println(list.size());
-//            out.print(0);
-//        }else {
-//            int ret=userInfoDao.insertUser(userBean);
-//            System.out.println(ret);
-//            out.print(ret);
-//        }
-//        out.flush();
-//        out.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -40,7 +40,7 @@ public class bgServlet extends HttpServlet {
         user.setRegDate(userList.get(0).getRegDate());
         user.setEmail(userList.get(0).getEmail());
         user.setAddress(userList.get(0).getAddress());
-        userInfoDao.updateUser(user);
+//        userInfoDao.updateUser(user);
         //输出
         PrintWriter out=response.getWriter();
         out.print(String.valueOf(bId));

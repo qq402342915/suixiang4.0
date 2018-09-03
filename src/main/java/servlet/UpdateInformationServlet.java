@@ -29,7 +29,7 @@ public class UpdateInformationServlet extends HttpServlet {
 
 
         String address = request.getParameter("address");
-        String telNum = "1355555555";
+        String telNum = "18111111111";
         User user = new User();
 
         user.setUserName(userName);

@@ -38,7 +38,7 @@
     margin-top: 14px;
 }
 #su_top_left font{
-    margin-left: 280px;
+    margin-left: 190px;
     float: left;
     margin-top: 18px;
 }
@@ -46,7 +46,7 @@
     width: 900px;
     height: 50px;
     float: left;
-    margin-left: 175px;
+    margin-left: 190px;
     margin-top: 10px;
 }
 .space{
@@ -65,11 +65,13 @@
     width: 1000px;
     height: 430px;
     margin: 0 auto;
+    background-color: white;
 }
 #su_regi_left{
     width: 630px;
     height: 430px;
     float:left;
+    margin-left: 15px;
 }
 
 #su_userName{
@@ -107,6 +109,7 @@
     font-size: 12px;
     margin-left: 90px;
     margin-top: 10px;
+    background-color: white;
 }
 
 #su_ok{
@@ -126,6 +129,35 @@
     font-family: 新宋体;
     font-size: 20px;
     background-color:#87c4db;
+
+
+    display: inline-block;
+    padding: .3em .5em;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3em;
+    box-shadow: 0 1px white inset;
+    /*text-align: center;*/
+    text-shadow: 0 1px 1px black;
+    color:white;
+    font-weight: bold;
+}
+#su_submit1{
+    width: 100px;
+    height: 30px;
+    font-family: 新宋体;
+    font-size: 20px;
+
+    display: inline-block;
+    padding: .3em .5em;
+    border: 0px solid rgba(0,0,0,.2);
+    border-radius: .3em;
+    box-shadow: 0 1px white inset;
+    text-align: center;
+    line-height: 10px;
+
+    text-shadow: 0 1px 1px black;
+    color:white;
+    font-weight: bold;
 }
 #kuang1{
     width: 350px;
@@ -148,13 +180,13 @@
     width: 350px;
     height: 35px;
     margin-top: 15px;
-    margin-left: 34px;
+    margin-left: 33px;
 }
 #kuang4{
     width: 350px;
     height: 35px;
     margin-top: 15px;
-    margin-left: 16px;
+    margin-left: 15px;
 }
 #code{
     width: 180px;
@@ -164,21 +196,22 @@
 #btn{
     height: 35px;
     width: 150px;
-    position: relative;
+    position: absolute;
     margin-left: 13px;
 }
 #su_regi_right{
     width: 350px;
     height: 430px;
     float: right;
-    background-color: beige;
+    background-color: #87c4db;
+    margin-top: -10px;
 }
 #su_regi_right_top{
     width: 270px;
     height: 130px;
-    float: left;
-    margin-top: 30px;
-    margin-left: 50px;
+    /*float: left;*/
+    line-height: 130px;
+    text-align: center;
 }
 a{
     text-decoration: none;
@@ -190,22 +223,27 @@ a{
     float: left;
     margin-left: 55px;
 }
+#su_regi_right_bottom img{
+    margin-left: 40px;
+}
+
 input:focus.required:focus{
     border: 1px solid #87c4db;
     background-color: antiquewhite;
 }
-#isExist{
-    font-size: 10px;
-    color: red;
+/*#isExist,#isRegister{*/
+    /*font-size: 10px;*/
+    /*color: red;*/
+/*}*/
+#isExist1{
+    font-size: 10px;!important;
+    color: red;!important;
 }
 
 em.error{
     color: red;
     font-size: 12px;
-    font-family: 新宋体;
-    padding-left:16px ;
-}
-em.success{
-    padding-left: 16px;
+    font-family: 黑体;
+    font-style: normal;
 }
 

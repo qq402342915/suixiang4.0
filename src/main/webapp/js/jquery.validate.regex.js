@@ -84,12 +84,7 @@ $(function () {
         errorElement:"em",
         success:function (input) {
             input.text(" ").addClass("success");
+            $("#btn").attr("disabled",false);
         }
-
-        // errorElement: "em", //可以用其他标签，记住把样式也对应修改
-        // success: function(label) {
-        //     //label指向上面那个错误提示信息标签em
-        //     label.text(" ")        //清空错误提示消息
-        //         .addClass("success");  //加上自定义的success类
     });
 });
