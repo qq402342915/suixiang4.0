@@ -27,19 +27,19 @@ public class ShowFoucsServlet extends HttpServlet {
         String name=request.getParameter("userName");
         FansInfoDao fansInfoDao=new FansInfoDaoImpl();//实例化一个fansDao
         UserInfoDao userInfoDao=new UserInfoDaoImpl();//实例化一个UserDao
-        List<Fansuser> fansList=fansInfoDao.getAllFans(3);//得到用户id=3的粉丝
+       /* List<Fansuser> fansList=fansInfoDao.getAllFans(3);//得到用户id=3的粉丝
 
         List<User> userList= new ArrayList<User>();//定义一个空集合
         for(int i=0;i<fansList.size();i++){//用户粉丝列表
             int fansId= fansList.get(i).getFansId();//得到粉丝id
             userList.add((User) userInfoDao.getUser(fansId).get(0));//把fansList的每个用户的所有信息当做一项，
                                                         // 放在定义的userList集合中
-            }
+            }*/
         JsonConfig jsonConfig =new JsonConfig();
         JsonDate jd=new JsonDate();//转化日期格式
         jsonConfig.registerJsonValueProcessor(Date.class,jd);
         PrintWriter out=response.getWriter();
-        out.print(String.valueOf(JSONArray.fromObject(userList,jsonConfig)));
+        /*out.print(String.valueOf(JSONArray.fromObject(userList,jsonConfig)));*/
             out.flush();
             out.close();
 

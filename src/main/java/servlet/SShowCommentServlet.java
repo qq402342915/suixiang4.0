@@ -1,9 +1,9 @@
 package servlet;
 
-import dao.UserInfoDao;
-import dao.UserInfoDaoImpl;
-import entity.Background;
-import entity.User;
+import dao.CommentInfoDao;
+import dao.CommentInfoDaoImpl;
+import entity.Comment;
+import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,18 +14,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/BackServlet")
-public class userBgServlet extends HttpServlet {
+@WebServlet("/SShowComment")
+public class SShowCommentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path=request.getParameter("");//获取表单数据
-        Background background=new Background();
-        UserInfoDao userInfoDao=new UserInfoDaoImpl();//实例化
-        User user=new User();
-//        int  updateUser=userInfoDao.updateUser(userInfoDao);
-//        PrintWriter out=response.getWriter();
-//        out.print(updateUser);
-//        out.flush();
-//        out.close();
+        int blogId = Integer.parseInt(request.getParameter("blogId"));
+        CommentInfoDao commentInfoDao = new CommentInfoDaoImpl();
+        List<Comment> comList = commentInfoDao.getAllComment(blogId);
+        JSONArray comJSonArr = JSONArray.fromObject(comList);
+        PrintWriter out = response.getWriter();
+        out.print(comJSonArr);
+        out.flush();
+        out.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

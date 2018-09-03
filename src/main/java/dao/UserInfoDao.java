@@ -32,6 +32,8 @@ public interface UserInfoDao {
     int delOneUser(int userId);
     //更新头像
     int UpdateHeadP(String headp,String telNum);
+    //更新背景
+    int UpdateBg(int bgId,String telNum);
     //查询今天的用户注册量
     int countToday();
     //查询之前某天的用户注册量

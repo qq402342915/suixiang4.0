@@ -27,12 +27,12 @@ public class ShowInformServlet extends HttpServlet {
         String name=request.getParameter("userName");
         InformDao informDao=new InformDaoImpl();
         UserInfoDao userInfoDao=new UserInfoDaoImpl();
-        List<Inform> informList=informDao.getInformById(10);//通过通知id得到举报信息
+        List<Inform> informList=informDao.getInformById(15);//通过通知id得到举报信息
 
         List<User> userList=new ArrayList<User>();
         for(int i=0;i<informList.size();i++){
-            int userId=informList.get(i).getUserId();
-            userList.add((User) userInfoDao.getUser(userId).get(0));
+            int userId=informList.get(i).getUserId();//通过通知id得到被举报用户id
+            userList.add((User) userInfoDao.getUser(userId).get(0));//将得到的被举报用户信息放入userL中
         }
         JsonConfig jsonConfig =new JsonConfig();
         JsonDate jd=new JsonDate();//转化日期格式

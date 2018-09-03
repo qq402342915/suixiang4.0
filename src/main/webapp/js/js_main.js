@@ -4,37 +4,6 @@ layui.use(['flow','upload',"layer","element"], function() {
         layer = layui.layer,
         element = layui.element;
 
-    flow.load({
-        elem: '#LAY_demo1' //流加载容器
-        , done: function (page, next) { //执行下一页的回调
-            //模拟数据插入
-            // setTimeout(function () {
-            //     var lis = [];
-            //     for (var i = 0; i < 8; i++) {
-            //         lis.push('<li> <div class="s_body_content_personinfo"> <img src="../images/logo.png" alt=""> <div class="s_body_content_personinfo_nt"> <a href="">你不爱吃西红柿</a> <span>2018-08-28 9:30</span> </div> </div> <div class="s_body_content_text"> 6666 <br> 666666 <br> 6666 <br> 666666 <br>  6666 <br> 666666 <br> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> </div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>1</span></div> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>3</span></div> <div><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>2</span></div> </div> </li>')
-            //     }
-            //
-            //     //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-            //     //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-            //     next(lis.join(''), page < 10); //假设总页数为 10
-            // }, 500);
-            // $.ajax({
-            //     url:"/ShowHotBlog",
-            //     type:"post",
-            //     dataType:"text",
-            //     success:function (blog) {
-            //         // alert(blog)
-            //             // var lis = [];
-            //             // for (var i = 0; i < 1; i++) {
-            //             //     lis.push('<li> <div class="s_body_content_personinfo"> <img src="../images/logo.png" alt=""> <div class="s_body_content_personinfo_nt"> <a href="">你不爱吃西红柿</a> <span>2018-08-28 9:30</span> </div> </div> <div class="s_body_content_text">'+ result[0].context +'<img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> <img src="../images/logo.png" alt=""> </div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>1</span></div> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>3</span></div> <div><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>2</span></div> </div> </li>')
-            //             // }
-            //             // next(lis.join(''), page < 5);
-            //     }
-            // })
-        }
-    });
-
-
     //执行实例
     var uploadInst = upload.render({
         elem: '#s_picture',      //绑定元素
@@ -168,9 +137,88 @@ layui.use(['flow','upload',"layer","element"], function() {
     });
 
 
-})
+
 
 $(function () {
+    //转发,
+    //评论
+    $(".s_mynode").on("click",".s_body_content_func_2",function () {
+        var $node = $(this).parents(".s_mynode");
+        var $comment = $node.children(".s_comment");
+        $comment.children(".s_comment_publish").nextAll().remove();
+        // alert();
+        if($($comment).css("display") != "none"){
+            $comment.hide();
+        }else{
+            $comment.show();
+        }
+        $.ajax({
+            url: "/SShowComment",
+            type:"post",
+            data:{"blogId":$node.attr("blogId")},
+            dataType:"json",
+            success:function (comment) {
+                for(var i = 0; i < comment.length;i++){
+                    var $newcomment = '<div class="s_showcomment">'+
+                                            '<img src="../images/logo.png" alt="">'+
+                                            '<span class="s_showcomment_name">我不爱吃西红柿</span>'+
+                                            '<div class="s_showcomment_text">:'+comment[i].comContent+'</div>'+
+                                                '<div class="s_showcomment_footer">'+
+                                                    '<span class="s_showcomment_time">'+format(comment[i].comDate.time)+'</span>'+
+                                                    '<div class="s_showcomment_footer_right">'+
+                                                    '<span class="s_showcomment_footer_right_hui">回复</span>'+
+                                                    '<span class="s_showcomment_footer_right_pra"><i class="layui-icon layui-icon-praise"></i><span>'+comment[i].num+'</span></span>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>';
+                    $comment.append($newcomment);
+                }
+            }
+        })
+    })
+    //点赞
+    var $node = $(".s_mynode").detach();
+function showContent(url,node) {
+    $.ajax({
+        url: url,
+        type:"post",
+        dataType:"json",
+        success:function (userblog) {
+            var $mynode;
+            // alert((userblog[0].blogPic == ""));
+            // var mypage = 5;
+            // var mypages = Math.floor(userblog.length/5);
+            for (var i = 0; i < userblog.length; i++) {
+                $mynode = $node.clone(true)
+                var $newnode;
+                // i = (page-1)*5 + j;
+                if(userblog[i].blogPic != ""){
+                    var patt1=new RegExp("\\w+(?:\\.jpg|\\.png)","g");
+                    // var reg = /\w+(?:\.jpg|\.png)/;
+                    // var pic = patt1.exec(userblog[i].blogPic);
+                    var pic = "";
+                    do
+                    {
+                        result=patt1.exec(userblog[i].blogPic);
+                        if(result != null){
+                            pic = pic + '<img src="../images/'+result+'" alt="">';
+                        }
+                    }
+                    while (result!=null)
+                    $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+userblog[i].tsNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+userblog[i].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+userblog[i].praNum+'</span></div> </div>';
+                }else if(userblog[i].blogVideo != ""){
+                    $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+userblog[i].tsNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+userblog[i].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+userblog[i].praNum+'</span></div> </div>';
+                }else if(userblog[i].blogPic == "" && userblog[i].blogVideo == ""){
+                    $newnode= '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+userblog[i].tsNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+userblog[i].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+userblog[i].praNum+'</span></div> </div>';
+                }
+                $mynode.attr("blogId",userblog[i].blogId);
+                $mynode.prepend($newnode);
+                $(node).append($mynode);
+            }
+        }
+    })
+}
+    showContent("/ShowHotBlog","#LAY_demo1");
     //登录成功后，显示用户信息，关注微博等
     function showUser() {
         $("#personInfo").prop("href","personinfo.html");
@@ -187,6 +235,15 @@ $(function () {
         $(".s_headphoto_nologin").hide();
         $(".s_headphoto_login").show();
         $("#s_header_right").show();
+        $("#s_body_content_commentgif").click(function () {
+            showContent("/ShowLikeDayBlog","#LAY_demo2");
+        })
+        //发布功能
+        $("#publish").click(function () {
+            
+        })
+
+
     }
     // $("#LAY_demo1").hide();
     $.ajax({
@@ -194,6 +251,7 @@ $(function () {
         dataType:"json",
         success:function (result) {
             // alert(result[0]);
+            // alert(result.userName);
             if(result[0].userName != null){
                 showUser();
             }
@@ -325,12 +383,26 @@ $(function () {
     });
 
 
-        $("#s_publish_test").emoji({
-            button:"#s_emoji",
-            showTab: true,
-            animation: 'fade',
-            basePath: '../images/emoji',
-            icons: emojiLists   // 注：详见 js/emoji.list.js
-        });
+    $("#s_publish_test").emoji({
+        button:"#s_emoji",
+        showTab: true,
+        animation: 'fade',
+        basePath: '../images/emoji',
+        icons: emojiLists   // 注：详见 js/emoji.list.js
     });
+});
+})
+function add0(m){return m<10?'0'+m:m }
+function format(timestamp)
+{
+    //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
 
+    var time = new Date(timestamp);
+    var year = time.getFullYear();
+    var month = time.getMonth()+1;
+    var date = time.getDate();
+    var hours = time.getHours();
+    var minutes = time.getMinutes();
+    var seconds = time.getSeconds();
+    return year+'-'+add0(month)+'-'+add0(date)+' '+add0(hours)+':'+add0(minutes)+':'+add0(seconds);
+}
