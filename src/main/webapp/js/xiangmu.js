@@ -130,9 +130,9 @@ $(function () {
             $('input[name="school"]').val(res[0].school);
             $('input[name="regDate"]').val(res[0].regDate);
             $('input[name="sign"]').val(res[0].sign);
-            $('input[name="birthday"]').val(res[0].birthday);
+            $('input[name="birthday"]').val((res[0].birthday).substr(0,10));
             $('input[name="address"]').val(res[0].address);
-
+            $(".y_headp").prop("src", res[0].headP);
 
         }
     })
@@ -152,35 +152,32 @@ $(function () {
             //获取图片路径并显示预览
             var url = getUrl(data.files[0]);
             $(".y_headp").prop("src", url)
+            $(".y_headp_hold").click(function () {
+                data.submit();
+            });
+            // $.ajax({
+            //     url:"/UpdateHeadp",
+            //     Type:'POST',
+            //     // data:"",
+            //     dataType:"json",
+            //     success:function (ret) {
+            //
+            //     }
+            //
+            // })
 
         },
         //done函数为上传成功后执行的操作
         done: function (e, ret) {
             if (ret.result.errno == 0) {
                 // 显示上传成功，并循环输出上传内容预览。
-                $(".y_headback").append("<div>上传成功:" + ret.result.data + "</div>");
-                $.each(ret.result.data, function (index, fileSrc) {
-                    $(".y_headback").append("<div style='margin-top:10px;'><embed src=" +
-                        fileSrc + " allowscriptaccess='always' " +
-                        "allowfullscreen='true' wmode='opaque' width='280' height='200'>" +
-                        "</embed></div>");
-
-                });
+alert("dddd")
             } else {
                 alert("上传失败");
             }
 
         },
 
-        // //此方法控制进度条
-        // progressall: function (e, data) {
-        //     var progress = parseInt(data.loaded / data.total * 100, 10);
-        //     $('#progress .bar').css(
-        //         'width',
-        //         progress + '%'
-        //     );
-        // },
-        //dropZone: $('#dropzone') //此为拖拽文件控制，暂未开发。
     });
 
     function getUrl(file) {

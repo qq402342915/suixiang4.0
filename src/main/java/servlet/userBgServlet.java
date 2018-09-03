@@ -21,11 +21,11 @@ public class userBgServlet extends HttpServlet {
         Background background=new Background();
         UserInfoDao userInfoDao=new UserInfoDaoImpl();//实例化
         User user=new User();
-        /*int  updateUser=userInfoDao.updateUser(user);*/
-        PrintWriter out=response.getWriter();
-       /* out.print(updateUser);*/
-        out.flush();
-        out.close();
+//        int  updateUser=userInfoDao.updateUser(userInfoDao);
+//        PrintWriter out=response.getWriter();
+//        out.print(updateUser);
+//        out.flush();
+//        out.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

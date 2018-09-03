@@ -30,4 +30,6 @@ public interface UserInfoDao {
     int getCountUser();
     //根据用户id删除单个用户
     int delOneUser(int userId);
+    //更新头像
+    int UpdateHeadP(String headp,String telNum);
 }

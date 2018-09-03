@@ -5,6 +5,23 @@
     <title>praise</title>
     <link href="../css/base.css" rel="stylesheet">
     <link href="../css/praise.css" rel="stylesheet">
+    <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url:"/PraiseServlet",
+                data:{"userName":name},
+                type:"post",
+                dataType:"json",
+                success:function (praiseList) {
+                    $.each(praiseList,function (index,obj) {
+                        var $node=$('<div class="l_fcous"><span>'+obj['userName']+'</span>点赞了你的微博</div>');
+                        $("#l_inner2").append($node);
+                    });
+                }
+            })
+        })
+    </script>
 </head>
 <body class="l_border">
 <div id="l_out">
@@ -18,7 +35,9 @@
                 <li class="web"><a href="http://localhost:63342/suixiang4.0/src/main/webapp/html/inform.html?_ijt=hbpgimq16cdom02h9806ki3g4o">系统通知</a></li>
             </ul>
         </div>
-        <p id="l_inner2">这里空荡荡^_^</p>
+        <div id="l_inner2">
+            <p>小主儿，信息全部在这里啦！^_^</p>
+        </div>
     </div>
 </div>
 </body>
