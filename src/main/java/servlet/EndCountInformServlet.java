@@ -1,7 +1,7 @@
 package servlet;
 
-import dao.UserInfoDao;
-import dao.UserInfoDaoImpl;
+import dao.InformDao;
+import dao.InformDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,22 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-//删除单个用户信息，级联删除
-@WebServlet(name = "EndDelUserServlet",urlPatterns = "/EndDelUserServlet")
-public class EndDelUserServlet extends HttpServlet {
+//获取通知总数量
+@WebServlet(name = "EndCountInformServlet",urlPatterns = "/EndCountInformServlet")
+public class EndCountInformServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userIdStr=request.getParameter("id");
-        int userId=Integer.parseInt(userIdStr);
-        UserInfoDao userInfoDao = new UserInfoDaoImpl();
-        int res= userInfoDao.delOneUser(userId);
+
+        InformDao informDao = new InformDaoImpl();
+        int res= informDao.countAllInform();
         response.getWriter().write(String.valueOf(res));
+
 
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
-
     }
 }

@@ -66,6 +66,7 @@ $(function () {
     //1.用户管理
     //1.1切换表格
     $("#w_user_manage").click(function (e) {
+
         e.preventDefault();
         //加载弹框
         var loadBlog = layer.load(1, {
@@ -164,7 +165,7 @@ $(function () {
                 var $tr = $('    <tr>\n' +
                     '        <td>' + obj['userId'] + '</td>\n' +
                     '        <td>' + obj['userName'] + '</td>\n' +
-                    '        <td><img src='+obj['headP']+' class="layui-nav-img"></td>\n' +
+                    '        <td><img src=' + obj['headP'] + ' class="layui-nav-img"></td>\n' +
                     '        <td>' + obj['telNum'] + '</td>\n' +
                     '        <td>' + obj['email'] + '</td>\n' +
                     '        <td>' + obj['sex'] + '</td>\n' +
@@ -183,13 +184,16 @@ $(function () {
             });
         };
 
+
+
+
+
+
     });
 
     //1.2
     //点击查看查看个人信息
     $("body").on("click", ".see", function () {
-
-
         //获取用户ID
         var userId = $(this).closest('tr').children().eq(0).text();
         //发送ajax请求用户表展示单个用户详细信息
@@ -204,12 +208,12 @@ $(function () {
             }
         });
 
-        //得到评论json格式
+        //得到用户详情json格式
         function getUserDetailsJson(res) {
             $.each(res, function (index, obj) {
                 var $detTr = $('    <tr>\n' +
                     '        <td>出生日期</td>\n' +
-                    '        <td>' + obj['birthday'].substring(0,10) + '</td>\n' +
+                    '        <td>' + obj['birthday'].substring(0, 10) + '</td>\n' +
                     '</tr>\n' +
                     '    <tr>\n' +
                     '        <td>所在地</td>\n' +
@@ -229,14 +233,7 @@ $(function () {
 
         }
 
-
-
-
-
-
         var $id = $(this).closest('tr');
-        console.log($id.text());
-        console.log($id.children().eq(1).text());
         layer.open({
             type: 1 //Page层类型
             , area: ['500px', '300px']
@@ -255,13 +252,15 @@ $(function () {
         });
 
     });
+
+
+
     //1.3
     //点击删除按钮删除个人信息
-    $("body").on("click", ".del", function () {
+    $("body").on("click", ".del", function (event) {
+        event.stopPropagation();
         var $id = $(this).closest('tr');
         var userId = $(this).closest('tr').children().eq(0).text();
-        alert(userId);
-
         layer.confirm('确定要删除吗？', {
             btn: ['确定', '取消'] //按钮
         }, function () {
@@ -269,17 +268,41 @@ $(function () {
                 $id.remove();
                 layer.msg('删除成功', {icon: 1});
             } else {
-                layer.msg('删除失败', {icon: 2})
+                layer.msg('删除失败', {icon: 2});
             }
         }, function () {
             layer.msg('取消操作');
         });
+
+
+    });
+
+    //1.4搜索用户ID
+    $("body").on("click", "#w_UserSelect", function (event) {
+        event.stopPropagation();
+        //获取input信息
+        var userId = $("#demoReload").val();
+
+        //发送ajax请求用户表展示单个用户信息
+        $.ajax({
+            url: "/EndUserDetailsServlet",
+            type: "post",
+            data: {"userId": userId},
+            dataType: "json",
+            success: function (res) {
+                getUserJson(res);
+                //移除底部分页
+                $(".w_end_foot").children().remove();
+            }
+        });
+
     });
 
 
     //2.微博管理
     //2.1切换表格
     $("#w_blog_manage").click(function (e) {
+        e.stopPropagation();
         e.preventDefault();
 
         //加载弹框
@@ -393,64 +416,68 @@ $(function () {
 
         }
 
-        //2.2查看详细信息
-        $("body").on("click", ".w_blog_see", function () {
-            var blogId = $(this).closest('tr').children().eq(0).text();
-            // alert(blogId);
-            //发送ajax请求评论表
-            $.ajax({
-                url: "/EndShowCommentServlet",
-                type: "post",
-                data: {"blogId": blogId},
-                dataType: "json",
-                success: function (res) {
-                    getCommentJson(res);
-
-                }
-            });
-
-            //得到评论json格式
-            function getCommentJson(res) {
-                $.each(res, function (index, obj) {
-                    var $comTr = $('    <tr>\n' +
-                        '        <td>' + obj['userId'] + '</td>\n' +
-                        '        <td>' + obj['comContent'] + '</td>\n' +
-                        '    </tr>');
-                    $("#comId").append($comTr);
-
-                });
+    });
+    //2.2查看详细信息
+    $("body").on("click", ".w_blog_see", function (event) {
+        event.stopPropagation()
+        var blogId = $(this).closest('tr').children().eq(0).text();
+        // alert(blogId);
+        //发送ajax请求评论表
+        $.ajax({
+            url: "/EndShowCommentServlet",
+            type: "post",
+            data: {"blogId": blogId},
+            dataType: "json",
+            success: function (res) {
+                getCommentJson(res);
 
             }
-
-            //弹出查看详情页
-            layer.open({
-                type: 1 //Page层类型
-                , area: ['500px', '300px']
-                , title: '查看评论'
-                , shade: 0.6 //遮罩透明度
-                , maxmin: true //允许全屏最小化
-                , anim: 1 //0-6的动画形式，-1不开启
-                , content: '<div style="padding:0 10px; height: 200px">' + '<table class="layui-table">\n' +
-                '        <colgroup>\n' +
-                '            <col width="50">\n' +
-                '            <col width="200">\n' +
-                '        </colgroup>\n' +
-                '        <thead>\n' +
-                '        <tr>\n' +
-                '            <td>用户ID</td>\n' +
-                '            <td>评论内容</td>\n' +
-                '        </tr>\n' +
-                '        <tbody id="comId">\n' +
-                '        </tbody>\n' +
-                '        </thead>\n' +
-                '    </table>\n' +
-                '</div>'
-            });
         });
+
+        //得到评论json格式
+        function getCommentJson(res) {
+            $.each(res, function (index, obj) {
+                var $comTr = $('    <tr>\n' +
+                    '        <td>' + obj['userId'] + '</td>\n' +
+                    '        <td>' + obj['comContent'] + '</td>\n' +
+                    '    </tr>');
+                $("#comId").append($comTr);
+
+            });
+
+        }
+
+        //弹出查看详情页
+        layer.open({
+            type: 1 //Page层类型
+            , area: ['500px', '300px']
+            , title: '查看评论'
+            , shade: 0.6 //遮罩透明度
+            , maxmin: true //允许全屏最小化
+            , anim: 1 //0-6的动画形式，-1不开启
+            , content: '<div style="padding:0 10px; height: 200px">' + '<table class="layui-table">\n' +
+            '        <colgroup>\n' +
+            '            <col width="50">\n' +
+            '            <col width="200">\n' +
+            '        </colgroup>\n' +
+            '        <thead>\n' +
+            '        <tr>\n' +
+            '            <td>用户ID</td>\n' +
+            '            <td>评论内容</td>\n' +
+            '        </tr>\n' +
+            '        <tbody id="comId">\n' +
+            '        </tbody>\n' +
+            '        </thead>\n' +
+            '    </table>\n' +
+            '</div>'
+        });
+
+    });
 
         //2.3
         //点击删除按钮删除个人信息
         $("body").on("click", ".w_blog_del", function () {
+            event.stopPropagation()
             var $id = $(this).closest('tr');
             //获取当前微博id
             var blogId = $(this).closest('tr').children().eq(0).text();
@@ -473,7 +500,9 @@ $(function () {
 
         //2.4
         //点击搜索搜索指定用户ID发过的所有微博
-        $("body").on("click", "#w_blogSelect", function () {
+        $("body").on("click", "#w_blogSelect", function (event) {
+            event.stopPropagation()
+
             //获取input信息
             var userId = $("#demoReload").val();
             // 把input信息通过ajax发送到后端 "/EndUserBlogServlet"
@@ -499,108 +528,4 @@ $(function () {
 
         });
 
-
-        //3.消息通知
-        //3.1切换表格
-        $("#w_inform_manage").click(function (e) {
-            e.preventDefault();
-            $(".w_demo").children().remove();
-            $(".w_demo").addClass("w_padding");
-
-
-            $(".w_demo").prepend('<table class="layui-table">\n' +
-                '    <colgroup>\n' +
-                '        <col width="70">\n' +
-                '        <col width="70">\n' +
-                '        <col width="100">\n' +
-                '        <col width="150">\n' +
-                '        <col width="70">\n' +
-                '        <col width="70">\n' +
-                '        <col width="70">\n' +
-                '    </colgroup>\n' +
-                '    <thead>\n' +
-                '    <tr>\n' +
-                '        <th>通知ID</th>\n' +
-                '        <th>被举报用户ID</th>\n' +
-                '        <th>举报时间</th>\n' +
-                '        <th>举报内容</th>\n' +
-                '        <th>举报用户ID</th>\n' +
-                '        <th>是否处理</th>\n' +
-                '        <th>操作</th>\n' +
-                '\n' +
-                '    </tr>\n' +
-                '    </thead>\n' +
-                '    <tbody>\n' +
-                '    <tr>\n' +
-                '        <td>3</td>\n' +
-                '        <td>5</td>\n' +
-                '        <td>2018-07-09 11:00:00</td>\n' +
-                '        <td>微博涉及反动言论</td>\n' +
-                '        <td>1</td>\n' +
-                '        <td>否</td>\n' +
-                '        <td><button class="layui-btn w_inform_btn layui-btn-warm layui-btn-xs">警告</button></td>\n' +
-                '\n' +
-                '    </tr>\n' +
-                '    <tr>\n' +
-                '        <td>3</td>\n' +
-                '        <td>5</td>\n' +
-                '        <td>2018-07-09 11:00:00</td>\n' +
-                '        <td>微博涉及反动言论</td>\n' +
-                '        <td>1</td>\n' +
-                '        <td>否</td>\n' +
-                '        <td><button class="layui-btn w_inform_btn layui-btn-warm layui-btn-xs">警告</button></td>\n' +
-                '\n' +
-                '    </tr>\n' +
-                '    <tr>\n' +
-                '        <td>3</td>\n' +
-                '        <td>5</td>\n' +
-                '        <td>2018-07-09 11:00:00</td>\n' +
-                '        <td>微博涉及反动言论</td>\n' +
-                '        <td>1</td>\n' +
-                '        <td>否</td>\n' +
-                '        <td><button class="layui-btn w_inform_btn layui-btn-warm layui-btn-xs">警告</button></td>\n' +
-                '\n' +
-                '    </tr>\n' +
-                '    <tr>\n' +
-                '        <td>3</td>\n' +
-                '        <td>5</td>\n' +
-                '        <td>2018-07-09 11:00:00</td>\n' +
-                '        <td>微博涉及反动言论</td>\n' +
-                '        <td>1</td>\n' +
-                '        <td>否</td>\n' +
-                '        <td><button class="layui-btn w_inform_btn layui-btn-warm layui-btn-xs">警告</button></td>\n' +
-                '\n' +
-                '    </tr>\n' +
-                '    <tr>\n' +
-                '        <td>3</td>\n' +
-                '        <td>5</td>\n' +
-                '        <td>2018-07-09 11:00:00</td>\n' +
-                '        <td>微博涉及反动言论</td>\n' +
-                '        <td>1</td>\n' +
-                '        <td>否</td>\n' +
-                '        <td><button class="layui-btn w_inform_btn layui-btn-warm layui-btn-xs">警告</button></td>\n' +
-                '\n' +
-                '    </tr>\n' +
-                '    <tr>\n' +
-                '        <td>3</td>\n' +
-                '        <td>5</td>\n' +
-                '        <td>2018-07-09 11:00:00</td>\n' +
-                '        <td>微博涉及反动言论</td>\n' +
-                '        <td>1</td>\n' +
-                '        <td>否</td>\n' +
-                '        <td><button class="layui-btn w_inform_btn layui-btn-warm layui-btn-xs">警告</button></td>\n' +
-                '\n' +
-                '    </tr>\n' +
-                '\n' +
-                '\n' +
-                '    </tbody>\n' +
-                '</table>   ');
-        });
-        //3.2通知用户
-        $("body").on("click", ".w_inform_btn", function () {
-            layer.msg('通知成功');
-        });
-
-
-    });
 });
