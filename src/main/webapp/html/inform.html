@@ -5,6 +5,21 @@
     <title>inform</title>
     <link href="../css/base.css" rel="stylesheet">
     <link href="../css/l_inform.css" rel="stylesheet">
+    <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+    <script>
+        $.ajax({
+            url:"/InformServlet",
+            type:"post",
+            data:{"userName":name},
+            dataType:"json",
+            success:function (informList) {
+                $.each(informList,function (index,obj) {
+                    var $node=$('<div class="l_fcous"><span>'+obj['userName']+'</span>你已被举报</div>');
+                    $("#l_inner2").append($node);
+                });
+            }
+        })
+    </script>
 </head>
 <body class="l_border">
     <div id="l_out">

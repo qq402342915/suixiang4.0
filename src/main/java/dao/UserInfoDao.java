@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserInfoDao {
     //获取用户列表
     List<User> getAllUser();
+    /*//获取用户粉丝列表
+    List<User> getAllFans(int userId);*/
     //根据主键查看用户信息
     List<User> getUser(int userId);
     //根据手机查看用户信息
@@ -30,4 +32,8 @@ public interface UserInfoDao {
     int getCountUser();
     //根据用户id删除单个用户
     int delOneUser(int userId);
+    //更新头像
+    int UpdateHeadP(String headp,String telNum);
+    //更新背景
+    int UpdateBg(int bgId,String telNum);
 }

@@ -2,6 +2,7 @@ package dao;
 
 import entity.User;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
@@ -9,6 +10,12 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     public List<User> getAllUser() {
         return executeQuery("select * from t_user");
     }
+
+    /*@Override
+    public List<User> getAllFans(int userId) {
+        return executeQuery("select headP,userName,userId from t_user where userId in(select fansId from t_fansuser where userId = ?)",new Object[]{userId});
+    }*/
+
     @Override
     public List<User> getUser(int userId) {
         return executeQuery("select * from t_user where userId = ?",new Object[]{userId});
@@ -30,7 +37,7 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
 
     @Override
     public int updateUser(User user, String telNum) {
-        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,email=?,sex=?,school=?,sign=?,birthday=?,address=? where telNum=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),user.getBirthday(), user.getAddress(),telNum});
+        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,email=?,sex=?,school=?,sign=?,birthday=?,address=? where telNum=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),new Timestamp(user.getBirthday().getTime()), user.getAddress(),telNum});
     }
 
     @Override
@@ -62,4 +69,11 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
         return executeUpdate("delete from t_user where userId = ?",new Object[]{userId});
     }
 
+    @Override
+    public int UpdateHeadP(String headp,String telNum) {
+        return executeUpdate("update t_user set headP=? where telNum = ?",new Object[]{headp,telNum});
+    }
+    public int UpdateBg(int bgId,String telNum){
+        return executeUpdate("update t_user set bgId=? where telNum = ?",new Object[]{bgId,telNum});
+    }
 }

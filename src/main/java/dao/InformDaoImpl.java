@@ -12,12 +12,21 @@ public class InformDaoImpl extends BaseDao<Inform> implements InformDao {
     }
 
     @Override
-    public List<Inform> getInformById(int userId) {
-        return executeQuery("select * from t_inform where userId=?",new Object[]{userId});
+    public List<Inform> getInformById(int informId) {
+        return executeQuery("select * from t_inform where informId=?",new Object[]{informId});
     }
 
     @Override
     public List<Inform> getAllInform() {
         return executeQuery("select * from t_inform");
+    }
+
+    @Override
+    public List<Inform> getAllInform(int pageNo,int pageSize){
+        return executeQuery("select * from t_inform limit ?,?",new Object[]{(pageNo-1)*pageSize,pageSize});
+    }
+    @Override
+    public int countAllInform(){
+        return getRecordCount("select count(*) from t_inform");
     }
 }
