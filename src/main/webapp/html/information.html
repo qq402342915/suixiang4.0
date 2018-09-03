@@ -67,7 +67,7 @@
     </div>
             <!--信息表-->
     <div id="inform" class="y_inform">
-        <form class="layui-form" action="/UpdateInformation" method="post">
+        <form class="layui-form" action="/UpdateInformation" method="post" onsubmit="return saveReport();">
 
             <div class="layui-form-item y_pad">
                 <label class="layui-form-label">昵称</label>
@@ -88,7 +88,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-block">
-                    <input type="text" name="email" placeholder="未输入邮箱"
+                    <input type="text" name="email"  placeholder="未输入邮箱"
                            autocomplete="off" class="layui-input y_input">
                 </div>
             </div>
@@ -144,7 +144,8 @@
 
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <input type="submit">ggggggg
+                    <!--<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>-->
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -164,22 +165,27 @@
         </div>
 
         <li class="y_headp_li">请选择jpg、gif、png格式，（使用高质量图片，可生成高清头像）</li>
-        <button type="submit" class="layui-btn layui-btn-normal y_headp_hold">保存</button>
+        <button type="submit" id="y_btn" class="layui-btn layui-btn-normal y_headp_hold">保存</button>
 
     </div>
 </div>
 </div>
 
+
+<script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
 <script src="../js/foot.js"></script>
 <script src="../js/jquery.emoji.min.js"></script>
 <script src="../js/emoji.list.js"></script>
-<script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+
+
+<script src="../layer/layer.js"type="application/javascript"></script>
 <script src="../layui/layui.js" type="application/javascript"></script>
 <script src="../js/jquery.validate.js" type="application/javascript"></script>
 <script src="../js/jquery.validate.regex.js" type="application/javascript"></script>
 <script src="../js/jquery.ui.widget.js"></script>
 <script src="../js/jquery.iframe-transport.js"></script>
 <script src="../js/jquery.fileupload.js"></script>
+
 <script src="../js/xiangmu.js" type="application/javascript"></script>
 </body>
 

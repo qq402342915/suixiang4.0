@@ -33,6 +33,7 @@ $(function () {
         });
     });
 
+
     $(".layui-form").validate({
         rules: {
             nickName: {
@@ -46,28 +47,24 @@ $(function () {
                 maxlength: 11,
                 regex: "^1[3|4|5|7|8][0-9][0-9]{8}$",
             },
-            // email: {
-            //     required: true,
-            //     regex: "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"
-            // },
-            // school: {
-            //     required: true,
-            //     maxlength: 10,
-            //     regex: "^[\u4e00-\u9fa5a-zA-Z]+$"
-            // },
-            // sign: {
-            //     required: true,
-            //     maxlength: 50,
+            //     email: {
+            //         required:true ,
+            //         regex: "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"
+            //     },
+            //     school: {
+            //         required: false,
+            //         maxlength: 10,
+            //         regex: "^[\u4e00-\u9fa5a-zA-Z]+$"
+            //     },
             //
-            // },
-            // address: {
-            //     required: true,
-            //     maxlength: 19,
-            //     regex: "^[\u4e00-\u9fa5a-zA-Z]+$"
-            // },
+            //     address: {
+            //         required: false,
+            //         maxlength: 19,
+            //         regex:"^[\u4e00-\u9fa5a-zA-Z]+$"
+            //     },
         },
         messages: {
-            nickName: {
+            userName: {
                 required: "请输入昵称",
                 maxlength: "昵称小于十个字",
                 regex: "只能输入中文，英文，数字"
@@ -90,11 +87,6 @@ $(function () {
                 regex: "学校名称由中文或英文字母组成"
             },
 
-            sign: {
-                required: "请输入签名",
-                maxlength: "签名小于五十个字",
-
-            },
 
             address: {
                 required: "请输入地址",
@@ -105,7 +97,26 @@ $(function () {
         },
 
     })
+// function notRequire($node,reg,mession){
+//
+//        if ($node.val()!=null) {
+//           if ( reg.text($node.val())){
+//               return true;
+//           }
+//           if (reg.text($node.val())==false) {
+//               return mession;
+//           }
+//     }
+// }
+    // notRequire($('input[name="email"]'),"^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$","ss")
+    // notRequire()
+    // notRequire()
+    // notRequire()
+    // notRequire()
+    // notRequire()
 
+
+    $('input[name="email"]')
     // //String->Date
     // function getDate(strDate) {
     //     //strDate为需要转换成日期格式的字符串
@@ -113,7 +124,7 @@ $(function () {
     //         function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');
     //     return date;
     // }
-   // tlogDate=getDate(tlogDate);
+    // tlogDate=getDate(tlogDate);
 
     //展示用户信息
     $.ajax({
@@ -121,7 +132,7 @@ $(function () {
         type: "post",
         // data:"telNumber"
         dataType: "json",
-        success:function(res){
+        success: function (res) {
 
             $('input[name="userName"]').val(res[0].userName);
             $('input[name="telNumber"]').val(res[0].telNum);
@@ -130,7 +141,7 @@ $(function () {
             $('input[name="school"]').val(res[0].school);
             $('input[name="regDate"]').val(res[0].regDate);
             $('input[name="sign"]').val(res[0].sign);
-            $('input[name="birthday"]').val((res[0].birthday).substr(0,10));
+            $('input[name="birthday"]').val((res[0].birthday).substr(0, 10));
             $('input[name="address"]').val(res[0].address);
             $(".y_headp").prop("src", res[0].headP);
 
@@ -138,11 +149,9 @@ $(function () {
     })
 
 
-
-
 //更换头像
     $('.y_headp_chance').fileupload({
-        url: "/uploadFile",
+        url: "/Updatepic",
         Type: 'POST',//请求方式 ，可以选择POST，PUT或者PATCH,默认POST
         dataType: 'json',//服务器返回的数据类型
         // singleFileUploads: false,//不设置多个文件循环提交，设置后一起提交
@@ -167,13 +176,22 @@ $(function () {
             // })
 
         },
+
         //done函数为上传成功后执行的操作
         done: function (e, ret) {
             if (ret.result.errno == 0) {
                 // 显示上传成功，并循环输出上传内容预览。
-alert("dddd")
+                layer.alert('上传成功', {
+                    skin: 'layui-layer-lan'
+                    , closeBtn: 0
+
+                });
             } else {
-                alert("上传失败");
+                layer.alert('上传失败', {
+                    skin: 'layui-layer-lan'
+                    , closeBtn: 0
+
+                });
             }
 
         },
@@ -191,5 +209,19 @@ alert("dddd")
         }
         return url;
     }
+
+    function saveReport() {
+// jquery 表单提交
+        $("#y_btn").ajaxSubmit(function (message) {
+// 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
+            layer.alert('更新成功', {
+                skin: 'layui-layer-lan'
+                , closeBtn: 0
+            });
+
+        });
+        return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+    }
+  
 
 })
