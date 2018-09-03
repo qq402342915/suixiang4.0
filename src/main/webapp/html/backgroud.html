@@ -17,7 +17,8 @@
             <li class="layui-nav-item"><a href="">文艺</a></li>
             <li class="layui-nav-item"><a href="">简约</a></li>
             <li class="layui-nav-item"><a href="">自定义</a></li>
-            <li id="l_save"><input type="button" value="保存"> </li>
+            <li id="l_save"><input type="submit" style="width:40px;height: 20px;border: none;opacity:0.5" value="保存"></li>
+            <!---->
         </ul>
         <div >
         <div class="l_style1">
@@ -134,24 +135,20 @@
             $(document).ready(function () {
                 $("img").click(function () {
                     addr = $(this).attr("src");
-                    alert(addr);
                     $("#l_tu").css("background-image", 'url(' + addr + ')');
                 });
             });
             $(document).on("click","#l_save>input",function () {
-                alert("click");
                 $.ajax({
                     url: "/bgffServlet",
                     type: "post",
                     data: {"bgPath": addr},
-                    success: function () {
-                        alert("成功");
-                        // layer.msg("成功", {time: 1000});
-                        // if (backgroundList!=null) {
-                        //     layer.msg("成功", {time: 1000}, function () {
-                        //         location.reload();
-                        //     });
-                        // }
+                    success: function (ret) {
+                        if(ret=="1"){
+                           layer.msg("保存成功", {time: 1000});
+                        }else{
+                            layer.msg("保存失败，请重新选择", {time: 1000});
+                                }
                     }
                 })
 

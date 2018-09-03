@@ -198,14 +198,16 @@ body{
     float: left;
     margin-right: 5px;
 }
-.c_list span{
+.c_list_name{
     float: left;
     height: 35px;
     line-height: 35px;
     display: inline-block;
 }
 .c_list_span{
-    margin-left: 135px;
+    height: 35px;
+    line-height: 35px;
+    float: right;
     width: 70px;
     text-align: center;
     background-color: #f2f2f5;

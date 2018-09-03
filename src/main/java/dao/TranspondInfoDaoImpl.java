@@ -1,6 +1,9 @@
 package dao;
 
+import entity.Comment;
 import entity.Transpond;
+
+import java.util.List;
 
 public class TranspondInfoDaoImpl extends BaseDao<Transpond> implements TranspondInfoDao{
     @Override
@@ -12,5 +15,8 @@ public class TranspondInfoDaoImpl extends BaseDao<Transpond> implements Transpon
     public int deleteTranspond(int tsId) {
 
         return executeUpdate("delete from t_transpond where tsId=?",new Object[]{tsId});
+    }
+    public List<Transpond> getAllTranpond(int blogId) {
+        return executeQuery("select * from t_transpond where blogId=?",new Object[]{blogId});
     }
 }

@@ -1,5 +1,6 @@
 package util;
 
+import dao.UserInfoDaoImpl;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -20,6 +21,11 @@ public class UploadFile {
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
+    
+
+
+
+
 
     /**
      * @param request    HttpServletRequest对象
@@ -87,7 +93,9 @@ public class UploadFile {
                         if (dateFormat) {
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmsssss");
                             fileName = simpleDateFormat.format(new Date()) + (int) (Math.random() * 1000) + fileName.substring(fileName.lastIndexOf("."));
+
                         }
+
                         String filePath = uploadPath + File.separator + fileName;
                         File storeFile = new File(filePath);
                         // 在控制台输出文件的上传路径
