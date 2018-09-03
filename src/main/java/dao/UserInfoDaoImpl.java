@@ -67,5 +67,21 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     public int UpdateHeadP(String headp,String telNum) {
         return executeUpdate("update t_user set headP=? where telNum = ?",new Object[]{headp,telNum});
     }
+    @Override
+    public int countToday(){
+        return getRecordCount("SELECT count(*) FROM t_user WHERE TO_DAYS(regDate) = TO_DAYS(NOW())");
+    }
+    @Override
+    public int countPreDay(int day){//1为昨天，2为前天
+        return getRecordCount("SELECT count(*) FROM t_user WHERE TO_DAYS(now()) - TO_DAYS(regDate) <= ?",new Object[]{day});
+    }
+    @Override
+    public List<User> hotBlogUserNameByP(){
+        return executeQuery("select d.userName,c.userId from t_user AS d,\n" +
+                "(select a.userId,b.blogId FROM \n" +
+                "t_blog AS a,(select blogId from (select blogId,count(*) hot from t_praise GROUP BY blogId ORDER BY hot DESC) hotblog limit 0,5) as b\n" +
+                "WHERE a.blogId = b.blogId) as c\n" +
+                "WHERE c.userId = d.userId;");
+    }
 
 }

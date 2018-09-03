@@ -32,4 +32,10 @@ public interface UserInfoDao {
     int delOneUser(int userId);
     //更新头像
     int UpdateHeadP(String headp,String telNum);
+    //查询今天的用户注册量
+    int countToday();
+    //查询之前某天的用户注册量
+    int countPreDay(int day);
+    //返回最热门的前五条微博的作者昵称，根据点赞数
+    List<User> hotBlogUserNameByP();
 }
