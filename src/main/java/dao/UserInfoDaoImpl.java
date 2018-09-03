@@ -67,5 +67,7 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     public int UpdateHeadP(String headp,String telNum) {
         return executeUpdate("update t_user set headP=? where telNum = ?",new Object[]{headp,telNum});
     }
-
+    public int UpdateBg(int bgId,String telNum){
+        return executeUpdate("update t_user set bgId=? where telNum = ?",new Object[]{bgId,telNum});
+    }
 }

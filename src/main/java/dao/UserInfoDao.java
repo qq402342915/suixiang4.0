@@ -32,4 +32,6 @@ public interface UserInfoDao {
     int delOneUser(int userId);
     //更新头像
     int UpdateHeadP(String headp,String telNum);
+    //更新背景
+    int UpdateBg(int bgId,String telNum);
 }
