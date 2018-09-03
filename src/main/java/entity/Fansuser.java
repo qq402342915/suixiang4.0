@@ -10,10 +10,9 @@ public class Fansuser {
     public Fansuser() {
     }
 
-    public Fansuser(int userId, int fansId, Date followDate) {
+    public Fansuser(int userId, int fansId) {
         this.userId = userId;
         this.fansId = fansId;
-        this.followDate = followDate;
     }
 
     public int getUserId() {
