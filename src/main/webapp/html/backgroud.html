@@ -16,8 +16,7 @@
             <li class="layui-nav-item "><a href="">卡通</a></li>
             <li class="layui-nav-item"><a href="">文艺</a></li>
             <li class="layui-nav-item"><a href="">简约</a></li>
-            <li class="layui-nav-item"><a href="">自定义</a></li>
-            <li id="l_save"><input type="submit" style="width:40px;height: 20px;border: none;opacity:0.5" value="保存"></li>
+            <li id="l_save"><input type="submit" style="width:40px;height: 25px;border: none;opacity:0.5" value="保存"></li>
             <!---->
         </ul>
         <div >
@@ -74,33 +73,18 @@
                 <div class="l_ht1"><img class="l_h1" src="http://pic1.win4000.com/wallpaper/0/59c9c1ced7234.jpg"></div>
                 <div class="l_ht3"><img class="l_h3" src="http://pic1.win4000.com/wallpaper/b/58705f2c2ad41.jpg"></div>
             </div>
-        </div>
-        <div class="pic">
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                <legend>常规使用：普通图片上传</legend>
-            </fieldset>
-            <div class="layui-upload">
-                <button type="button" class="layui-btn" id="test1">上传图片</button>
-                <div class="layui-upload-list">
-                    <img class="layui-upload-img" id="demo1">
-                    <p id="demoText"></p>
-                </div>
-            </div>
-        </div>
-        </div>
     </div>
+        </div>
+    <script src="../layui/layui.js"></script>
     <script src="../js/jquery-3.3.1.js"></script>
-    <script type="application/javascript" src="../layui/layui.js"></script>
     <script>
         //注意：导航 依赖 element 模块，否则无法进行功能性操作
         layui.use('element', function(){
             var element = layui.element;
         });
-
         $(function () {
             $(".l_style2").hide();
             $(".l_style3").hide();
-            $(".pic").hide();
             // $(".l_style1").hide();
             $(document).on("click", ".layui-nav li>a:contains('文艺')", function (e) {
                 $(".l_style1").hide();
@@ -152,36 +136,6 @@
                     }
                 })
 
-            })
-        })
-        layui.use('upload', function() {
-            var $ = layui.jquery,
-                upload = layui.upload;
-            //普通图片上传
-            var uploadInst = upload.render({
-                elem: '#test1',
-                url: '/upload/',
-                before: function (obj) {
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function (index, file, result) {
-                        $('#demo1').attr('src', result); //图片链接（base64）
-                    });
-                },
-                done: function (res) {
-                    //如果上传失败
-                    if (res.code > 0) {
-                        return layer.msg('上传失败');
-                    }
-                    //上传成功
-                }
-                , error: function () {
-                    //演示失败状态，并实现重传
-                    var demoText = $('#demoText');
-                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                    demoText.find('.demo-reload').on('click', function () {
-                        uploadInst.upload();
-                    });
-                },
             })
         })
 

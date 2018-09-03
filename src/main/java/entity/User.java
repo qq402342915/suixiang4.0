@@ -40,6 +40,12 @@ public class User {
         this.headP = headP;
     }
 
+    public User( String userName, String telNum, String password) {
+        this.userName = userName;
+        this.telNum = telNum;
+        this.password = password;
+    }
+
     public int getUserId() {
         return userId;
     }
