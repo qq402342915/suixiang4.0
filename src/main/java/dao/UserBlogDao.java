@@ -9,4 +9,6 @@ public interface UserBlogDao {
     public List<BlogContext> searchDayBlog();
     //显示用户关注的人的当天微博
     public List<BlogContext> searchLikeDayBlog(int myId);
+    //返回最热门的前五条微博的作者昵称，根据点赞数
+    List<BlogContext> hotBlogUserNameByP();
 }

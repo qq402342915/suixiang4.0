@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../css/suixiang_end.css">
 
 
-
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -24,7 +23,7 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    <img src="../images/headpic1.jpg" class="layui-nav-img">
                     远方
                 </a>
                 <dl class="layui-nav-child">
@@ -41,7 +40,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a id="w_user_manage" href="javascript:;">用户管理</a>
 
@@ -51,54 +50,31 @@
 
                 </li>
                 <li class="layui-nav-item"><a id="w_inform_manage" href="javascript:;">消息通知</a></li>
-                <li class="layui-nav-item"><a href="javascript:;">数据统计</a></li>
+                <li class="layui-nav-item"><a id="w_data" href="javascript:;">数据统计</a></li>
             </ul>
         </div>
     </div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-            <div class="w_demo">
-                <div class="w_banner">
-                    <span>随享，分享生活的点点滴滴</span>
-                </div>
-
+        <div class="w_demo">
+            <div class="w_banner">
+                <span>随享，分享生活的点点滴滴</span>
             </div>
 
+        </div>
 
 
     </div>
+
     <div class="w_end_foot">
-        <div id="demo" ></div>
+        <!--<div id="demo"></div>-->
     </div>
 </div>
 <script src="../js/jquery-3.3.1.js"></script>
 <script src="../layer/layer.js"></script>
 <script src="../layui/layui.js"></script>
-
-<script>
-    //JavaScript代码区域
-    layui.use('laypage', function(){
-        var laypage = layui.laypage
-            ,layer = layui.layer;
-        laypage.render({
-            elem: 'demo'
-            ,count: 10
-            ,layout: [ 'prev', 'page', 'next', 'skip']
-            ,jump: function(obj){
-
-            }
-        });
-
-    });
-    layui.use('element', function(){
-        var element = layui.element;
-
-    });
-
-
-
-</script>
+<script src="../js/echarts.common.min.js"></script>
 <script src="../js/Adminster.js"></script>
 </body>
 </html>

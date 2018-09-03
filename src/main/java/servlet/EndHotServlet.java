@@ -1,7 +1,10 @@
 package servlet;
 
+import dao.UserBlogDao;
+import dao.UserBlogDaoImpl;
 import dao.UserInfoDao;
 import dao.UserInfoDaoImpl;
+import entity.BlogContext;
 import entity.User;
 import net.sf.json.JSONArray;
 
@@ -17,8 +20,8 @@ import java.util.List;
 @WebServlet(name = "EndHotServlet",urlPatterns = "/EndHotServlet")
 public class EndHotServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserInfoDao userInfoDao = new UserInfoDaoImpl();
-        List<User> userList = userInfoDao.hotBlogUserNameByP();
+        UserBlogDao userBlogDao = new UserBlogDaoImpl();
+        List<BlogContext> userList = userBlogDao.hotBlogUserNameByP();
         response.getWriter().write(String.valueOf(JSONArray.fromObject(userList)));
 
 

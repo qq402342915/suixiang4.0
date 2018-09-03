@@ -1,5 +1,7 @@
 package dao;
 
+import entity.Blog;
+import entity.BlogContext;
 import entity.User;
 
 import java.util.List;
@@ -38,6 +40,5 @@ public interface UserInfoDao {
     int countToday();
     //查询之前某天的用户注册量
     int countPreDay(int day);
-    //返回最热门的前五条微博的作者昵称，根据点赞数
-    List<User> hotBlogUserNameByP();
+
 }
