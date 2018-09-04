@@ -47,9 +47,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void showMyFollowCount(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
-        userId = user.getUserId();
+        userId = Integer.parseInt(request.getParameter("userId"));
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
         int myFollowCount = fansInfoDao.getFollowCount(userId);
         PrintWriter out = response.getWriter();
