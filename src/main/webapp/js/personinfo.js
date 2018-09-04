@@ -25,12 +25,20 @@ $(function () {
             userId = user.userId;
         }
     });
-
+    var flag=-1;
     var currentUserId=window.location.search.substring(8,10);
     if(userId==currentUserId){
         userId=userId;
+        flag=1;
+        $(".guanzhu").hide();
+        $(".jubao").hide();
     }else {
         userId=currentUserId;
+        flag=0;
+        $(".c_search").hide();
+        $(".c_search_img").hide();
+        $(".c_list_span").addClass("hideguanzhu");
+        alert($(".c_list_span").html());
     }
     updateFansCount();
     updateFollowCount();
@@ -279,7 +287,11 @@ function showFansList() {
             $(".c_list").children().remove();
             for (var i = 0; i < myfansList.length; i ++){
                 var userId = myfansList[i].userId;
-                var $node = $(' <a class="c_list_a"><img src="'+myfansList[i].headP+'" id="'+userId+'"><span class="c_list_name">'+myfansList[i].userName+'</span><span class="c_list_span" name="'+userId+'"><strong>+</strong> 关注</span></a>')
+                if(flag==1){
+                    var $node = $(' <a class="c_list_a"><img src="'+myfansList[i].headP+'" id="'+userId+'"><span class="c_list_name">'+myfansList[i].userName+'</span><span class="c_list_span" name="'+userId+'"><strong>+</strong> 关注</span></a>')
+                }else{
+                    var $node = $(' <a class="c_list_a"><img src="'+myfansList[i].headP+'" id="'+userId+'"><span class="c_list_name">'+myfansList[i].userName+'</span></a>')
+                }
                 $.ajax({
                     url:"/ShowFans?method=showIfFollow",
                     type:"post",
@@ -307,7 +319,12 @@ function showFollowList() {
             $(".c_list").children().remove();
             for (var i = 0; i < myfollowList.length; i ++){
                 var userId = myfollowList[i].userId;
-                var $node = $(' <a class="c_list_a"><img src="'+myfollowList[i].headP+'" id="'+myfollowList[i].userId+'"><span class="c_list_name">'+myfollowList[i].userName+'</span><span class="c_list_span" name="'+userId+'"><strong>+</strong> 关注</span></a>')
+                if(flag==1){
+                    var $node = $(' <a class="c_list_a"><img src="'+myfollowList[i].headP+'" id="'+myfollowList[i].userId+'"><span class="c_list_name">'+myfollowList[i].userName+'</span><span class="c_list_span" name="'+userId+'"><strong>+</strong> 关注</span></a>')
+                }else{
+                    var $node = $(' <a class="c_list_a"><img src="'+myfollowList[i].headP+'" id="'+myfollowList[i].userId+'"><span class="c_list_name">'+myfollowList[i].userName+'</span></a>')
+                }
+
                 $.ajax({
                     url:"/ShowFans?method=showIfFollow",
                     type:"post",
