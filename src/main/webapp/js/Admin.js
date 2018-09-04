@@ -1,5 +1,40 @@
 $(function () {
 
+
+    //从session中获取用户名
+    $.ajax({
+        async: false,
+        url: "/EndGetSessionServlet",
+        type: "post",
+        dataType: "json",
+        success: function (res) {
+            $.each(res, function (index, obj) {
+                $("#w_adminName").text(obj['amName']);
+            });
+        }
+    });
+    //未登录则跳转登录界面
+    var adminUser = $("#w_adminName").text();
+    if (adminUser == "远方") {
+        window.location.href = "adminBack.html";
+    }
+    //退出当前账号,清除session
+    $("#w_logOut").click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            async: false,
+            url: "/EndClearSessionServlet",
+            type: "post",
+            dataType: "text",
+            success: function (res) {
+            }
+        });
+
+        window.location.href = "adminBack.html";
+
+    });
+
     //定义分页容器
     var $page = $('<div id="demo"></div>');
 
@@ -62,7 +97,7 @@ $(function () {
             , shade: 0.6 //遮罩透明度
             , maxmin: true //允许全屏最小化
             , anim: 1 //0-6的动画形式，-1不开启
-            , content: '<div style="padding:50px;">这是一个非常普通的页面层，传入了自定义的html</div>'
+            , content: '<div style="padding:50px;">每个管理员都很不错</div>'
         });
     });
 
@@ -615,7 +650,6 @@ $(function () {
         $(".w_demo").addClass("w_padding");
 
 
-
         $(".w_demo").prepend($infoTable);
         $(".w_end_foot").append($page);
         //分页
@@ -694,50 +728,48 @@ $(function () {
         $(".w_end_foot").children().remove();
 
         //--条状图
-        var $div=$('<div id="chartmain" style="width:500px; height: 400px; display: inline-block"></div>');
+        var $div = $('<div id="chartmain" style="width:500px; height: 400px; display: inline-block"></div>');
         //--饼状图
-        var $divCircular=$('<div id="circular" style="width:500px; height: 400px; display: inline-block"></div>');
+        var $divCircular = $('<div id="circular" style="width:500px; height: 400px; display: inline-block"></div>');
         $(".w_demo").prepend($divCircular);
         $(".w_demo").prepend($div);
 
 
-
         //数据统计------------------------------------------------------
         //条状图
-        var countUserBytime=0;
+        var countUserBytime = 0;
+
         //查询用户注册时间
         function selectUserCountByTime(day) {
             $.ajax({
                 async: false,
-                url:"/selectUserCountByTime",
-                data:{"day":day},
-                dataType:"text",
-                type:"post",
-                success:function (res) {
-                    countUserBytime=res;
+                url: "/selectUserCountByTime",
+                data: {"day": day},
+                dataType: "text",
+                type: "post",
+                success: function (res) {
+                    countUserBytime = res;
                 }
             });
             return countUserBytime;
         }
 
         var option = {
-            title:{
-                text:'注册用户量'
+            title: {
+                text: '注册用户量'
             },
-            tooltip:{},
-            legend:{
-                data:[]
+            tooltip: {},
+            legend: {
+                data: []
             },
-            xAxis:{
-                data:["前天","昨天","今天"]
+            xAxis: {
+                data: ["前天", "昨天", "今天"]
             },
-            yAxis:{
-
-            },
-            series:[{
-                name:'注册量',
-                type:'line',
-                data:[selectUserCountByTime(2),selectUserCountByTime(1),selectUserCountByTime()]
+            yAxis: {},
+            series: [{
+                name: '注册量',
+                type: 'line',
+                data: [selectUserCountByTime(2), selectUserCountByTime(1), selectUserCountByTime()]
             }]
         };
         //初始化echarts实例
@@ -746,44 +778,45 @@ $(function () {
         //使用制定的配置项和数据显示图表
 
         //定义json对象
-        var hotJson ;
+        var hotJson;
         myChart.setOption(option);
+
         function getHotName() {
             $.ajax({
                 async: false,
-                url:"/EndHotServlet",
-                dataType:"json",
-                type:"post",
-                success:function (res) {
-                    hotJson=res;
+                url: "/EndHotServlet",
+                dataType: "json",
+                type: "post",
+                success: function (res) {
+                    hotJson = res;
                 }
             });
             return hotJson;
         }
+
         var arrName = new Array();
         var arrCount = new Array();
-        $.each(getHotName(),function (index,obj) {
-            arrName[index]=obj['userName'];
-            arrCount[index]=obj['praNum'];
+        $.each(getHotName(), function (index, obj) {
+            arrName[index] = obj['userName'];
+            arrCount[index] = obj['praNum'];
         });
-
 
 
         //饼状图
         var option = {
-            title:{
-                text:'网络达人'
+            title: {
+                text: '网络达人'
             },
-            series:[{
-                name:'访问量',
-                type:'pie',
-                radius:'60%',
-                data:[
-                    {value:arrCount[0],name:arrName[0]},
-                    {value:arrCount[1],name:arrName[1]},
-                    {value:arrCount[2],name:arrName[2]},
-                    {value:arrCount[3],name:arrName[3]},
-                    {value:arrCount[4],name:arrName[4]}
+            series: [{
+                name: '访问量',
+                type: 'pie',
+                radius: '60%',
+                data: [
+                    {value: arrCount[0], name: arrName[0]},
+                    {value: arrCount[1], name: arrName[1]},
+                    {value: arrCount[2], name: arrName[2]},
+                    {value: arrCount[3], name: arrName[3]},
+                    {value: arrCount[4], name: arrName[4]}
 
                 ]
             }]
@@ -794,8 +827,6 @@ $(function () {
 
         //使用制定的配置项和数据显示图表
         myChartCircular.setOption(option);
-
-
 
 
     });
