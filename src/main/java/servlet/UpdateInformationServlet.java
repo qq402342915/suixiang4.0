@@ -23,9 +23,9 @@ public class UpdateInformationServlet extends HttpServlet {
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
 //        HttpSession session=request.getSession();
 //        User user2= (User) session.getAttribute("user");
-//        String telNum=user2.getTelNum();
+//        int userId=user2.getUserId();
+int userId=28;
 
-        String telNum="13333333333";
 
 
         //获取当前属性
@@ -59,7 +59,7 @@ public class UpdateInformationServlet extends HttpServlet {
             user.setSign(sign);
             user.setBirthday(birth);
             user.setAddress(address);
-            userInfoDao.updateUser(user,telNum);
+            int ret= userInfoDao.updateUser(user,userId);
 //            user.setRegDate(user2.getRegDate());
 //            user.setBgId(user2.getBgId());
 //            user.setHeadP(user2.getHeadP());
@@ -69,6 +69,7 @@ public class UpdateInformationServlet extends HttpServlet {
 //
 //
 //            session.setAttribute("user",user);
+
 
         } catch (ParseException e) {
             e.printStackTrace();

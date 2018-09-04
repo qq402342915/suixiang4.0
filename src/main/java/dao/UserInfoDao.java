@@ -18,7 +18,7 @@ public interface UserInfoDao {
     //添加用户信息
     int insertUser(User user);
     //更新用户信息
-    int updateUser(User user ,String telNUm);
+    int updateUser(User user ,int userId);
     //查看用户名是否存在
     boolean getUserName(String username);
     //查看用户是否被锁定
@@ -36,4 +36,8 @@ public interface UserInfoDao {
     int UpdateHeadP(String headp,String telNum);
     //更新背景
     int UpdateBg(int bgId,String telNum);
+    //查询未关注的人
+    List<User> getNotFansId(int userId);
+    //根据用户名查找
+    List<User> getUserId(String username);
 }

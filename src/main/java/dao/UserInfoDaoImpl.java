@@ -36,8 +36,8 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     }
 
     @Override
-    public int updateUser(User user, String telNum) {
-        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,email=?,sex=?,school=?,sign=?,birthday=?,address=? where telNum=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),new Timestamp(user.getBirthday().getTime()), user.getAddress(),telNum});
+    public int updateUser(User user, int userId) {
+        return executeUpdate("UPDATE t_user set userName = ? ,telNum=?,email=?,sex=?,school=?,sign=?,birthday=?,address=? where userId=?",new Object[]{user.getUserName(),user.getTelNum(),user.getEmail(),user.getSex(),user.getSchool(),user.getSign(),new Timestamp(user.getBirthday().getTime()), user.getAddress(),userId});
     }
 
     @Override
@@ -75,5 +75,14 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     }
     public int UpdateBg(int bgId,String telNum){
         return executeUpdate("update t_user set bgId=? where telNum = ?",new Object[]{bgId,telNum});
+    }
+    @Override
+    public List<User> getNotFansId(int userId) {
+        return executeQuery("select * From t_user WHERE userId not in (select userId FROM t_fansuser where fansId=?)",new Object[]{userId});
+    }
+
+    @Override
+    public List<User> getUserId(String username) {
+        return executeQuery("select * from t_user where userName=?",new Object[]{username});
     }
 }

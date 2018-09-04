@@ -93,26 +93,7 @@ $(function () {
     // tlogDate=getDate(tlogDate);
 
     //展示用户信息
-    $.ajax({
-        url: "/ShowInformation",
-        type: "post",
-        // data:"telNumber"
-        dataType: "json",
-        success: function (res) {
-
-            $('input[name="userName"]').val(res[0].userName);
-            $('input[name="telNumber"]').val(res[0].telNum);
-            $('input[name="email"]').val(res[0].email);
-            $('input[name="sex"]').val(res[0].sex);
-            $('input[name="school"]').val(res[0].school);
-            $('input[name="regDate"]').val(res[0].regDate);
-            $('input[name="sign"]').val(res[0].sign);
-            $('input[name="birthday"]').val((res[0].birthday).substr(0, 10));
-            $('input[name="address"]').val(res[0].address);
-            $(".y_headp").prop("src", res[0].headP);
-
-        }
-    })
+   show();
 
 
 //更换头像
@@ -167,39 +148,48 @@ $(function () {
         return url;
     }
 
-    // $('#y_hold').click(function () {
-    //     $.ajax({
-    //         url: "/UpdateInformation",
-    //         Type: 'POST',
-    //         data: "$(\"#y_information\").serializeArray()",
-    //         dataType: "json",
-    //         success: function (ret) {
-    //             if (ret) {
-    //             layer.alert('更新成功', {
-    //                 skin: 'layui-layer-lan'
-    //                 , closeBtn: 0
-    //             })}
-    //             else{layer.alert('更新失败', {
-    //                 skin: 'layui-layer-lan'
-    //                 , closeBtn: 0
-    //             })}
-    //         }
-    //     })
-    //
-    // })
 
-    // if ($("#y_information").ajaxSubmit().submit()==true) {
-    //     layer.alert('更新成功', {
-    //         skin: 'layui-layer-lan'
-    //         , closeBtn: 0
-    //     });
-    // }
-    // else {
-    //     layer.alert('更新失败', {
-    //         skin: 'layui-layer-lan'
-    //         , closeBtn: 0
-    //     });
-    // }
+    $('#y_hold').click(function () {
+        $.ajax({
+            url: "/UpdateInformation",
+            Type: 'POST',
+            data: $("#y_information").serializeArray(),
+            dataType: "json",
+            success: function (ret) {
+
+            }
+
+        })
+        layer.alert('更新成功', {
+            skin: 'layui-layer-lan'
+            , closeBtn: 0
+        })
+show();
+
+    })
+
 
 
 })
+function show() {
+    $.ajax({
+        url: "/ShowInformation",
+        type: "post",
+        // data:"telNumber"
+        dataType: "json",
+        success: function (res) {
+
+            $('input[name="userName"]').val(res[0].userName);
+            $('input[name="telNumber"]').val(res[0].telNum);
+            $('input[name="email"]').val(res[0].email);
+            $('input[name="sex"]').val(res[0].sex);
+            $('input[name="school"]').val(res[0].school);
+            $('input[name="regDate"]').val(res[0].regDate);
+            $('input[name="sign"]').val(res[0].sign);
+            $('input[name="birthday"]').val((res[0].birthday).substr(0, 10));
+            $('input[name="address"]').val(res[0].address);
+            $(".y_headp").prop("src", res[0].headP);
+
+        }
+    })
+}
