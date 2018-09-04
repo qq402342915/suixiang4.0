@@ -24,11 +24,12 @@ public class ShowInformationServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin","*");
         HttpSession session=request.getSession();
         User user= (User) session.getAttribute("user");
-        String telNumber=user.getTelNum();
+        int userId=28;
+//                user.getUserId();
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
 
         //获取当前用户信息
-        List<User> userList = userInfoDao.getUser(telNumber);
+        List<User> userList = userInfoDao.getUser(userId);
         JsonConfig jsonConfig =new JsonConfig();
         JsonDate jd=new JsonDate();
         jsonConfig.registerJsonValueProcessor(Date.class,jd);

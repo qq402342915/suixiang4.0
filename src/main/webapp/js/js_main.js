@@ -395,12 +395,12 @@ layui.use(['flow', 'upload', "layer", "element"], function () {
         });
 
         //推荐关注
-follow();
+reload();
 
 
         //选择关注
         $(".y_follow").click(function () {
-            alert($(this).prev().text());
+
             $.ajax({
                 url: "/InsertFollow",
                 type: "post",
@@ -413,14 +413,15 @@ follow();
                 }
             })
             $(this).text("√ 已关注")
-            setTimeout(follow(),2000);
-             setTimeout(function (){$(".y_follow").text("+关注")},2000);
-        })
+            // setTimeout(reload(),3000);
+            // setTimeout(function (){$(".y_follow").text("+关注")},2000);
+            }
+        )
     });
 })
-$('#y_change').click(function () {
-    follow();
-})
+$("#y_change").click(function () {
+   reload();
+});
 
 
 function add0(m) {
@@ -439,13 +440,14 @@ function format(timestamp) {
     var seconds = time.getSeconds();
     return year + '-' + add0(month) + '-' + add0(date) + ' ' + add0(hours) + ':' + add0(minutes) + ':' + add0(seconds);
 }
-function follow(){
+function reload(){
     $.ajax({
         url: "/SuggestFollow",
         type: "post",
         dataType: "json",
         success: function (ret) {
-            $("#y_img1").css("src", ret[0].headP);
+
+            $("#y_img1").prop(src, ret[0].headP);
             $("#y_a1").text(ret[0].userName);
             $("#y_img2").attr("src", ret[1].headP);
             $("#y_a2").text(ret[1].userName);
