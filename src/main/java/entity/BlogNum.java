@@ -1,30 +1,30 @@
 package entity;
 
 public class BlogNum {
-    private Long comNum;
-    private Long praNum;
+    private int comNum;
+    private int praNum;
 
     public BlogNum() {
     }
 
-    public BlogNum(Long comNum, Long praNum) {
+    public BlogNum(int comNum, int praNum) {
         this.comNum = comNum;
         this.praNum = praNum;
     }
 
-    public Long getComNum() {
+    public int getComNum() {
         return comNum;
     }
 
-    public void setComNum(Long comNum) {
+    public void setComNum(int comNum) {
         this.comNum = comNum;
     }
 
-    public Long getPraNum() {
+    public int getPraNum() {
         return praNum;
     }
 
-    public void setPraNum(Long praNum) {
+    public void setPraNum(int praNum) {
         this.praNum = praNum;
     }
 }

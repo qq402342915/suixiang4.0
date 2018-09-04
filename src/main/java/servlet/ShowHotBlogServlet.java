@@ -1,7 +1,6 @@
 package servlet;
 
 import dao.*;
-import entity.BlogContext;
 import entity.UserBlog;
 import net.sf.json.JSONArray;
 
