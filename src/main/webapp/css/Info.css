@@ -352,6 +352,7 @@ body{
 /*头部*/
 .c_main{
     overflow: hidden;
+    margin-bottom: 10px;
 }
 .s_header{
     position: fixed;

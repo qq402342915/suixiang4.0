@@ -31,8 +31,11 @@ public class ShowBlogServlet extends HttpServlet {
             showMyBlogCount(request, response);//执行blogCount代码
         } else if(method.equals("showMyBlogInfo")){
             showMyBlogInfo(request, response);//执行BlogInfo代码
+        } else if (method.equals("showSearchBlog")){
+            showSearchBlog(request,response);
+        }else if (method.equals("deleteBlog")) {
+            deleteBlog(request, response);
         }
-
     }
 
     private void showMyBlogCount(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
@@ -68,6 +71,31 @@ public class ShowBlogServlet extends HttpServlet {
         System.out.println(ip);
         PrintWriter out = response.getWriter();
         out.print(array);
+        out.flush();
+        out.close();
+    }
+
+    private void showSearchBlog(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        String key = request.getParameter("key");
+        BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
+        List<Blog> mySearchBlog = blogInfoDao.getBlogByKey(userId,key);
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.registerJsonValueProcessor(Date.class , new JsonDate());
+        JSONArray array = JSONArray.fromObject(mySearchBlog,jsonConfig);
+        PrintWriter out = response.getWriter();
+        out.print(array);
+        out.flush();
+        out.close();
+    }
+
+    private void deleteBlog(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        String blogId = request.getParameter("blogId");
+        BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
+        int result = blogInfoDao.deleteBlog(Integer.parseInt(blogId));
+        PrintWriter out = response.getWriter();
+        out.print(result);
         out.flush();
         out.close();
     }
