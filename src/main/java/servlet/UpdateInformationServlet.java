@@ -25,7 +25,7 @@ public class UpdateInformationServlet extends HttpServlet {
 //        User user2= (User) session.getAttribute("user");
 //        String telNum=user2.getTelNum();
 
-        String telNum="13122222214";
+        String telNum="13333333333";
 
 
         //获取当前属性

@@ -36,32 +36,25 @@ $(function () {
 
     $(".layui-form").validate({
         rules: {
-            //     nickName: {
-            //         required: true,
-            //         maxlength: 10,
-            //         regex: "^[\u4e00-\u9fa5a-zA-Z0-9]+$"
-            //     },
-            //     telNumber: {
-            //         required: true,
-            //         minlength: 11,
-            //         maxlength: 11,
-            //         regex: "^1[3|4|5|7|8][0-9][0-9]{8}$",
-            //     },
-            //     email: {
-            //         required:true ,
-            //         regex: "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"
-            //     },
-            //     school: {
-            //         required: false,
-            //         maxlength: 10,
-            //         regex: "^[\u4e00-\u9fa5a-zA-Z]+$"
-            //     },
-            //
-            //     address: {
-            //         required: false,
-            //         maxlength: 19,
-            //         regex:"^[\u4e00-\u9fa5a-zA-Z]+$"
-            //     },
+            userName: {
+                required: true,
+                maxlength: 10,
+                regex: "^[\u4e00-\u9fa5a-zA-Z0-9]+$"
+            },
+            telNumber: {
+                required: true,
+                minlength: 11,
+                maxlength: 11,
+                regex: "^1[3|4|5|7|8][0-9][0-9]{8}$",
+            },
+            email: {
+                required: true,
+                regex: "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"
+            },
+            birthday: {
+                required: true,
+            },
+
         },
         messages: {
             userName: {
@@ -81,42 +74,15 @@ $(function () {
                 required: "请输入邮箱",
                 regex: "邮箱格式错误"
             },
-            school: {
-                required: "请输入学校",
-                maxlength: "学校小于十个字",
-                regex: "学校名称由中文或英文字母组成"
-            },
+            birthday: {
+                required: "请输入生日",
 
-
-            address: {
-                required: "请输入地址",
-                maxlength: "地址小于十九个字",
-                regex: "只能输入中文，英文"
             },
 
         },
 
     })
-// function notRequire($node,reg,mession){
-//
-//        if ($node.val()!=null) {
-//           if ( reg.text($node.val())){
-//               return true;
-//           }
-//           if (reg.text($node.val())==false) {
-//               return mession;
-//           }
-//     }
-// }
-    // notRequire($('input[name="email"]'),"^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$","ss")
-    // notRequire()
-    // notRequire()
-    // notRequire()
-    // notRequire()
-    // notRequire()
 
-
-    // $('input[name="email"]')
     // //String->Date
     // function getDate(strDate) {
     //     //strDate为需要转换成日期格式的字符串
@@ -164,16 +130,7 @@ $(function () {
             $(".y_headp_hold").click(function () {
                 data.submit();
             });
-            // $.ajax({
-            //     url:"/UpdateHeadp",
-            //     Type:'POST',
-            //     // data:"",
-            //     dataType:"json",
-            //     success:function (ret) {
-            //
-            //     }
-            //
-            // })
+
 
         },
 
@@ -209,23 +166,40 @@ $(function () {
         }
         return url;
     }
-    //
+
     // $('#y_hold').click(function () {
-    //     $("#y_information").ajaxSubmit().submit();
+    //     $.ajax({
+    //         url: "/UpdateInformation",
+    //         Type: 'POST',
+    //         data: "$(\"#y_information\").serializeArray()",
+    //         dataType: "json",
+    //         success: function (ret) {
+    //             if (ret) {
+    //             layer.alert('更新成功', {
+    //                 skin: 'layui-layer-lan'
+    //                 , closeBtn: 0
+    //             })}
+    //             else{layer.alert('更新失败', {
+    //                 skin: 'layui-layer-lan'
+    //                 , closeBtn: 0
+    //             })}
+    //         }
+    //     })
     //
-    //     if ($("#y_information").ajaxSubmit().submit()==true) {
-    //         layer.alert('更新成功', {
-    //             skin: 'layui-layer-lan'
-    //             , closeBtn: 0
-    //         });
-    //     }
-    //     else {
-    //         layer.alert('更新失败', {
-    //             skin: 'layui-layer-lan'
-    //             , closeBtn: 0
-    //         });
-    //     }
     // })
+
+    // if ($("#y_information").ajaxSubmit().submit()==true) {
+    //     layer.alert('更新成功', {
+    //         skin: 'layui-layer-lan'
+    //         , closeBtn: 0
+    //     });
+    // }
+    // else {
+    //     layer.alert('更新失败', {
+    //         skin: 'layui-layer-lan'
+    //         , closeBtn: 0
+    //     });
+    // }
 
 
 })
