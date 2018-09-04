@@ -22,7 +22,7 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
 
     @Override
     public int insertBlog(Blog blog) {
-        return executeUpdate("insert into t_blog value(?,?,?,?,?,?,?)",new Object[]{blog.getContext(),blog.getSendDate(),blog.getSendAddr(),blog.getUserId(),blog.getIp(),blog.getTsNum()});
+        return executeUpdate("insert into t_blog(context,userId,blogPic,blogVideo) value(?,?,?,?)",new Object[]{blog.getContext(),blog.getUserId(),blog.getBlogPic(),blog.getBlogVideo()});
     }
 
     @Override

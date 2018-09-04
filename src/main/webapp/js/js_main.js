@@ -5,8 +5,8 @@ layui.use(['flow','upload',"layer","element"], function() {
         element = layui.element;
     //发布的内容
     var s_photo;
-    // var s_vedio;
-    // var s_text;
+    var s_video;
+    var s_text;
     //执行实例
     var uploadInst = upload.render({
         elem: '#s_picture',      //绑定元素
@@ -61,19 +61,10 @@ layui.use(['flow','upload',"layer","element"], function() {
         },
 
         done: function(res, index, upload){
-            // alert("上传成功");
-            s_photo = res;
+            alert("上传成功");
+            s_photo = res.data;
             layer.closeAll('loading'); //关闭loading
             $('.preview_div').children().remove();
-            $.ajax({
-                url:"/PublishBlogServlet",
-                type:"post",
-                data:{"s_photo":s_photo,"s_text":$("#s_publish_test").val()},
-                dataType:"json",
-                success:function (result) {
-                    alert("6666");
-                }
-            })
         },
         error: function(index, upload){
             layer.open({
@@ -132,7 +123,7 @@ layui.use(['flow','upload',"layer","element"], function() {
         }
         ,done: function(res, index, upload){
             if(res.errno == 0){ //上传成功
-                s_vedio = res;
+                s_video = res.data;
                 setTimeout( "$('.preview_div').children().remove()",3000);
                 var tr = $(".preview_div").find('tr#upload-'+ index)
                     ,tds = tr.children();
@@ -156,50 +147,36 @@ layui.use(['flow','upload',"layer","element"], function() {
 $(function () {
     //转发
     $(".s_mynode").on("click",".s_body_content_func_1",function () {
+        var $node = $(this);
+        var userName = $node.parent().siblings(".s_body_content_personinfo").children().eq(1).children("a").text();
+        // alert(userName);
         layer.open({
             type: 1 //Page层类型
-            , area: ['400px', '390px']
-            , title: '随享，随你所享'
+            , area: ['500px', '343px']
+            , title:"转发"
             , shade: 0.6 //遮罩透明度
             , maxmin: true //允许全屏最小化
             , anim: 1 //0-6的动画形式，-1不开启
-            , content: '<div class="w_login">\n' +
-                '    <div class="w_loginHead">\n' +
-                '        <span>用户登录</span>\n' +
-                '        <span>Login User</span>\n' +
-                '    </div>\n' +
-                '    <div class="w_line w_lineLeft"></div>\n' +
-                '    <div class="w_loginText">\n' +
-                '        随时随地分享你的生活\n' +
-                '    </div>\n' +
-                '    <div class="w_line w_lineRight"></div>\n' +
-                '    <div class="w_loginUser">\n' +
-                '        <span class="layui-icon layui-icon-username"></span>\n' +
-                '        <input name="w_tel" id="w_telId" type="text" placeholder="手机号">\n' +
-                '    </div>\n' +
-                '    <div class="w_loginPass">\n' +
-                '        <span class="layui-icon layui-icon-password"></span>\n' +
-                '        <input name="w_pass" id="w_passId" type="password" placeholder="密码">\n' +
-                '    </div>\n' +
-                '    <div class="w_remMe">\n' +
-                '        <input id="w_rememberMe" type="checkbox"><span>记住我</span>\n' +
-                '    </div>\n' +
-                '    <div class="w_loginBottom">\n' +
-                '        <div class="w_validationCode">\n' +
-                '            <input type="text" id="w_codeId" name="w_code" placeholder="请输入验证码">\n' +
-                '        </div>\n' +
-                '        <div class="w_validationImg">\n' +
-                '            <div><img id="w_changeImg" src="/CheckCodeServlet" alt=""></div>\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '    <div class="w_wrong" id="w_wrongInfo">\n' +
-                '        <span>您输入的用户名或密码不正确</span>\n' +
-                '    </div>\n' +
-                '    <div class="w_loginBtn">\n' +
-                '        <input type="button" id="w_login_btn" class="layui-btn layui-btn-radius layui-btn-normal" value="登录">\n' +
-                '    </div>\n' +
-                '\n' +
-                '</div>'
+            , content: '<div class="s_trans_body">'+
+                            '<span class="s_trans_body_at">@'+userName+'</span>'+
+                            '<div class="s_trans_body_text">'+
+                                '<textarea id="s_trans_body_text"></textarea>'+
+                            '</div>'+
+                            '<div class="s_trans_body_trans">'+
+                                '<button class="layui-btn layui-btn-sm layui-btn-normal" id="s_trans">转发</button>'+
+                            '</div>'+
+                        '</div>'
+        })
+        $("#s_trans").click(function () {
+            // $.ajax({
+            //     url: "/SInsertComment",
+            //     type:"post",
+            //     data:{"userId":$(".s_body").attr("userId"),"blogId":$node_push.closest("li").attr("blogId"),"comContent":$node_text.val()},
+            //     dataType:"text",
+            //     success:function () {
+            //
+            //     }
+            // })
         })
     });
     //发表评论
@@ -359,34 +336,46 @@ function showContent(url,node) {
     showContent("/ShowHotBlog","#LAY_demo1");
     //登录成功后，显示用户信息，关注微博等
     function showUser() {
-        $("#personInfo").prop("href","personinfo.html");
         $.ajax({
+            async:false,
             url:"/ShowMy",
             type:"post",
             data:{"w_tel":$("#w_telId").val()},
             dataType:"json",
             success:function (user) {
+                $("#personInfo").attr("userId",user[0].userId);
                 $("#s_headphoto_photo").prop("src",user[0].headP);
                 $("#s_userName").html(user[0].userName);
                 $(".s_body").attr("headP",user[0].headP);
                 $(".s_body").attr("userId",user[0].userId);
             }
         })
+        // alert($("#personInfo").attr("userId"));
+        $("#personInfo").prop("href","personinfo.html?userid="+($("#personInfo").attr("userId")));
         $(".s_headphoto_nologin").hide();
         $(".s_headphoto_login").show();
         $("#s_header_right").show();
         $("#s_body_content_commentgif").click(function () {
+            $("#LAY_demo2").empty();
             showContent("/ShowLikeDayBlog","#LAY_demo2");
         })
         //发布功能
-        // $("#publish").click(function () {
-        //     $.ajax({
-        //         url:"/ShowMy",
-        //         type:"post",
-        //         data:{"w_tel":$("#w_telId").val()},
-        //         dataType:"json",
-        //     })
-        // })
+        // $("#s_publish_test").
+        $("#publish").click(function () {
+            $.ajax({
+                url:"/PublishBlogServlet",
+                type:"post",
+                data:{"s_photo":s_photo,"s_text":$("#s_publish_test").val(),"s_video":s_video},
+                success:function (result) {
+                    $("#s_publish_test").val("");
+                    // var $newnode;
+                    //
+                    // var $mynode = $node.clone(true);
+                    // $mynode.append($newnode);
+                    // $("#LAY_demo2").append($mynode);
+                }
+            })
+        })
 
 
     }
