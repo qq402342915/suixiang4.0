@@ -141,7 +141,28 @@ layui.use(['flow','upload',"layer","element"], function() {
 
 $(function () {
     //转发,
-    //评论
+    //发表评论
+    $(".s_comment_publish_push").click(function () {
+        var $node_push = $(this);
+        var $node_text = $node_push.parent().prev().children(".s_comment_publish_text");
+        // alert($node_text.val())
+        // alert($node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html())
+        $.ajax({
+            url: "/SInsertComment",
+            type:"post",
+            data:{"userId":$(".s_body").attr("userId"),"blogId":$(this).closest("li").attr("blogId"),"comContent":$node_text.val()},
+            dataType:"text",
+            success:function (ret) {
+                if(ret == "1"){
+                    layer.msg("评论成功");
+                    $(".s_comment_publish_text").val("");
+                    var num = parseInt($node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html()) + 1;
+                    $node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html(num);
+                }
+            }
+        })
+    })
+    //显示评论
     $(".s_mynode").on("click",".s_body_content_func_2",function () {
         var $node = $(this).parents(".s_mynode");
         var $comment = $node.children(".s_comment");
@@ -150,31 +171,44 @@ $(function () {
         if($($comment).css("display") != "none"){
             $comment.hide();
         }else{
+            $(".s_comment_publish_header img").prop("src",$(".s_body").attr("headP"));
+            // alert($(".s_body").attr("headP"));
             $comment.show();
-        }
-        $.ajax({
-            url: "/SShowComment",
-            type:"post",
-            data:{"blogId":$node.attr("blogId")},
-            dataType:"json",
-            success:function (comment) {
-                for(var i = 0; i < comment.length;i++){
-                    var $newcomment = '<div class="s_showcomment">'+
-                                            '<img src="../images/logo.png" alt="">'+
-                                            '<span class="s_showcomment_name">我不爱吃西红柿</span>'+
-                                            '<div class="s_showcomment_text">:'+comment[i].comContent+'</div>'+
-                                                '<div class="s_showcomment_footer">'+
-                                                    '<span class="s_showcomment_time">'+format(comment[i].comDate.time)+'</span>'+
-                                                    '<div class="s_showcomment_footer_right">'+
-                                                    '<span class="s_showcomment_footer_right_hui">回复</span>'+
-                                                    '<span class="s_showcomment_footer_right_pra"><i class="layui-icon layui-icon-praise"></i><span>'+comment[i].num+'</span></span>'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>';
-                    $comment.append($newcomment);
+            $.ajax({
+                url: "/SShowComment",
+                type:"post",
+                data:{"blogId":$node.attr("blogId")},
+                dataType:"json",
+                success:function (comment) {
+                    // alert(comment.length);
+                    for(var i = 0; i < comment.length;i++){
+                        var $newcomment;
+                        $.ajax({
+                            async: false,
+                            url: "/SShowUserInfoServlet",
+                            type:"post",
+                            data:{"userId":comment[i].userId},
+                            dataType:"json",
+                            success:function (s_user) {
+                                $newcomment = '<div class="s_showcomment">'+
+                                    '<img src="'+s_user[i].headP+'" alt="">'+
+                                    '<span class="s_showcomment_name">'+s_user[i].userName+'</span>'+
+                                    '<div class="s_showcomment_text">:'+comment[i].comContent+'</div>'+
+                                    '<div class="s_showcomment_footer">'+
+                                    '<span class="s_showcomment_time">'+format(comment[i].comDate.time)+'</span>'+
+                                    '<div class="s_showcomment_footer_right">'+
+                                    '<span class="s_showcomment_footer_right_hui">回复</span>'+
+                                    '<span class="s_showcomment_footer_right_pra"><i class="layui-icon layui-icon-praise"></i><span>'+comment[i].num+'</span></span>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</div>';
+                            }
+                        })
+                        $comment.append($newcomment);
+                    }
                 }
-            }
-        })
+            })
+        }
     })
     //点赞
     var $node = $(".s_mynode").detach();
@@ -230,6 +264,8 @@ function showContent(url,node) {
             success:function (user) {
                 $("#s_headphoto_photo").prop("src",user[0].headP);
                 $("#s_userName").html(user[0].userName);
+                $(".s_body").attr("headP",user[0].headP);
+                $(".s_body").attr("userId",user[0].userId);
             }
         })
         $(".s_headphoto_nologin").hide();
