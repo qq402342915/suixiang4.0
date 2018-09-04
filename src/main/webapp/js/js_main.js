@@ -28,7 +28,7 @@ layui.use(['flow','upload',"layer","element"], function() {
                 }
                 // 添加图片 ImgPreview-预览的dom元素的id
                 $('.preview_div').append('<div class="image-container" id="container'+index+'"><div class="delete-css"></div>' +
-                    '<img id="showImg'+index+'" style="width: 150px; margin:4px;cursor:pointer;float: left"src="' + result + '" alt="' + file.name + '"><button id="upload_img_'+index+'" class="layui-btn layui-btn-danger layui-btn-xs" style="float: left">X</button></div>');
+                    '<img id="showImg'+index+'" style="width: 150px; margin:4px;cursor:pointer;float: left"src="' + result + '" alt="' + file.name + '"><button id="upload_img_'+index+'" class="layui-btn layui-btn-danger layui-btn-xs" style="float: left">✖</button></div>');
                 //删除某图片
                 $("#upload_img_" + index).click(function () {
                     delete files[index];

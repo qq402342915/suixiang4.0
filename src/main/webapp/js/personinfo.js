@@ -1,10 +1,13 @@
+var userhead;
+var username;
+var key;
 $(function () {
     updateFansCount();
     updateFollowCount();
     showFansList();
+    showMyBlogInfo();
+    showMyBlogCount();
     /*显示用户信息*/
-    var userhead;
-    var username;
     var userId;
     $.ajax({
         url:"/RepostSession",
@@ -23,52 +26,6 @@ $(function () {
             $(".c_content_name a").html("src",user.userName);*/
         }
     });
-    //显示我的微博数量
-    $.ajax({
-        url:"/ShowBlogInfo?method=showMyBlogCount",
-        type:"post",
-        dataType:"json",
-        success:function (result) {
-            $(".c_content_right1 strong").text(result);
-        }
-    });
-    //显示我的微博信息
-    $.ajax({
-        url:"/ShowBlogInfo?method=showMyBlogInfo",
-        type:"post",
-        dataType:"json",
-        success:function (bloglist) {
-            for (var i = 0; i < bloglist.length; i ++){
-                bloglist[i].sendDate
-                var $node = $('<div class="c_content">'+
-                    '<div class="c_content_top" >'+
-                    '<img src="'+userhead+'">'+
-                    '<div class="c_content_name"><a>'+username+'</a><i class="layui-icon layui-icon-close c_blog_del"></i></div>'+
-                    '<div class="c_content_date"><a>'+bloglist[i].sendDate+'</a><a><i class="layui-icon layui-icon-location"></i><span>天津</span></a></div>'+
-                '</div> <div class="c_content_content">'+bloglist[i].context+'</div>'+
-                    '<div class="c_content_img"> <ul>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '</ul>'+
-                    '</div>'+
-                    '<div class="c_content_bottom">'+
-                    '<a><i class="layui-icon layui-icon-release" style="font-size: 20px"></i><span>6</span></a>'+
-                '<a><i class="layui-icon layui-icon-reply-fill" style="font-size: 20px"></i><span>66</span></a>'+
-                '<a><i class="layui-icon layui-icon-praise" style="font-size: 20px"></i><span>666</span></a>'+
-                '</div>'+
-                '</div>');
-                $(".c_content_right2").append($node);
-            }
-        }
-    });
-
-
         //点击添加或取消关注
     $(".c_list").on('click',".c_list_span",function () {
         var fansId = $(this).attr("name");
@@ -99,30 +56,42 @@ $(function () {
             });
         }
     });
-    /*$(".c_list").on('click',".c_list_span",function () {
-        var fansId = $(this).attr("name");
-        var $span = $(this);
-        $.ajax({
-            url: "/ShowFans?method=cancelFollow",
-            type: "post",
-            data: {"userId": userId, "fansId": fansId},
-            dataType: "text",
-            success: function (result) {
-                if (result == 1) $span.html("<strong>+</strong> 关注</span>").css("background-color", "#f2f2f5");
+    $(".c_content_right1 a span").click(function () {
+        location.reload();
+    })
+    //点击跳转其他主页
+    $(".c_list").on('click',".c_list_a img",function (){
+        userId = $(this).attr("id");
+        location.href = "../html/personinfo.html";
+    });
+    //搜索微博
+    $(".c_search_img").click(function () {
+        key = $(".c_search").val();
+        showSearchBlog();
+    })
+    //删除微博
+    $(".c_content_right2").on('click',".c_blog_del",function () {
+        var blogId = $(this).prop("id");
+        var $blogdiv = $(this).parents(".c_content");
+        layer.msg('确认要删除这条微博吗？', {
+            time: 5000, //5s后自动关闭
+            btn: ['确定', '取消'],
+            yes:function () {
+                $.ajax({
+                    url:"/ShowBlogInfo?method=deleteBlog",
+                    type:"post",
+                    data:{"blogId":blogId},
+                    dataType:"text",
+                    success:function (result) {
+                        if (result == 1) layer.msg("微博删除成功！");
+                        $blogdiv.remove();
+                        showMyBlogCount();
+                    }
+                });
             }
         });
-    });*/
-/*    //显示是否关注
-    $.ajax({
-        url:"/ShowFans?method=showIfFollow",
-        type:"post",
-        data:{"fansId":$('.c_list_a img').prop("id")},
-        dataType:"json",
-        success:function (result) {
 
-        }
-    });*/
-
+    })
 /*    $.ajax({
         url:"http://ip.taobao.com/service/getIpInfo.php?ip=43.247.4.54",
         type:"post",
@@ -161,14 +130,6 @@ $(function () {
         $(this).css("background-color","#e8e8e8");
         $(this).siblings().css("background-color","white");
     });
-    //搜索框聚焦
-    $(".c_search").focus(function () {
-        $(this).val("");
-    });
-    //搜索框失焦
-    $(".c_search").blur(function () {
-        $(this).val("搜索我的微博");
-    });
     //显示举报
     $(".jubao").hover(function () {
         $(".jubao_div").show(300);
@@ -179,13 +140,6 @@ $(function () {
         $(this).show();
     },function () {
         $(this).hide(300);
-    })
-    //点击刪除箭头弹框
-    $(".c_blog_del").click(function () {
-        layer.msg('确认要删除这条微博吗？', {
-            time: 5000, //5s后自动关闭
-            btn: ['确定', '取消']
-        });
     })
 });
 layui.use(['layer','element'], function(){
@@ -270,4 +224,91 @@ function showFollowList() {
         }
     });
 }
-
+//显示自己微博
+function showMyBlogInfo() {
+    $.ajax({
+        url:"/ShowBlogInfo?method=showMyBlogInfo",
+        type:"post",
+        dataType:"json",
+        success:function (bloglist) {
+            for (var i = 0; i < bloglist.length; i ++){
+                var $node = $('<div class="c_content">'+
+                    '<div class="c_content_top" >'+
+                    '<img src="'+userhead+'">'+
+                    '<div class="c_content_name"><a>'+username+'</a><i class="layui-icon layui-icon-close c_blog_del" id="'+bloglist[i].blogId+'"></i></div>'+
+                    '<div class="c_content_date"><a>'+bloglist[i].sendDate+'</a><a><i class="layui-icon layui-icon-location"></i><span>天津</span></a></div>'+
+                    '</div> <div class="c_content_content">'+bloglist[i].context+'</div>'+
+                    '<div class="c_content_img"> <ul>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '</ul>'+
+                    '</div>'+
+                    '<div class="c_content_bottom">'+
+                    '<a><i class="layui-icon layui-icon-release" style="font-size: 20px"></i><span>6</span></a>'+
+                    '<a><i class="layui-icon layui-icon-reply-fill" style="font-size: 20px"></i><span>66</span></a>'+
+                    '<a><i class="layui-icon layui-icon-praise" style="font-size: 20px"></i><span>666</span></a>'+
+                    '</div>'+
+                    '</div>');
+                $(".c_content_right2").append($node);
+            }
+        }
+    });
+}
+//显示搜索微博
+function showSearchBlog() {
+    $.ajax({
+        url:"/ShowBlogInfo?method=showSearchBlog",
+        type:"post",
+        data:{"key":key},
+        dataType:"json",
+        success:function (bloglist) {
+            $(".c_content_right2").children().remove();
+            if (bloglist.length == 0) layer.msg("无符合内容的微博！")
+            else layer.msg("查询成功！共"+bloglist.length+"条");
+            for (var i = 0; i < bloglist.length; i ++){
+                var $node = $('<div class="c_content">'+
+                    '<div class="c_content_top" >'+
+                    '<img src="'+userhead+'">'+
+                    '<div class="c_content_name"><a>'+username+'</a><i class="layui-icon layui-icon-close c_blog_del" id="'+bloglist[i].blogId+'"></i></div>'+
+                    '<div class="c_content_date"><a>'+bloglist[i].sendDate+'</a><a><i class="layui-icon layui-icon-location"></i><span>天津</span></a></div>'+
+                    '</div> <div class="c_content_content">'+bloglist[i].context+'</div>'+
+                    '<div class="c_content_img"> <ul>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '<li><img src="../images/head.jpg"></li>'+
+                    '</ul>'+
+                    '</div>'+
+                    '<div class="c_content_bottom">'+
+                    '<a><i class="layui-icon layui-icon-release" style="font-size: 20px"></i><span>6</span></a>'+
+                    '<a><i class="layui-icon layui-icon-reply-fill" style="font-size: 20px"></i><span>66</span></a>'+
+                    '<a><i class="layui-icon layui-icon-praise" style="font-size: 20px"></i><span>666</span></a>'+
+                    '</div>'+
+                    '</div>');
+                $(".c_content_right2").append($node);
+            }
+            $(".c_search").val("");
+        }
+    });
+}
+//显示我的微博数量
+function showMyBlogCount() {
+    $.ajax({
+        url:"/ShowBlogInfo?method=showMyBlogCount",
+        type:"post",
+        dataType:"json",
+        success:function (result) {
+            $(".c_content_right1 strong").text(result);
+        }
+    });
+}

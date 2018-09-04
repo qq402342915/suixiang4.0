@@ -38,7 +38,7 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
 
     @Override
     public List<Blog> getBlogByKey(int userId, String key) {
-        return executeQuery("select * from t_blog where userId = ? and context like ?",new Object[]{userId,"%" + key + "%"});
+        return executeQuery("select * from t_blog where userId = ? and context like ? order by sendDate desc",new Object[]{userId,"%" + key + "%"});
     }
 
     @Override
