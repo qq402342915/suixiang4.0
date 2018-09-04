@@ -36,6 +36,12 @@ public class ShowFansServlet extends HttpServlet {
             showMyFollowInfo(request, response);
         } else if(method.equals("showMyFansInfo")) {
             showMyFansInfo(request, response);
+        }else if (method.equals("showIfFollow")) {
+            showIfFollow(request,response);
+        }else if (method.equals("addFollow")){
+            addFollow(request,response);
+        }else if (method.equals("cancelFollow")){
+            cancelFollow(request,response);
         }
     }
 
@@ -72,9 +78,9 @@ public class ShowFansServlet extends HttpServlet {
             User user = userInfoDao.getUser(myAllFollowId.get(i).getUserId()).get(0);
             myAllFollow.add(user);
         }
-        /*JSONArray array = JSONArray.fromObject(myAllFollow);*/
+        JSONArray array = JSONArray.fromObject(myAllFollow);
         PrintWriter out = response.getWriter();
-        out.print(myAllFollow);
+        out.print(array);
         out.flush();
         out.close();
     }
@@ -101,6 +107,41 @@ public class ShowFansServlet extends HttpServlet {
         out.print(array);
         out.flush();
         out.close();*/
+    }
+
+    private void showIfFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        String fansId = request.getParameter("fansId");
+        FansInfoDao fansInfoDao = new FansInfoDaoImpl();
+        boolean result = fansInfoDao.getIfFollow(userId,Integer.parseInt(fansId));
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        System.out.println(result);
+        out.flush();
+        out.close();
+    }
+
+    private void addFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        String fansId = request.getParameter("fansId");
+        Fansuser fansuser = new Fansuser(userId,Integer.parseInt(fansId));
+        FansInfoDao fansInfoDao = new FansInfoDaoImpl();
+        int result = fansInfoDao.addFollow(fansuser);
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
+    }
+
+    private void cancelFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        String fansId = request.getParameter("fansId");
+        FansInfoDao fansInfoDao = new FansInfoDaoImpl();
+        int result = fansInfoDao.cancelFollow(userId,Integer.parseInt(fansId));
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

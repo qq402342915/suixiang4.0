@@ -17,18 +17,14 @@
     float: left;
 }
 #su_top_left{
-    width: 900px;
+    width: 800px;
     height: 70px;
     float: left;
     position: relative;
 }
-#su_top_left font{
-    margin-left: 460px;
-    float: left;
-    margin-top: -45px;
-}
+
 #su_top_right{
-    width: 450px;
+    width: 550px;
     height: 70px;
     float: left;
     position: relative;
@@ -38,14 +34,19 @@
     font-family: 楷体;
 }
 #su_top_left img{
-    margin-left: 400px;
-    margin-top: 10px;
+    margin-left: -129px;
+    margin-top: 14px;
+}
+#su_top_left font{
+    margin-left: 190px;
+    float: left;
+    margin-top: 18px;
 }
 #su_title{
     width: 900px;
     height: 50px;
     float: left;
-    margin-left: 225px;
+    margin-left: 190px;
     margin-top: 10px;
 }
 .space{
@@ -61,38 +62,38 @@
     font-style: unset;
 }
 #su_register{
-    width: 900px;
+    width: 1000px;
     height: 430px;
     margin: 0 auto;
+    background-color: white;
 }
 #su_regi_left{
     width: 630px;
     height: 430px;
     float:left;
+    margin-left: 15px;
 }
+
 #su_userName{
     width: 630px;
     height: 60px;
     float: left;
-    color: red;
 }
+
 #su_phone{
     width: 630px;
     height: 60px;
     float: left;
-    color: red;
 }
 #su_password{
     width: 630px;
     height: 60px;
     float: left;
-    color: red;
 }
 #su_repassword{
     width: 630px;
     height: 60px;
     float: left;
-    color: red;
 }
 #su_active{
     width: 630px;
@@ -100,7 +101,6 @@
     float: left;
     position: relative;
     top: 10px;
-    color: red;
 }
 #su_agree{
     width: 630px;
@@ -109,7 +109,7 @@
     font-size: 12px;
     margin-left: 90px;
     margin-top: 10px;
-    color: red;
+    background-color: white;
 }
 
 #su_ok{
@@ -129,6 +129,35 @@
     font-family: 新宋体;
     font-size: 20px;
     background-color:#87c4db;
+
+
+    display: inline-block;
+    padding: .3em .5em;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3em;
+    box-shadow: 0 1px white inset;
+    /*text-align: center;*/
+    text-shadow: 0 1px 1px black;
+    color:white;
+    font-weight: bold;
+}
+#su_submit1{
+    width: 100px;
+    height: 30px;
+    font-family: 新宋体;
+    font-size: 20px;
+
+    display: inline-block;
+    padding: .3em .5em;
+    border: 0px solid rgba(0,0,0,.2);
+    border-radius: .3em;
+    box-shadow: 0 1px white inset;
+    text-align: center;
+    line-height: 10px;
+
+    text-shadow: 0 1px 1px black;
+    color:white;
+    font-weight: bold;
 }
 #kuang1{
     width: 350px;
@@ -151,13 +180,13 @@
     width: 350px;
     height: 35px;
     margin-top: 15px;
-    margin-left: 34px;
+    margin-left: 33px;
 }
 #kuang4{
     width: 350px;
     height: 35px;
     margin-top: 15px;
-    margin-left: 16px;
+    margin-left: 15px;
 }
 #code{
     width: 180px;
@@ -167,21 +196,22 @@
 #btn{
     height: 35px;
     width: 150px;
-    position: relative;
+    position: absolute;
     margin-left: 13px;
 }
 #su_regi_right{
-    width: 270px;
+    width: 350px;
     height: 430px;
-    float: left;
-    background-color: beige;
+    float: right;
+    background-color: #87c4db;
+    margin-top: -10px;
 }
 #su_regi_right_top{
     width: 270px;
     height: 130px;
-    float: left;
-    margin-top: 30px;
-    margin-left: 50px;
+    /*float: left;*/
+    line-height: 130px;
+    text-align: center;
 }
 a{
     text-decoration: none;
@@ -193,7 +223,27 @@ a{
     float: left;
     margin-left: 55px;
 }
+#su_regi_right_bottom img{
+    margin-left: 40px;
+}
+
 input:focus.required:focus{
     border: 1px solid #87c4db;
     background-color: antiquewhite;
 }
+/*#isExist,#isRegister{*/
+    /*font-size: 10px;*/
+    /*color: red;*/
+/*}*/
+#isExist1{
+    font-size: 10px;!important;
+    color: red;!important;
+}
+
+em.error{
+    color: red;
+    font-size: 12px;
+    font-family: 黑体;
+    font-style: normal;
+}
+

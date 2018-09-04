@@ -6,12 +6,14 @@ jQuery.validator.addMethod("regex", //addMethod第1个参数:方法名称
     }, "格式错误");
 $(function () {
     $("#share_register").validate({
+
         rules: {
             userName: {
                 required: true,
                 minlength: 2,
                 maxlength: 15,
-                regex:"^[\u4E00-\u9FA5A-Za-z0-9_]+$"
+                regex:"^[\u4E00-\u9FA5A-Za-z0-9_]+$",
+                // checkUsername:true
             },
             phoneNum: {
                 required: true,
@@ -46,7 +48,8 @@ $(function () {
                 required: "请输入用户名",
                 minlength: "用户名至少2个字母或汉字",
                 maxlength: "用户名不得超过15个字母或汉字",
-                regex: "请输入正确的用户名"
+                regex: "请输入正确的用户名",
+                // checkUsername:"用户名已存在"
             },
             phoneNum: {
                 required: "请输入您的手机号",
@@ -78,5 +81,10 @@ $(function () {
                 required:"请同意用户协议"
             }
         },
+        errorElement:"em",
+        success:function (input) {
+            input.text(" ").addClass("success");
+            $("#btn").attr("disabled",false);
+        }
     });
 });
