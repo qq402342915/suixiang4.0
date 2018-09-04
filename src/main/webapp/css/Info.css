@@ -88,7 +88,7 @@ body{
 }
 .guanzhu{
     margin-left: 380px;
-    display: none;
+    /*display: none;*/
     height:34px;
     line-height:35px;
     width: 100px;
@@ -101,7 +101,7 @@ body{
     height: 34px;
     float: left;
     background-color: #646973;
-    display: none;
+    /*display: none;*/
     line-height: 35px;
 }
 .jubao_div{

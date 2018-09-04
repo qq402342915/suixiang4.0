@@ -1,3 +1,4 @@
+var userId;
 var userhead;
 var username;
 var key;
@@ -8,15 +9,32 @@ $(function () {
     showMyBlogInfo();
     showMyBlogCount();
     /*显示用户信息*/
-    var userId;
+
     $.ajax({
+        async:false,
+        url:"/RepostSession",
+        type:"post",
+        dataType:"json",
+        success:function (user) {
+            userId = user.userId;
+        }
+    });
+
+    var currentUserId=window.location.search.substring(8,10);
+    if(userId==currentUserId){
+        userId=userId;
+    }else {
+        userId=currentUserId;
+    }
+
+    $.ajax({
+        async:false,
         url:"/RepostSession",
         type:"post",
         dataType:"json",
         success:function (user) {
             userhead = user.headP;
             username = user.userName;
-            userId = user.userId;
             $(".c_head_img").prop("src",user.headP);
             $(".c_top_one_name h2").html(user.userName);
             if(user.sex == '女')  $(".c_top_one_name img").prop("src","../images/woman.png");
@@ -26,6 +44,8 @@ $(function () {
             $(".c_content_name a").html("src",user.userName);*/
         }
     });
+
+
         //点击添加或取消关注
     $(".c_list").on('click',".c_list_span",function () {
         var fansId = $(this).attr("name");
@@ -62,7 +82,7 @@ $(function () {
     //点击跳转其他主页
     $(".c_list").on('click',".c_list_a img",function (){
         userId = $(this).attr("id");
-        location.href = "../html/personinfo.html";
+        window.location.href = "../html/personinfo.html?userId="+userId;
     });
     //搜索微博
     $(".c_search_img").click(function () {
@@ -141,6 +161,55 @@ $(function () {
     },function () {
         $(this).hide(300);
     })
+
+
+    //王时巨-------------------------------------------------------------
+    //点击举报
+    $("#w_Report").click(function () {
+        $.ajax({
+           url:"/ReportUserServlet",
+            data:{"userId":userId},
+           dataType:"text",
+            type:"post",
+            success:function (res) {
+
+            }
+        });
+
+    });
+
+
+    //显示粉丝列表
+    function getFansId() {
+        $.ajax({
+            url:"/ShowFans?method=showMyFansInfo",
+            type:"post",
+            dataType:"json",
+            success:function (myfansList) {
+                $(".c_list").children().remove();
+                for (var i = 0; i < myfansList.length; i ++){
+                    var userId = myfansList[i].userId;
+                }
+            }
+        });
+    }
+
+    //显示关注列表
+    function getFollowId() {
+        $.ajax({
+            url:"/ShowFans?method=showMyFollowInfo",
+            type:"post",
+            dataType:"json",
+            success:function (myfollowList) {
+                $(".c_list").children().remove();
+                for (var i = 0; i < myfollowList.length; i ++){
+                    var userId = myfollowList[i].userId;
+                }
+            }
+        });
+    }
+
+
 });
 layui.use(['layer','element'], function(){
     var layer = layui.layer,
