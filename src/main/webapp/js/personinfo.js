@@ -38,7 +38,6 @@ $(function () {
         $(".c_search").hide();
         $(".c_search_img").hide();
         $(".c_list_span").addClass("hideguanzhu");
-        alert($(".c_list_span").html());
     }
     updateFansCount();
     updateFollowCount();
@@ -91,6 +90,7 @@ $(function () {
                     updateFollowCount();
                 }
             });
+            layer.msg("添加关注成功！");
         }else {
             $.ajax({
                 url:"/ShowFans?method=cancelFollow",
@@ -103,6 +103,7 @@ $(function () {
                     updateFollowCount();
                 }
             });
+            layer.msg("取消关注成功！");
         }
     });
     $(".c_content_right1 a span").click(function () {
@@ -151,16 +152,7 @@ $(function () {
             alert("666")
         }
     });*/
-    //点击关注，取关
-    $(".guanzhu").click(function () {
-        if($(this).css("background-color") == "rgb(250, 125, 60)"){
-            $(this).css("background-color","#696e78");
-            $(this).html("✔已关注");
-        }else {
-            $(this).css("background-color","#fa7d3c");
-            $(this).html("<strong>+</strong> 关注");
-        }
-    });
+
     //点击改变主页或简介
     $(".c_top_two a").click(function () {
         if ($(this).prop("class") != "c_top_two1") {
@@ -277,6 +269,34 @@ function updateFollowCount(){
         }
     });
 }
+    $.ajax({
+        url:"/ShowFans?method=showIfFollow",
+        data:{"nowId":currentUserId},
+        dataType:"text",
+        type:"post",
+        success:function (res) {
+            if (res == "true") {
+                $(this).css("background-color","#696e78");
+                $(this).html("✔已关注");
+            }else {
+                $(this).css("background-color","#fa7d3c");
+                $(this).html("<strong>+</strong> 关注");
+            }
+        }
+    });
+//点击个人主页头部关注，取关
+   /* $(".guanzhu").click(function () {
+        if($(this).css("background-color") == "rgb(250, 125, 60)"){
+            $(this).css("background-color","#696e78");
+            $(this).html("✔已关注");
+
+
+        }else {
+            $(this).css("background-color","#fa7d3c");
+            $(this).html("<strong>+</strong> 关注");
+        }
+    });*/
+
 //显示粉丝列表
 function showFansList() {
     $.ajax({
