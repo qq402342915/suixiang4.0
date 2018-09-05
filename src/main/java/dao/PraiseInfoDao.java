@@ -13,4 +13,7 @@ public interface PraiseInfoDao {
     List<Praise> getPraiseById(int blogId);
     //查看点赞数
     int getPraiseCount(int blogId);
+    public List<Praise> getPraisetwoById(int blogId,int user_id);
+    public int deletetwoPraise(int userId,int blogId);
+    public int insertPraise(int userId,int blogId);
 }
