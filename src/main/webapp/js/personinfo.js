@@ -2,6 +2,7 @@ var userId;
 var userhead;
 var username;
 var key;
+var topinfo = -1;
 $(function () {
 
 
@@ -44,6 +45,7 @@ $(function () {
     showFansList();
     showMyBlogInfo();
     showMyBlogCount();
+    showTopIfFollow();
     //获取用户信息
     $.ajax({
         async:false,
@@ -74,6 +76,33 @@ $(function () {
     // {	window.onload = function () { window.location.reload();sign = 1;}	}
     // var sign = 0;
 
+
+//点击个人主页头部关注，取关
+    $(".guanzhu").click(function () {
+        if (topinfo == 1) {
+            $.ajax({
+                url:"/ShowFans?method=cancelTopFollow",
+                data:{"nowId":currentUserId},
+                dataType:"text",
+                type:"post",
+                success:function (res) {
+                    if (res == 1) showTopIfFollow();
+                    layer.msg("取消关注成功！");
+                }
+            });
+        }else {
+            $.ajax({
+                url:"/ShowFans?method=addTopFollow",
+                data:{"nowId":currentUserId},
+                dataType:"text",
+                type:"post",
+                success:function (res) {
+                    if (res == 1) showTopIfFollow();
+                    layer.msg("添加关注成功！");
+                }
+            });
+        }
+    })
     //点击添加或取消关注
     $(".c_list").on('click',".c_list_span",function () {
         var fansId = $(this).attr("name");
@@ -192,15 +221,22 @@ $(function () {
     //王时巨-------------------------------------------------------------
     //点击举报
     $("#w_Report").click(function () {
-        $.ajax({
-           url:"/ReportUserServlet",
-            data:{"userId":userId},
-           dataType:"text",
-            type:"post",
-            success:function (res) {
+        layer.msg('确定要举报吗？', {
+            time: 5000, //5s后自动关闭
+            btn: ['确定', '再想想'],
+            yes:function () {
+                $.ajax({
+                    url:"/ReportUserServlet",
+                    data:{"userId":currentUserId},
+                    dataType:"text",
+                    type:"post",
+                    success:function (res) {
 
+                    }
+                });
             }
         });
+
 
     });
 
@@ -233,6 +269,7 @@ $(function () {
             }
         });
         updateFollowCount();
+        updateFansCount();
     }
 //显示我的微博数量
     function showMyBlogCount() {
@@ -269,33 +306,26 @@ function updateFollowCount(){
         }
     });
 }
+//判断头部是否关注
+function showTopIfFollow(){
     $.ajax({
-        url:"/ShowFans?method=showIfFollow",
+        async:false,
+        url:"/ShowFans?method=showTopIfFollow",
         data:{"nowId":currentUserId},
         dataType:"text",
         type:"post",
         success:function (res) {
             if (res == "true") {
-                $(this).css("background-color","#696e78");
-                $(this).html("✔已关注");
+                $(".guanzhu").css("background-color","#696e78").html("✔已关注");
+                topinfo = 1;
             }else {
-                $(this).css("background-color","#fa7d3c");
-                $(this).html("<strong>+</strong> 关注");
+                $(".guanzhu").css("background-color","#fa7d3c").html("<strong>+</strong> 关注");
+                topinfo = 0;
             }
+            return topinfo;
         }
     });
-//点击个人主页头部关注，取关
-   /* $(".guanzhu").click(function () {
-        if($(this).css("background-color") == "rgb(250, 125, 60)"){
-            $(this).css("background-color","#696e78");
-            $(this).html("✔已关注");
-
-
-        }else {
-            $(this).css("background-color","#fa7d3c");
-            $(this).html("<strong>+</strong> 关注");
-        }
-    });*/
+}
 
 //显示粉丝列表
 function showFansList() {
