@@ -424,3 +424,42 @@ body{
     width: 400px;
     height: 140px;
 }
+.c_prev{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    display: inline-block;
+    float: left;
+    margin: 10px 0 0 90px;
+}
+.c_next{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    display: inline-block;
+    float: left;
+    margin: 10px 0 0 0;
+}
+#prev1,#next1{
+    display: none;
+}
+#c_fans{
+    margin-top: 10px;
+    float: left;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+}
+#c_follow{
+    margin-top: 10px;
+    float: left;
+    display: none;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+}

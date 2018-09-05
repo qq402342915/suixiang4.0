@@ -11,10 +11,12 @@ public interface FansInfoDao {
     int getFansCount(int userId);
     //根据用户主键查询粉丝列表Id
     List<Fansuser> getAllFansId(int userId);
+    List<Fansuser> getAllFansId(int userId,int pageNUm,int pageSize);
     //查关注数量
     int getFollowCount(int userId);
     //查关注列表Id
     List<Fansuser> getAllFollowId(int userId);
+    List<Fansuser> getAllFollowId(int userId,int pageNUm,int pageSize);
     //判断是否关注
     boolean getIfFollow(int userId,int fansId);
     //添加关注
