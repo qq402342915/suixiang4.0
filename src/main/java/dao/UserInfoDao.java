@@ -1,6 +1,7 @@
 package dao;
 
-
+import entity.Blog;
+import entity.BlogContext;
 import entity.User;
 
 import java.sql.Date;
@@ -9,6 +10,8 @@ import java.util.List;
 public interface UserInfoDao {
     //获取用户列表
     List<User> getAllUser();
+    /*//获取用户粉丝列表
+    List<User> getAllFans(int userId);*/
     //根据主键查看用户信息
     List<User> getUser(int userId);
     //根据手机查看用户信息
@@ -18,7 +21,7 @@ public interface UserInfoDao {
     //添加用户信息
     int insertUser(User user);
     //更新用户信息
-    int updateUser(User user ,String telNUm);
+    int updateUser(User user ,int userId);
     //查看用户名是否存在
     boolean getUserName(String username);
     //查看用户是否被锁定
@@ -36,6 +39,11 @@ public interface UserInfoDao {
     int UpdateHeadP(String headp,String telNum);
     //更新背景
     int UpdateBg(int bgId,String telNum);
+    List<User> getNotFansId(int userId );
+    //查询未关注的人
+    List<User> getNotFansId(int userId,int num,int size);
+    //根据用户名查找
+    List<User> getUserId(String username);
     //查询今天的用户注册量
     int countToday();
     //查询之前某天的用户注册量

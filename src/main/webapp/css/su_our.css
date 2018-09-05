@@ -27,6 +27,7 @@
     float: left;
     position: relative;
     margin-top: 5px;
+    z-index: 99!important;
 }
 #su_top_right font{
     font-family: 楷体;
@@ -39,6 +40,54 @@
 #su_top_left font{
     margin-left: 190px;
     float: left;
-    color: #87c4db;;
+    color: #87c4db;
     margin-top: 18px;
+}
+#su_body{
+    width: 1365px;
+    height: 550px;
+    /*background-color: #c3c3c3;*/
+}
+
+#su_body_left{
+    width: 300px;
+    height: 400px;
+    float: left;
+    /*background-color: #87c4db;;*/
+    margin-top: 100px;
+    margin-left: 30px;
+    text-align: center;
+}
+h1 {
+    font-family: Georgia;
+    font-style:oblique;
+    font-weight:bold;
+    font-size: 60px;
+}
+#su_body_right{
+    width: 800px;
+    height: 400px;
+    /*background-color: #87c4db;;*/
+    float: right;
+    margin-top: 100px;
+    margin-right: 80px;
+    z-index: 1;
+}
+#lunbo{
+    width: 800px;
+    height: 400px;
+}
+#lunbo img{
+    width: 800px;
+    height: 400px;
+}
+#open{
+    margin-left: 10px;
+    margin-top: -470px;
+    float: left;
+
+}
+#open img{
+    background-size: cover;
+    display: none;
 }

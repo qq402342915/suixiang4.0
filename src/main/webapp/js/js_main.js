@@ -15,10 +15,12 @@ layui.use(['flow','upload',"layer","element"], function() {
         auto: false, //选择文件后不自动上传
         multiple: true, //允许多文件上传
         drag:true,
-        bindAction: '#publish', //指向一个按钮触发上传
+        bindAction: '#s_add', //指向一个按钮触发上传
         dataType: 'json',//服务器返回的数据类型
         //选中图片之后触发
         choose: function (obj) {
+            $("#s_delete").show();
+            $("#s_add").show();
             //将每次选择的文件追加到文件队列
             var files = obj.pushFile();
             //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
@@ -33,6 +35,10 @@ layui.use(['flow','upload',"layer","element"], function() {
                 $("#upload_img_" + index).click(function () {
                     delete files[index];
                     $("#container"+index).remove();
+                    if ($(".preview_div").children().length == 0) {
+                        $("#s_delete").hide();
+                        $("#s_add").hide();
+                    }
                     uploadInst.config.elem.next()[0].value = '';
                 });
                 //某图片放大预览
@@ -56,12 +62,13 @@ layui.use(['flow','upload',"layer","element"], function() {
                         content: "<img width='" + bigW + "' height='" + bigH + "' src=" + result + " />"
                     });
                 })
-
             });
         },
 
         done: function(res, index, upload){
-            alert("上传成功");
+            layer.msg("上传成功");
+            $("#s_add").hide();
+            $("#s_delete").hide();
             s_photo = res.data;
             layer.closeAll('loading'); //关闭loading
             $('.preview_div').children().remove();
@@ -89,20 +96,20 @@ layui.use(['flow','upload',"layer","element"], function() {
         url: '/uploadFile',
         accept: 'video',
         multiple: false,
-        auto: true,
+        auto: false,
         drag:true,
         dataType: 'json',
+        bindAction: '#s_vadd',
         choose: function(obj){
             var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+            $("#s_vdelete").show();
+            $("#s_vadd").show();
             //读取本地文件
             obj.preview(function(index, file, result){
                 var tr = $(['<tr id="upload-'+ index +'">'
                     ,'<td>'+ file.name +'</td>'
                     ,'<td>&nbsp;&nbsp;&nbsp;'+ (file.size/1014).toFixed(1) +'kb</td>'
-                    ,'<td>'
-                    ,'<button class="layui-btn layui-btn-xs layui-btn-normal video_publish">上传</button>'
-                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                    ,'</td>'
+                    ,'<td>等待上传</td>'
                     ,'<td><button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button></td>'
                     ,'</tr>'].join(''));
 
@@ -122,9 +129,10 @@ layui.use(['flow','upload',"layer","element"], function() {
             });
         }
         ,done: function(res, index, upload){
+            $("#s_vadd").hide();
             if(res.errno == 0){ //上传成功
                 s_video = res.data;
-                setTimeout( "$('.preview_div').children().remove()",3000);
+                /*setTimeout( "$('.preview_div').children().remove()",3000);*/
                 var tr = $(".preview_div").find('tr#upload-'+ index)
                     ,tds = tr.children();
                 tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
@@ -145,6 +153,21 @@ layui.use(['flow','upload',"layer","element"], function() {
 
 
 $(function () {
+
+    $("#s_vdelete").click(function () {
+        $(this).hide();
+        $("#s_vadd").hide();
+        layer.msg("取消上传成功！");
+        $(".preview_div").children().remove();
+    })
+
+    $("#s_delete").click(function () {
+        $(this).hide();
+        $("#s_add").hide();
+        layer.msg("取消上传成功！");
+        $(".preview_div").children().remove();
+    })
+
     //转发
     $(".s_mynode").on("click",".s_body_content_func_1",function () {
         var $node = $(this);
@@ -523,6 +546,68 @@ function showContent(url,node) {
         animation: 'fade',
         basePath: '../images/emoji',
         icons: emojiLists   // 注：详见 js/emoji.list.js
+    });
+
+    //推荐关注
+    alert($("#y_a1").text())
+    // var i = 1;
+    $.ajax({
+        url: "/SuggestFollow",
+        type: "post",
+        // data: {"page": i},
+        dataType: "json",
+        success: function (ret) {
+// alert(ret[0].headP)
+            $("#y_img1").prop("src", ret[0].headP);
+            $("#y_a1").text(ret[0].userName);
+            $("#y_img2").attr("src", ret[1].headP);
+            $("#y_a2").text(ret[1].userName);
+            $("#y_img3").prop("src", ret[2].headP);
+            $("#y_a3").text(ret[2].userName);
+            $("#y_img4").prop("src", ret[3].headP);
+            $("#y_a4").text(ret[3].userName);
+        }
+    })
+
+    //选择关注
+    $(".y_follow").click(function () {
+
+            $.ajax({
+                url: "/InsertFollow",
+                type: "post",
+                data: {
+                    "userName": $(this).prev().text()
+                },
+                dataType: "json",
+                success: function (ret) {
+
+                }
+            })
+            $(this).text("√ 已关注")
+            //setTimeout(reload2(),3000);
+            // setTimeout(function (){$(".y_follow").text("+关注")},2000);
+        }
+    )
+    $("#y_change").click(function () {
+
+        $.ajax({
+            url: "/SuggestFollow",
+            type: "post",
+            // data: {"page": i},
+            dataType: "json",
+            success: function (ret) {
+
+                $("#y_img1").prop("src", ret[0].headP);
+                $("#y_a1").html(ret[0].userName);
+                $("#y_img2").attr("src", ret[1].headP);
+                $("#y_a2").text(ret[1].userName);
+                $("#y_img3").prop("src", ret[2].headP);
+                $("#y_a3").text(ret[2].userName);
+                $("#y_img4").prop("src", ret[3].headP);
+                $("#y_a4").text(ret[3].userName);
+            }
+        })
+        $(".y_follow").text("+关注");
     });
 });
 })

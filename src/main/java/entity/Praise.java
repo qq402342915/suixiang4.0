@@ -16,6 +16,11 @@ public class Praise {
         this.userId = userId;
         this.praDate = praDate;
     }
+    public Praise(int praId, int blogId, int userId) {
+        this.praId = praId;
+        this.blogId = blogId;
+        this.userId = userId;
+    }
 
     public int getPraId() {
         return praId;
