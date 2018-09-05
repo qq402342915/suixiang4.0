@@ -41,4 +41,8 @@ public interface UserInfoDao {
     List<User> getNotFansId(int userId,int num,int size);
     //根据用户名查找
     List<User> getUserId(String username);
+    //查询今天的用户注册量
+    int countToday();
+    //查询之前某天的用户注册量
+    int countPreDay(int day);
 }
