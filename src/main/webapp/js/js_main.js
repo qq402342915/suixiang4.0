@@ -665,7 +665,58 @@ function showContent(url,node) {
                             $("#w_wrongInfo span").text("验证码错误");
                             $("#w_wrongInfo span").css("display","inline-block");
                         }else {
-                            layer.msg("您因被举报锁定三个小时");
+
+                            // layer.msg("您因被举报锁定三个小时");
+                            //显示剩余时间
+                            $.ajax({
+                                url:"/UserGetLockServlet",
+                                data:{"telNum":$("#w_telId").val()},
+                                type:"post",
+                                dataType:"json",
+                                success:function (res) {
+                                    // var $content=$("<span id='w_hour'></span><span>时</span><span id='w_min'></span><span>分</span><span id='w_sec'></span><span>秒</span>")
+                                    layer.open({
+                                        type: 1 //Page层类型
+                                        ,area: ['500px', '200px']
+                                        ,title: '你已被举报'
+                                        ,shade: 0.6 //遮罩透明度
+                                        ,maxmin: true //允许全屏最小化
+                                        ,anim: 1 //0-6的动画形式，-1不开启
+                                        ,content: '<div style="padding:50px;"><span>剩余时间:</span><span id="w_hour"></span><span>时</span><span id="w_min"></span><span>分</span><span id="w_sec"></span><span>秒</span></div>'
+                                    });
+                                    var lockDate;
+                                    $.each(res,function (index,obj) {
+                                        //得到锁定时间
+                                        lockDate=obj['lockDate'];
+
+                                    });
+                                    var lock = new Date(lockDate.replace(/-/g, "/"));
+                                    var hour;
+                                    var min;
+                                    var sec;
+                                    var nd = 1000 * 24 * 60 * 60;
+                                    var nh = 1000 * 60 * 60;
+                                    var nm = 1000 * 60;
+                                    var ns = 1000;
+                                    setInterval(function () {
+                                        var currentDate = new Date();
+                                        //得到相同的秒数
+                                        var diff=currentDate.getTime()-lock.getTime();
+                                        hour = Math.floor(3-diff % nd / nh);
+                                        min =  Math.floor(59-diff % nd % nh / nm);
+                                        sec =  Math.floor(59-diff % nd % nh % nm / ns);
+                                        $("#w_hour").text(hour);
+                                        $("#w_min").text(min);
+                                        $("#w_sec").text(sec);
+
+
+                                    },1000);
+
+
+
+
+                                }
+                            });
                         }
                     }
 

@@ -24,9 +24,13 @@ img:hover{
     cursor: pointer;
 }
 body{
-    background-color: skyblue;
+    /*background-color: skyblue;*/
     /*background: url("../images/skin.png") no-repeat ;*/
+    /*background-image: url("");*/
     background-size:100%;
+    background-size:cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 .c_top{
     width: 920px;

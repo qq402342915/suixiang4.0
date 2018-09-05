@@ -19,6 +19,12 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     public List<Blog> getAllBlog(int userId) {
         return executeQuery("select * from t_blog where userId = ?",new Object[]{userId});
     }
+
+    @Override
+    public List<Blog> getMyAllBlog(int userId, int page) {
+        return executeQuery("select * from t_blog where userId = ? limit ?,5",new Object[]{userId,page});
+    }
+
     public  int getOneBlog(int userId){
         return  executeUpdate("select blogId from t_blog where userid=?",new Object[]{userId});
     }

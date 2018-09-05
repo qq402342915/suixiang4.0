@@ -11,6 +11,8 @@ public interface BlogInfoDao {
     int deleteBlog(int blogId);
     //获取用户所有微博
     List<Blog> getAllBlog(int userId);
+    //流加载
+    List<Blog> getMyAllBlog(int userId,int page);
     //发布新微博
     int insertBlog(Blog blog);
     //查询关注人的微博，根据时间排序，表连接

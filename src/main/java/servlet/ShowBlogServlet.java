@@ -61,8 +61,10 @@ public class ShowBlogServlet extends HttpServlet {
         if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
+        int page = Integer.parseInt(request.getParameter("page"));
+        System.out.println(page);
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
-        List<Blog> myBlogInfoList = blogInfoDao.getAllBlog(userId);
+        List<Blog> myBlogInfoList = blogInfoDao.getMyAllBlog(userId,page);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class , new JsonDate());
         JSONArray array = JSONArray.fromObject(myBlogInfoList,jsonConfig);

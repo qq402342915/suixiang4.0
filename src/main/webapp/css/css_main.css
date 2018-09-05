@@ -78,11 +78,15 @@
 }
 .s_header_right{
     float: left;
-    width: 250px;
+    width: 350px;
     height: 68px;
     margin-left: 20px;
     line-height: 68px;
     display: none;
+}
+.s_header_right li{
+    text-align: center;
+    width: 100px;
 }
 /*.s_header_right {*/
 /*margin-left: 40px;*/
