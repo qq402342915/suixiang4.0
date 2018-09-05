@@ -482,6 +482,10 @@ function showContent(url,node) {
     });
 }
     showContent("/ShowHotBlog","#LAY_demo1");
+    $(".s_biaoqing").emojiParse({
+        basePath: 'images/emoji',
+        icons: emojiLists   // 注：详见 js/emoji.list.js
+    });
     //登录成功后，显示用户信息，关注微博等
     function showUser() {
         $.ajax({
@@ -856,10 +860,6 @@ function showContent(url,node) {
             })
             $(".y_follow").text("+关注");
         }
-    });
-    $(".s_biaoqing").emojiParse({
-        basePath: 'images/emoji',
-        icons: emojiLists   // 注：详见 js/emoji.list.js
     });
  });
 });

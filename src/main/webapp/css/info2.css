@@ -1,0 +1,159 @@
+.c_content_right2 li{
+    display: block;
+    margin-top: 20px;
+    width: 600px;
+    /*height: 180px;*/
+    /*padding: 20px 20px 0px 20px;*/
+    background-color: #FFFFFF;
+    float: left;
+}
+
+/*评论*/
+.s_comment{
+    margin: auto;
+    width: 600px;
+    /*height: 300px;*/
+    display: none;
+    background-color: #F0F3EF;
+    float: left;
+}
+.s_comment img{
+    width: 30px;
+    height: 30px;
+    float: left;
+}
+.s_comment_publish_text{
+    display: block;
+    width: 500px;
+    height: 26px;
+    float: left;
+    margin-left: 10px;
+}
+.s_comment_publish_header{
+    height: 30px;
+    margin-top: 10px;
+}
+.s_comment_publish_footer{
+    width: 560px;
+}
+.s_comment_publish{
+    width: 560px;
+    height: 79px;
+    overflow: hidden;
+    margin: auto;
+    border-bottom: 1px solid #CCCCCC;
+}
+.s_comment_publish_push{
+    margin-top: 10px;
+    margin-right: 15px;
+    float: right;
+}
+.s_showcomment{
+    width: 560px;
+    margin-left: 36px;
+    float: left;
+    border-bottom: 1px solid #CCCCCC;
+}
+.s_showcomment_name{
+    height: 30px;
+    display: block;
+    margin-left: 10px;
+    float: left;
+}
+.s_showcomment_text{
+    display: block;
+    width: 415px;
+    margin-left: 3px;
+    margin-top: 1px;
+    float: left;
+    word-wrap:break-word;
+    word-break:break-all;
+}
+.s_showcomment_time{
+    display: block;
+    float: left;
+    margin-left: 40px;
+}
+.s_showcomment_footer{
+    width: 560px;
+    float: left;
+}
+.s_showcomment_footer_right{
+    width: 120px;
+    float: right;
+}
+.s_showcomment_footer_right_hui{
+    display: block;
+    width: 59px;
+    border-right: 1px solid #CCCCCC;
+    float: left;
+    cursor:pointer;
+}
+.s_showcomment_footer_right_pra{
+    width: 60px;
+    float: left;
+    line-height: 19px;
+    text-align: center;
+}
+.s_body_content_personinfo{
+    height: 80px;
+    /*line-height: 80px;*/
+}
+.s_body_content_personinfo img{
+    width: 50px;
+    height: 50px;
+    margin-top: 15px;
+    float: left;
+}
+.s_body_content_personinfo_nt{
+    width: 540px;
+    margin-left: 10px;
+    float: left;
+}
+.s_body_content_personinfo_nt a{
+    display: block;
+    height: 25px;
+    margin-top: 20px;
+}
+.s_body_content_personinfo_nt span{
+    display: block;
+    height: 25px;
+}
+.s_body_content_text{
+    width: 540px;
+    margin-left: 60px;
+}
+.s_body_content_text img{
+    width: 110px;
+    height: 110px;
+}
+.s_body_content_text video{
+    width: 300px;
+    height: 200px;
+}
+.s_body_content_func{
+    height: 40px;
+}
+.s_body_content_func div{
+    display: block;
+    float: left;
+    width: 199px;
+    text-align: center;
+    line-height: 36px;
+    cursor:pointer;
+}
+.s_body_content_func_1 ,.s_body_content_func_2{
+    border-right: 1px solid #CCCCCC;
+}
+.s_body_content_func span{
+    font-size: 25px;
+}
+.s_xinxijiazaitishi{
+    width: 560px;
+    height: 20px;
+    padding: 0px 20px 0px 20px;
+    float: left;
+    background-color: #CCCCCC;
+    text-align: center;
+    line-height: 20px;
+}
