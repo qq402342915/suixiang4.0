@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/jquery.emoji.css">
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/css_comment.css" type="text/css">
+    <link rel="stylesheet" href="../css/css_transpond.css" type="text/css">
     <script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
     <script src="../layui/layui.js" type="application/javascript"></script>
     <script src="../js/js_main.js" type="application/javascript"></script>
@@ -49,7 +50,7 @@
             </li>
         </ul>
     </div>
-    <div class="s_body">
+    <div class="s_body" headP="" userId="">
         <div class="s_publish">
             <span class="s_publish_tlogo">有什么新鲜事想告诉大家?</span>
             <div class="s_publish_content">
@@ -74,7 +75,7 @@
         </div>
         <div class="s_headphoto">
             <div class="s_headphoto_photo">
-                <a href="" id="personInfo"><img src="../images/logo2.png" alt="" id="s_headphoto_photo"></a>
+                <a href="" id="personInfo" userId=""><img src="../images/logo2.png" alt="" id="s_headphoto_photo"></a>
             </div>
             <div class="s_headphoto_nologin">
                 <button class="layui-btn layui-btn-normal" id="s_login">登录</button>
@@ -100,11 +101,11 @@
                                 <div class='s_comment'>
                                     <div class="s_comment_publish">
                                         <div class="s_comment_publish_header">
-                                            <img src="../images/logo.png" alt="">
+                                            <img src="" alt="" >
                                             <input type="text" class="s_comment_publish_text">
                                         </div>
                                         <div class="s_comment_publish_footer">
-                                            <button class="layui-btn layui-btn-xs layui-btn-normal" id="s_comment_publish_push">评论</button>
+                                            <button class="layui-btn layui-btn-xs layui-btn-normal s_comment_publish_push">评论</button>
                                         </div>
                                     </div>
                                 </div>

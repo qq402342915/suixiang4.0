@@ -5,15 +5,6 @@
     <title>admin</title>
     <link href="../css/base.css" type="text/css" rel="stylesheet">
     <link href="../css/adminBack.css" type="text/css" rel="stylesheet">
-    <script src="js/jquery-3.3.1.js" type="application/javascript"></script>
-    <script src="js/jquery.validate.js" type="text/javascript"></script>
-    <script>
-        $(function () {
-            $("#l_login").click(function () {
-
-            })
-        })
-    </script>
 </head>
 <body >
 <form id="l_regstForm">
@@ -22,12 +13,88 @@
             <h1>随享后台管理</h1>
         </div>
         <div id="l_b">
-            <div id="l_user"><input type="text" id="l_loginname" placeholder="请输入用户名"></div>
-            <div id="l_password"><input type="password" id="l_pwd" placeholder="请输入密码">
+            <div id="l_user"><input type="text" name="l_loginname" id="l_loginname"class="required" placeholder="请输入用户名"></div>
+            <div id="l_password"><input type="password" name="l_pwd" id="l_pwd" class="required"placeholder="请输入密码">
             </div>
-            <div id="l_login">登录</div>
+            <div id="l_login"><input type="button"  value="登录" style="width: 80px;height: 35px;border: none;opacity: 0.5;font-size:20px;font-style:inherit"></div>
         </div>
     </div>
 </form>
+<script src="../js/jquery-3.3.1.js" type="application/javascript"></script>
+<script src="../js/jquery.validate.js" type="text/javascript"></script>
+<script src="../layer/layer.js"></script>
+<script>
+    jQuery.validator.addMethod("regex", //addMethod第1个参数:方法名称
+        function (value, element, params) {//addMethod第2个参数:验证方法，
+            //验证方法参数（被验证元素的值，被验证元素，参数）
+            var exp = new RegExp(params);//实例化正则对象，参数为用户传入的正则表达式
+            return exp.test(value);//测试是否匹配
+        }, "格式错误");
+    $(function () {
+        //点击登录
+        $("#l_login").children().click(function () {
+            var adminUser = $("#l_user").children().val();
+            var adminPass = $("#l_password").children().val();
+            isLogin(adminUser,adminPass);
+            
+        });
+
+
+        //验证登录
+        function isLogin(userName,uesrPass){
+
+            $.ajax({
+                url:"/EndLoginServlet",
+                type:"post",
+                data:{"userName":userName,"userPass":uesrPass},
+                dataType:"text",
+                success:function (res) {
+                    if(res==0){
+                        layer.msg('用户名或密码不正确', {icon: 5});
+                    }else{
+                        window.location.href="Admin.html";
+                    }
+
+                }
+
+            });
+        }
+        $("#l_regstForm").validate({
+            rules: {
+                l_pwd: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 19,
+                    regex: "^[a-zA-Z][a-zA-Z0-9_]+$"
+                } ,
+                l_loginname:{
+                    required: true,
+                    minlength: 2,
+                    maxlength: 10,
+                    regex: "^[a-zA-Z]+$"
+                },
+
+            },
+            messages: {
+                l_pwd: {
+                    required: "请输入密码",
+                    minlength: "密码长度至少为6位",
+                    maxlength: "密码长度不能超过19位",
+                    regex: "请输入正确的密码"// Start with the letter , the format is (^[a-zA-Z][a-zA-Z0-9_]+$)
+                },
+                l_loginname:{
+                    required: "请输入用户名",
+                    minlength: "用户名长度必须最少为2位",
+                    maxlength: "用户名名字的长度不能大于10位",
+                    regex: "请输入正确的用户名"
+                },
+            },
+            errorElement:"em",
+            success:function (input) {
+                input.text(" ").addClass("success");
+            }
+            })
+    });
+</script>
 </body>
 </html>

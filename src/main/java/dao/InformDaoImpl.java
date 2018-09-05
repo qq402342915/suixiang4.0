@@ -29,4 +29,8 @@ public class InformDaoImpl extends BaseDao<Inform> implements InformDao {
     public int countAllInform(){
         return getRecordCount("select count(*) from t_inform");
     }
+    @Override
+    public int changeInformState(int informId){
+        return executeUpdate("UPDATE t_inform SET informStatus = 0 WHERE informId = ?",new Object[]{informId});
+    }
 }
