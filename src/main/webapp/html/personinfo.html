@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <title>个人主页</title>
     <link type="text/css" rel="stylesheet" href="../css/Info.css">
     <link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
@@ -11,7 +10,7 @@
     <script type="text/javascript" src="../js/personinfo.js"></script>
 </head>
 </head>
-<body>
+<body name="top">
 <div class="c_main">
     <!--头部-->
     <div class="s_header">
@@ -58,7 +57,7 @@
             <a class="intro">一句话介绍一下自己吧，让别人更了解你</a>
             <a class="guanzhu"><strong>+</strong> 关注</a>
             <a class="jubao">▤</a>
-            <div class="jubao_div"><a><span>&nbsp&nbsp&nbsp举报他</span></a></div>
+            <div class="jubao_div"><a><span id="w_Report">&nbsp&nbsp&nbsp举报他</span></a></div>
         </div>
     </div>
     <div class="c_top_two">
@@ -143,9 +142,56 @@
             </div>-->
         </div>
     </div>
-    <div class="c_content_right_div" id="c_show_div2"></div>
+    <div class="c_content_right_div" id="c_show_div2">
+        <table class="layui-table" lay-even="" lay-skin="nob">
+            <colgroup>
+                <col width="80">
+                <col width="300">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>昵称</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>手机号</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>性别</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>毕业院校</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>注册时间</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>签名</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>生日</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>所在地</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-    <a ><i class="layui-icon layui-icon-up" style="position: fixed;margin-bottom: 0;bottom: 10%;right: 15%;"></i></a>
+    <a class="return_top" href="#top" title="返回顶部"><i class="layui-icon layui-icon-up"></i></a>
 </div>
 <script type="text/javascript" src="../js/foot.js"></script>
 </body>

@@ -9,5 +9,8 @@
         <module name="suixiang4.0" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="suixiang4.0" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

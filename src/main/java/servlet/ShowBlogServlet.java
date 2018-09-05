@@ -40,9 +40,7 @@ public class ShowBlogServlet extends HttpServlet {
 
     private void showMyBlogCount(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
-        userId = user.getUserId();
+        userId = Integer.parseInt(request.getParameter("userId"));
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
         int myBlogCount = blogInfoDao.getCountBlog(userId);
         PrintWriter out = response.getWriter();

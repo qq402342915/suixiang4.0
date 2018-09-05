@@ -19,6 +19,9 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     public List<Blog> getAllBlog(int userId) {
         return executeQuery("select * from t_blog where userId = ?",new Object[]{userId});
     }
+    public  int getOneBlog(int userId){
+        return  executeUpdate("select blogId from t_blog where userid=?",new Object[]{userId});
+    }
 
     @Override
     public int insertBlog(Blog blog) {
@@ -57,9 +60,7 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
 
     @Override
     public int getCountBlog(int userId) {
-        int count1 = getRecordCount("select count(*) from t_blog where userId = ?",new Object[]{userId});
-        int count2 = getRecordCount("select count(*) from t_transpond where userId = ?",new Object[]{userId});
-        return count1 + count2;
+        return getRecordCount("select count(*) from t_blog where userId = ?",new Object[]{userId});
     }
 
     @Override

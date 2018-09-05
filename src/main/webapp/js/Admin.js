@@ -620,7 +620,7 @@ $(function () {
             $tr.children().eq(6).children().removeClass("layui-btn-warm layui-btn-disabled");
             $tr.children().eq(6).children().addClass(isClick(obj['informStatus']));
 
-            $infoTable.children("tbody").append($tr);
+            $infoTable.children("tbody").prepend($tr);
 
 
         });
