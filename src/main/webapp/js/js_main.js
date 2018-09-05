@@ -496,6 +496,17 @@ function showContent(url,node) {
                 $("#s_userName").html(user[0].userName);
                 $(".s_body").attr("headP",user[0].headP);
                 $(".s_body").attr("userId",user[0].userId);
+                $.ajax({
+                    async:false,
+                    url:"/SGetBgByIdServlet",
+                    type:"post",
+                    data:{"bgId":user[0].bgId},
+                    dataType:"text",
+                    success:function (bgPath) {
+                        // alert(bgPath);
+                        $(".s_main").css("background-image","url(" + bgPath + ")");
+                    }
+                });
                 login_flag = 1;
             }
         })
@@ -726,8 +737,75 @@ function showContent(url,node) {
             }
         });
     }
+    //推荐关注
+    // alert($("#y_a1").text())
+    // var i = 1;
+    $.ajax({
+        url: "/SuggestFollow",
+        type: "post",
+        // data: {"page": i},
+        dataType: "json",
+        success: function (ret) {
+// alert(ret[0].headP)
+            $("#y_img1").prop("src", ret[0].headP);
+            $("#y_a1").text(ret[0].userName);
+            $("#y_img2").attr("src", ret[1].headP);
+            $("#y_a2").text(ret[1].userName);
+            $("#y_img3").prop("src", ret[2].headP);
+            $("#y_a3").text(ret[2].userName);
+            $("#y_img4").prop("src", ret[3].headP);
+            $("#y_a4").text(ret[3].userName);
+        }
+    })
+
+    //选择关注
+    $(".y_follow").click(function () {
+            if(login_flag == 0){
+                layer.msg("请先登录");
+            }else{
+                $.ajax({
+                    url: "/InsertFollow",
+                    type: "post",
+                    data: {
+                        "userName": $(this).prev().text()
+                    },
+                    dataType: "json",
+                    success: function (ret) {
+
+                    }
+                })
+                $(this).text("√ 已关注")
+                //setTimeout(reload2(),3000);
+                // setTimeout(function (){$(".y_follow").text("+关注")},2000);
+            }
+        }
+    )
+    $("#y_change").click(function () {
+        if(login_flag == 0){
+            layer.msg("请先登录");
+        }else{
+            $.ajax({
+                url: "/SuggestFollow",
+                type: "post",
+                // data: {"page": i},
+                dataType: "json",
+                success: function (ret) {
+
+                    $("#y_img1").prop("src", ret[0].headP);
+                    $("#y_a1").html(ret[0].userName);
+                    $("#y_img2").attr("src", ret[1].headP);
+                    $("#y_a2").text(ret[1].userName);
+                    $("#y_img3").prop("src", ret[2].headP);
+                    $("#y_a3").text(ret[2].userName);
+                    $("#y_img4").prop("src", ret[3].headP);
+                    $("#y_a4").text(ret[3].userName);
+                }
+            })
+            $(".y_follow").text("+关注");
+        }
+    });
 });
-})
+});
 function add0(m){return m<10?'0'+m:m }
 function format(timestamp)
 {

@@ -20,10 +20,12 @@
     display: none;
 }
 .s_main{
-    background-color: #c81623;
-    background-image: url("../images/body_bg.jpg");
+    /*background-color: #c81623;*/
+    background-image: url("http://old.bz55.com/uploads/allimg/150326/140-150326110T6-50.jpg");
     background-repeat: no-repeat;
-    background-color: #1f160f;
+    /*background-color: #1f160f;*/
+    background-size:cover;
+    background-attachment: fixed;
     overflow: hidden;
 }
 .s_header{
@@ -35,7 +37,7 @@
     z-index:100;
 }
 .s_header img{
-    margin-left: 150px;
+    margin-left: 80px;
     width: 70px;
     height: 68px;
     float: left;

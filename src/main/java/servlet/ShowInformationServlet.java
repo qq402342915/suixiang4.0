@@ -24,7 +24,7 @@ public class ShowInformationServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin","*");
         HttpSession session=request.getSession();
         User user= (User) session.getAttribute("user");
-        int userId=28;
+        int userId = user.getUserId();
 //                user.getUserId();
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
 

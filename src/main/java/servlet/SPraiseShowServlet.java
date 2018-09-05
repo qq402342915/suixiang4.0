@@ -20,7 +20,7 @@ public class SPraiseShowServlet extends HttpServlet {
         int blogId=Integer.parseInt(request.getParameter("praise").trim());
 //        int praId=Integer.parseInt(request.getParameter("praId"));
         User p =  (User) request.getSession().getAttribute("user");
-
+        System.out.println(p.getUserId());
         int user_id = p.getUserId();
 
         PraiseInfoDao praiseInfoDao=new PraiseInfoDaoImpl();

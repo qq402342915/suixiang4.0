@@ -21,10 +21,9 @@ public class UpdateInformationServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
 
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
-//        HttpSession session=request.getSession();
-//        User user2= (User) session.getAttribute("user");
-//        int userId=user2.getUserId();
-int userId=28;
+        HttpSession session=request.getSession();
+        User user2= (User) session.getAttribute("user");
+        int userId=user2.getUserId();
 
 
 
@@ -60,15 +59,15 @@ int userId=28;
             user.setBirthday(birth);
             user.setAddress(address);
             int ret= userInfoDao.updateUser(user,userId);
-//            user.setRegDate(user2.getRegDate());
-//            user.setBgId(user2.getBgId());
-//            user.setHeadP(user2.getHeadP());
-//            user.setLockDate(user2.getLockDate());
-//            user.setPassword(user2.getPassword());
-//            user.setUserId(user2.getUserId());
-//
-//
-//            session.setAttribute("user",user);
+            user.setRegDate(user2.getRegDate());
+            user.setBgId(user2.getBgId());
+            user.setHeadP(user2.getHeadP());
+            user.setLockDate(user2.getLockDate());
+            user.setPassword(user2.getPassword());
+            user.setUserId(user2.getUserId());
+
+
+            session.setAttribute("user",user);
 
 
         } catch (ParseException e) {

@@ -30,7 +30,10 @@ public class bgServlet extends HttpServlet {
         int bId=backgroundList.get(0).getBgId();//通过路径的到id
 
         HttpSession session = request.getSession();//获取session对象
-      String telNum=(String) session.getAttribute("telNum");//获取手机号
+        User user = (User) session.getAttribute("user");
+        user.setBgId(bId);
+        session.setAttribute("user",user);
+        String telNum=user.getTelNum();//获取手机号
 //        String telNum = "13222222111";//
 //        List<User> userList=userInfoDao.getUser("");//通过手机号码的到用户的信息
         int ret =userInfoDao.UpdateBg(bId,telNum);
