@@ -390,7 +390,7 @@ function showContent(url,node) {
         // var now_document = $(document).height();
         // alert(now_height);
         var bot = 180;
-        if ((bot + $(window).scrollTop()) > ($(document).height() - $(window).height()) + 20) {
+        if ((bot + $(window).scrollTop()) > ($(document).height() - $(window).height()) + 50) {
             $.ajax({
                 url: url,
                 type:"post",
@@ -459,8 +459,8 @@ function showContent(url,node) {
                     }
                     if(userblog.length < 5){
                         $(window).off('scroll');
-                        pages = 0;
                         $(node).append('<div class="s_xinxijiazaitishi">没有更多了</div>');
+                        pages = 0;
                     }
                 }
             });
