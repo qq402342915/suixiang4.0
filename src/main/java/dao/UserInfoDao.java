@@ -1,9 +1,9 @@
 package dao;
 
-import entity.Blog;
-import entity.BlogContext;
+
 import entity.User;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface UserInfoDao {
@@ -40,5 +40,9 @@ public interface UserInfoDao {
     int countToday();
     //查询之前某天的用户注册量
     int countPreDay(int day);
+    //给用户加锁
+    int updateLockDate(int userId);
+    //给用户解锁
+    int unLockDate(int userId);
 
 }

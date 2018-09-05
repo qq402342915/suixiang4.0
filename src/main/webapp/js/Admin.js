@@ -119,7 +119,6 @@ $(function () {
         '        <col width="100">\n' +
         '        <col width="70">\n' +
         '        <col width="100">\n' +
-        '        <col width="130">\n' +
         '        <col width="50">\n' +
         '        <col width="100">\n' +
         '        <col width="100">\n' +
@@ -132,7 +131,6 @@ $(function () {
         '        <th>用户昵称</th>\n' +
         '        <th>头像</th>\n' +
         '        <th>手机号</th>\n' +
-        '        <th>邮箱</th>\n' +
         '        <th>性别</th>\n' +
         '        <th>注册时间</th>\n' +
         '        <th>锁定时间</th>\n' +
@@ -153,7 +151,6 @@ $(function () {
                 '        <td>' + obj['userName'] + '</td>\n' +
                 '        <td><img src=' + obj['headP'] + ' class="layui-nav-img"></td>\n' +
                 '        <td>' + obj['telNum'] + '</td>\n' +
-                '        <td>' + obj['email'] + '</td>\n' +
                 '        <td>' + obj['sex'] + '</td>\n' +
                 '        <td>' + obj['regDate'] + '</td>\n' +
                 '        <td>' + obj['lockDate'] + '</td>\n' +
@@ -256,6 +253,10 @@ $(function () {
                     '        <td>' + obj['birthday'].substring(0, 10) + '</td>\n' +
                     '</tr>\n' +
                     '    <tr>\n' +
+                    '        <td>邮箱</td>\n' +
+                    '        <td>' + obj['email']+ '</td>\n' +
+                    '</tr>\n' +
+                    '    <tr>\n' +
                     '        <td>所在地</td>\n' +
                     '        <td>' + obj['address'] + '</td>\n' +
                     '</tr>\n' +
@@ -352,7 +353,6 @@ $(function () {
         '        <col width="70">\n' +
         '        <col width="70">\n' +
         '        <col width="70">\n' +
-        '        <col width="70">\n' +
         '        <col width="160">\n' +
         '        <col width="70">\n' +
         '        <col width="100">\n' +
@@ -363,7 +363,6 @@ $(function () {
         '        <th>微博ID</th>\n' +
         '        <th>用户ID</th>\n' +
         '        <th>发表时间</th>\n' +
-        '        <th>发布地点</th>\n' +
         '        <th>微博内容</th>\n' +
         '        <th>转发次数</th>\n' +
         '        <th>操作</th>\n' +
@@ -382,7 +381,6 @@ $(function () {
                 '        <td>' + obj['blogId'] + '</td>\n' +
                 '        <td>' + obj['userId'] + '</td>\n' +
                 '        <td>' + obj['sendDate'] + '</td>\n' +
-                '        <td>' + obj['sendAddr'] + '</td>\n' +
                 '        <td>' + obj['context'] + '</td>\n' +
                 '        <td>' + obj['tsNum'] + '</td>\n' +
                 '        <td>\n' +
@@ -392,7 +390,6 @@ $(function () {
                 '    </tr>');
 
             $table.children("tbody").append($tr);
-
 
         });
 
@@ -658,7 +655,7 @@ $(function () {
                 , layer = layui.layer;
             laypage.render({
                 elem: 'demo'
-                , limit: 10
+                , limit: 11
                 , count: getCount("/EndCountInformServlet")
                 , layout: ['prev', 'page', 'next', 'skip']
                 , jump: function (obj) {
@@ -690,6 +687,8 @@ $(function () {
     $("body").on("click", ".w_inform_btn", function () {
         //获取当前通知ID;
         var informId = $(this).closest('tr').children().eq(0).text();
+        //获取当前被举报用户ID
+        var isUserId = $(this).closest('tr').children().eq(1).text();
         //获取this,ajax中可以调用
         var $this = $(this);
 
@@ -701,9 +700,35 @@ $(function () {
             type: "post",
             success: function (res) {
                 if (res != 0) {
-                    $this.parent().prev().text("已处理");
-                    $this.addClass("layui-btn-disabled");
-                    layer.msg("通知成功");
+
+                    //在用户表中把锁定时间增加为当前时间
+                    $.ajax({
+                        url:"/EndAddLockServlet",
+                        type:"post",
+                        data:{"userId":isUserId},
+                        dataType:"text",
+                        success:function (res1) {
+                            if(res1!=0){
+                                $this.parent().prev().text("已处理");
+                                $this.addClass("layui-btn-disabled");
+                                layer.msg("通知成功");
+                                //三小时后自动解锁
+                                $.ajax({
+                                    url:"/EndUnlockServlet",
+                                    type:"post",
+                                    data:{"userId":isUserId},
+                                    dataType:"text",
+                                    success:function () {
+
+                                    }
+
+                                });
+                            }
+                            else {
+                                layer.msg("通知失败");
+                            }
+                        }
+                    });
                 } else {
                     layer.msg("通知失败");
                 }
