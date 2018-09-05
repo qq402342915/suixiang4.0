@@ -20,18 +20,27 @@ import java.util.List;
 @WebServlet(name = "EndUnlockServlet",urlPatterns = "/EndUnlockServlet")
 public class EndUnlockServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userIdStr=request.getParameter("userId");
-        int userId=Integer.parseInt(userIdStr);
+        String telNum=request.getParameter("telNum");
+
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
-        List<User> userList = userInfoDao.getUser(userId);
-        System.out.println(userList.get(0).getLockDate());
-        Date lockdate= userList.get(0).getLockDate();
-        Date currentDate = new Date();
-        long diff = currentDate.getTime() - lockdate.getTime();
-        //超过3小时解锁
-        if(diff>=10800000){
-            userInfoDao.unLockDate(userId);
+        List<User> userList = userInfoDao.getUser(telNum);
+        //如果用户处于被锁定状态
+        if(userList.get(0).getLockDate()!=null){
+            Date lockdate= userList.get(0).getLockDate();
+            Date currentDate = new Date();
+            long diff = currentDate.getTime() - lockdate.getTime();
+            //超过3小时解锁
+            if(diff>=10800000){
+                userInfoDao.unLockDate(telNum);
+                response.getWriter().write("1");
+            }
+            else{//未解锁
+                response.getWriter().write("0");
+            }
+        }else{//没有被锁定
+            response.getWriter().write("1");
         }
+
 
 
     }

@@ -51,6 +51,6 @@ public interface UserInfoDao {
     //给用户加锁
     int updateLockDate(int userId);
     //给用户解锁
-    int unLockDate(int userId);
+    int unLockDate(String telNum);
 
 }

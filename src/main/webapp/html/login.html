@@ -95,32 +95,47 @@
                     }
                     //用户名和密码都不为空
                     else{
+
+                        //检查用户是否被锁定
                         $.ajax({
-                            url:"/UserLoginServlet",
+                            url:"/EndUnlockServlet",
                             type:"post",
-                            data:{"w_tel":$("#w_telId").val(),"w_pass":$("#w_passId").val(),
-                            "rememberMe":$("#w_rememberMe").is(":checked"),"w_code":$("#w_codeId").val()},
+                            data:{"telNum":$("#w_telId").val()},
                             dataType:"text",
-                            success:function (res) {
-                                if(res=="true"){
-                                    if($("#w_rememberMe").is(":checked")){
-                                        $.cookie('cookieUserName',$("#w_telId").val(), { expires: 7, path: '/' });
-                                        $.cookie('cookiePass',$("#w_passId").val(), { expires: 7, path: '/' });
-                                    }else{
-                                        //删除cookie
-                                        $.removeCookie('cookieUserName',{ path: '/' });
-                                        $.removeCookie('cookiePass',{path: '/' });
-                                    }
-                                    $("#w_wrongInfo span").css("display","none");
-                                    alert("登录成功");
-                                }else if(res=="false"){
-                                    $("#w_wrongInfo span").text("您输入的用户名或密码不正确");
-                                    $("#w_wrongInfo span").css("display","inline-block");
-                                }else if(res=="codeFalse"){
-                                    $("#w_wrongInfo span").text("验证码错误");
-                                    $("#w_wrongInfo span").css("display","inline-block");
+                            success:function (islock) {
+                                //可以登录
+                                if(islock==1){
+                                    $.ajax({
+                                        url:"/UserLoginServlet",
+                                        type:"post",
+                                        data:{"w_tel":$("#w_telId").val(),"w_pass":$("#w_passId").val(),
+                                            "rememberMe":$("#w_rememberMe").is(":checked"),"w_code":$("#w_codeId").val()},
+                                        dataType:"text",
+                                        success:function (res) {
+                                            if(res=="true"){
+                                                if($("#w_rememberMe").is(":checked")){
+                                                    $.cookie('cookieUserName',$("#w_telId").val(), { expires: 7, path: '/' });
+                                                    $.cookie('cookiePass',$("#w_passId").val(), { expires: 7, path: '/' });
+                                                }else{
+                                                    //删除cookie
+                                                    $.removeCookie('cookieUserName',{ path: '/' });
+                                                    $.removeCookie('cookiePass',{path: '/' });
+                                                }
+                                                $("#w_wrongInfo span").css("display","none");
+                                                alert("登录成功");
+                                            }else if(res=="false"){
+                                                $("#w_wrongInfo span").text("您输入的用户名或密码不正确");
+                                                $("#w_wrongInfo span").css("display","inline-block");
+                                            }else if(res=="codeFalse"){
+                                                $("#w_wrongInfo span").text("验证码错误");
+                                                $("#w_wrongInfo span").css("display","inline-block");
+                                            }
+                                        }
+
+                                    });
+
                                 }else {
-                                    // layer.msg("您因被举报锁定三个小时");
+                                    // 被锁定
                                     //显示剩余时间
                                     $.ajax({
                                         url:"/UserGetLockServlet",
@@ -141,7 +156,7 @@
                                             var lockDate;
                                             $.each(res,function (index,obj) {
                                                 //得到锁定时间
-                                                 lockDate=obj['lockDate'];
+                                                lockDate=obj['lockDate'];
 
                                             });
                                             var lock = new Date(lockDate.replace(/-/g, "/"));
@@ -166,15 +181,15 @@
 
                                             },1000);
 
-
-
-
                                         }
                                     });
                                 }
+
                             }
 
                         });
+
+
                     }
 
 

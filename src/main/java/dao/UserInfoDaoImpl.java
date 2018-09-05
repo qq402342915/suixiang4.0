@@ -86,8 +86,8 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
         return executeUpdate("update t_user set lockDate = CURRENT_TIMESTAMP where userId= ?",new Object[]{userId});
     }
     @Override
-    public int unLockDate(int userId){
-        return executeUpdate("update t_user set lockDate = null where userId = ?",new Object[]{userId});
+    public int unLockDate(String telNum){
+        return executeUpdate("update t_user set lockDate = null where telNum = ?",new Object[]{telNum});
     }
 
     @Override
