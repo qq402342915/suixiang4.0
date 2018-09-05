@@ -2,9 +2,15 @@ var userId;
 var userhead;
 var username;
 var key;
+var num = 1;
+var num1 = 1;
 var topinfo = -1;
+var maxPage = 1;
+var rsCount = 1;
+var pageSize = 3;
+var maxPage1 = 1;
+var rsCount1 = 1;
 $(function () {
-
 
     // function reurl(){
     //     url = location.href; //把当前页面的地址赋给变量 url
@@ -23,7 +29,7 @@ $(function () {
         type:"post",
         dataType:"json",
         success:function (user) {
-            userId = user.userId;
+            userId = user[0].userId;
         }
     });
     var flag=-1;
@@ -42,10 +48,11 @@ $(function () {
     }
     updateFansCount();
     updateFollowCount();
-    showFansList();
     showMyBlogInfo();
     showMyBlogCount();
     showTopIfFollow();
+    showFansList();
+
     //获取用户信息
     $.ajax({
         async:false,
@@ -199,8 +206,20 @@ $(function () {
     $(".c_content_left a").click(function () {
         if($(this).prop("name") == "follow" ) {
             showFollowList();
+            $("#prev").hide();
+            $("#prev1").show();
+            $("#next").hide();
+            $("#next1").show();
+            $("#c_follow").show();
+            $("#c_fans").hide();
         }else {
             showFansList();
+            $("#prev1").hide();
+            $("#prev").show();
+            $("#next1").hide();
+            $("#next").show();
+            $("#c_follow").hide();
+            $("#c_fans").show();
         }
         $(this).css("background-color","#e8e8e8");
         $(this).siblings().css("background-color","white");
@@ -255,7 +274,7 @@ $(function () {
 
     });
 
-    //显示粉丝列表
+    //显示粉丝列表id
     function getFansId() {
         $.ajax({
             url:"/ShowFans?method=showMyFansInfo",
@@ -270,7 +289,7 @@ $(function () {
         });
     }
 
-    //显示关注列表
+    //显示关注列表id
     function getFollowId() {
         $.ajax({
             url:"/ShowFans?method=showMyFollowInfo",
@@ -301,6 +320,7 @@ $(function () {
 //显示粉丝数量
 function updateFansCount() {
     $.ajax({
+        async:false,
         url:"/ShowFans?method=showMyFansCount",
         type:"post",
         dataType:"json",
@@ -312,6 +332,7 @@ function updateFansCount() {
 //显示关注数量
 function updateFollowCount(){
     $.ajax({
+        async:false,
         url:"/ShowFans?method=showMyFollowCount",
         type:"post",
         data:{"userId":userId},
@@ -345,8 +366,10 @@ function showTopIfFollow(){
 //显示粉丝列表
 function showFansList() {
     $.ajax({
+        async:false,
         url:"/ShowFans?method=showMyFansInfo",
         type:"post",
+        data:{"num":num},
         dataType:"json",
         success:function (myfansList) {
             $(".c_list").children().remove();
@@ -371,14 +394,31 @@ function showFansList() {
                 });
                 $(".c_list").append($node);
             }
+            rsCount = $("#c_str2").text();
         }
     });
 }
+    //粉丝上下页
+    $("#prev").click(function () {
+        num = num > 1 ? -- num : num;
+        $(".c_list").children().remove();
+        showFansList();
+        $("#c_fans").text(num);
+    })
+    $("#next").click(function () {
+        maxPage = Math.ceil(rsCount / pageSize);
+        num = num < maxPage ? ++ num : maxPage;
+        $(".c_list").children().remove();
+        showFansList();
+        $("#c_fans").text(num);
+    })
+
 //显示关注列表
 function showFollowList() {
     $.ajax({
         url:"/ShowFans?method=showMyFollowInfo",
         type:"post",
+        data:{"num":num1},
         dataType:"json",
         success:function (myfollowList) {
             $(".c_list").children().remove();
@@ -404,9 +444,24 @@ function showFollowList() {
                 });
                 $(".c_list").append($node);
             }
+            rsCount1 = $("#c_str1").text();
         }
     });
 }
+//关注上下页
+    $("#prev1").click(function () {
+        num1 = num1 > 1 ? -- num1 : num1;
+        $(".c_list").children().remove();
+        showFollowList();
+        $("#c_follow").text(num1);
+    })
+    $("#next1").click(function () {
+        maxPage1 = Math.ceil(rsCount1 / pageSize);
+        num1 = num1 < maxPage1 ? ++ num1 : maxPage1;
+        $(".c_list").children().remove();
+        showFollowList();
+        $("#c_follow").text(num1);
+    })
 
 //显示自己微博
 function showMyBlogInfo() {

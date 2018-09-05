@@ -9,6 +9,8 @@ import entity.User;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
+import net.sf.json.JsonConfig;
+import util.JsonDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet("/ShowFans")
@@ -74,34 +77,46 @@ public class ShowFansServlet extends HttpServlet {
 
     private void showMyFollowInfo(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+        int pageNum = 1;
+        String num = request.getParameter("num");
+        if (num !=null && !num.equals("")) pageNum = Integer.parseInt(num);
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
-        List<Fansuser> myAllFollowId = fansInfoDao.getAllFollowId(userId);
+        List<Fansuser> myAllFollowId = fansInfoDao.getAllFollowId(userId,pageNum,3);
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
         List<User> myAllFollow = new ArrayList<User>();
         for (int i = 0; i < myAllFollowId.size(); i++){
             User user = userInfoDao.getUser(myAllFollowId.get(i).getUserId()).get(0);
             myAllFollow.add(user);
         }
-        JSONArray array = JSONArray.fromObject(myAllFollow);
+        JsonConfig jsonConfig =new JsonConfig();
+        JsonDate jd=new JsonDate();
+        jsonConfig.registerJsonValueProcessor(Date.class,jd);
+        /*JSONArray array = JSONArray.fromObject(myAllFollow);*/
         PrintWriter out = response.getWriter();
-        out.print(array);
+        out.print(String.valueOf(JSONArray.fromObject(myAllFollow,jsonConfig)));
         out.flush();
         out.close();
     }
 
     private void showMyFansInfo(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+        int pageNum = 1;
+        String num = request.getParameter("num");
+        if (num !=null && !num.equals("")) pageNum = Integer.parseInt(num);
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
-        List<Fansuser> myAllFansId = fansInfoDao.getAllFansId(userId);
+        List<Fansuser> myAllFansId = fansInfoDao.getAllFansId(userId,pageNum,3);
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
         List<User> myAllFans = new ArrayList<User>();
         for (int i = 0; i < myAllFansId.size(); i++){
             User user = userInfoDao.getUser(myAllFansId.get(i).getFansId()).get(0);
             myAllFans.add(user);
         }
-        JSONArray array = JSONArray.fromObject(myAllFans);
+        JsonConfig jsonConfig =new JsonConfig();
+        JsonDate jd=new JsonDate();
+        jsonConfig.registerJsonValueProcessor(Date.class,jd);
+        /*JSONArray array = JSONArray.fromObject(myAllFans);*/
         PrintWriter out = response.getWriter();
-        out.print(array);
+        out.print(String.valueOf(JSONArray.fromObject(myAllFans,jsonConfig)));
         out.flush();
         out.close();
        /* UserInfoDao userInfoDao = new UserInfoDaoImpl();

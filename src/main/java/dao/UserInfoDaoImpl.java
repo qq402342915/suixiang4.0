@@ -1,8 +1,8 @@
 package dao;
 
-import entity.BlogContext;
 import entity.User;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -45,8 +45,8 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
 
     @Override
     public boolean getUserIsLock(String telNum) {
-        List<User> userList = executeQuery("select lockDate from t_user where telNum = ?", new Object[]{telNum});
-        if (userList.get(0).getLockDate() != null)
+        List<User> userList = executeQuery("select userId from t_inform where userId=(SELECT userId from t_user where telNum=?) and informStatus = 0", new Object[]{telNum});
+        if (!userList.isEmpty())
             //锁定
             return true;
         else
@@ -77,10 +77,19 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
         return getRecordCount("SELECT count(*) FROM t_user WHERE TO_DAYS(now()) - TO_DAYS(regDate) <= ?",new Object[]{day});
     }
 
-
+    @Override
     public int UpdateBg(int bgId,String telNum){
         return executeUpdate("update t_user set bgId=? where telNum = ?",new Object[]{bgId,telNum});
     }
+    @Override
+    public int updateLockDate(int userId){
+        return executeUpdate("update t_user set lockDate = CURRENT_TIMESTAMP where userId= ?",new Object[]{userId});
+    }
+    @Override
+    public int unLockDate(int userId){
+        return executeUpdate("update t_user set lockDate = null where userId = ?",new Object[]{userId});
+    }
+
     @Override
     public List<User> getNotFansId(int userId ) {
         return executeQuery("select * From t_user WHERE userId not in (select userId FROM t_fansuser where fansId=?)",new Object[]{userId});
