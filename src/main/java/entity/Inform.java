@@ -19,6 +19,11 @@ public class Inform {
         this.informStatus = informStatus;
         this.reporterId = reporterId;
     }
+    public Inform(int userId,int reporterId,String informContent){
+        this.userId = userId;
+        this.reporterId = reporterId;
+        this.informContent = informContent;
+    }
 
     public int getInformId() {
         return informId;
