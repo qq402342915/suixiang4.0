@@ -50,7 +50,7 @@ document.writeln("                </li>");
 document.writeln("            </ul>");
 document.writeln("        </div>");
 document.writeln("        <div class=\'w_foot_bottom\'>");
-document.writeln("            ©2018 just2017.cn 版权所有。津ICP备10038086号-3");
+document.writeln("            ©2018 just2017.cn 版权所有。鲁ICP备18038759号");
 document.writeln("        </div>");
 document.writeln("    </div>");
 document.writeln("</div>");

@@ -15,4 +15,6 @@ public interface InformDao {
     List<Inform> getAllInform(int pageNo,int pageSize);
     //查看通知总数
     int countAllInform();
+    //根据ID更改通知状态
+    int changeInformState(int informId);
 }

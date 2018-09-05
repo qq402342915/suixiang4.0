@@ -11,6 +11,7 @@ public interface CommentInfoDao {
     int deleteComment(int commentId);
     //查看该微博的所有评论
     List<Comment> getAllComment(int blogId);
-
+    //查看评论数
+    int getOneBlogCommentNum(int blogId);
 
 }

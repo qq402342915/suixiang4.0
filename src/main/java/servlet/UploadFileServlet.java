@@ -41,6 +41,6 @@ public class UploadFileServlet extends HttpServlet {
         String telNum="13333333333";
         new UserInfoDaoImpl().UpdateHeadP(url,telNum);
         response.getWriter().print(obj.toString());
-
+        System.out.println("666"+obj.toString());
     }
 }

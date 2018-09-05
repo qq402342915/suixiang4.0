@@ -1,5 +1,40 @@
 $(function () {
 
+
+    //从session中获取用户名
+    $.ajax({
+        async: false,
+        url: "/EndGetSessionServlet",
+        type: "post",
+        dataType: "json",
+        success: function (res) {
+            $.each(res, function (index, obj) {
+                $("#w_adminName").text(obj['amName']);
+            });
+        }
+    });
+    //未登录则跳转登录界面
+    var adminUser = $("#w_adminName").text();
+    if (adminUser == "远方") {
+        window.location.href = "adminBack.html";
+    }
+    //退出当前账号,清除session
+    $("#w_logOut").click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            async: false,
+            url: "/EndClearSessionServlet",
+            type: "post",
+            dataType: "text",
+            success: function (res) {
+            }
+        });
+
+        window.location.href = "adminBack.html";
+
+    });
+
     //定义分页容器
     var $page = $('<div id="demo"></div>');
 
@@ -62,7 +97,7 @@ $(function () {
             , shade: 0.6 //遮罩透明度
             , maxmin: true //允许全屏最小化
             , anim: 1 //0-6的动画形式，-1不开启
-            , content: '<div style="padding:50px;">这是一个非常普通的页面层，传入了自定义的html</div>'
+            , content: '<div style="padding:50px;">每个管理员都很不错</div>'
         });
     });
 
@@ -136,18 +171,15 @@ $(function () {
     //1.用户管理
     //1.1切换表格
     $("#w_user_manage").click(function (e) {
+        e.preventDefault();
         //清空输入框
         $("#demoReload").val("");
-
-        e.preventDefault();
         //加载弹框
         var loadBlog = layer.load(1, {
             shade: [0.1, '#fff'] //0.1透明度的白色背景
         });
         $(".w_demo").children().remove();
         $(".w_demo").addClass("w_padding");
-
-
 
 
         $(".w_demo").prepend($userTable);
@@ -262,7 +294,6 @@ $(function () {
     });
 
 
-
     //1.3
     //点击删除按钮删除个人信息
     $("body").on("click", ".del", function (event) {
@@ -366,6 +397,7 @@ $(function () {
         });
 
     }
+
     //公有的分页--------------------------------------------------------
     //分页，第一第二位的值为分页数据，第三个为url地址
     //若要根据查询指定值分页，则传入第四个参数
@@ -405,12 +437,8 @@ $(function () {
         $(".w_demo").addClass("w_padding");
 
 
-
         $(".w_demo").prepend($table);
         $(".w_demo").prepend($head);
-
-
-
 
 
         //分页，count后面写传入数据的总数
@@ -533,7 +561,7 @@ $(function () {
             laypage.render({
                 elem: 'demo'
                 , limit: 7
-                , count: getCount("/EndBlogCountServlet",userId)
+                , count: getCount("/EndBlogCountServlet", userId)
                 , layout: ['prev', 'page', 'next', 'skip']
                 , jump: function (obj) {
                     var pageNo = obj.curr;
@@ -550,7 +578,7 @@ $(function () {
 
 
     //消息通知-----------------------------------------------------------------
-    var $infoTable=$('<table class="layui-table">\n' +
+    var $infoTable = $('<table class="layui-table">\n' +
         '    <colgroup>\n' +
         '        <col width="70">\n' +
         '        <col width="70">\n' +
@@ -574,6 +602,7 @@ $(function () {
         '    <tbody>\n' +
         '    </tbody>\n' +
         '</table>   ');
+
     //--------------------------------------------------------------------------------
     function getInfoJson(res) {
         $infoTable.children("tbody").children().remove();
@@ -584,22 +613,39 @@ $(function () {
                 '        <td>' + obj['warnDate'] + '</td>\n' +
                 '        <td>' + obj['informContent'] + '</td>\n' +
                 '        <td>' + obj['reporterId'] + '</td>\n' +
-                '        <td>' + isDo(obj['informStatus']) + '</td>\n' +
-                '        <td><button class="layui-btn w_inform_btn layui-btn-warm layui-btn-xs">警告</button></td>\n'+
+                '        <td class="isDo">' + isDo(obj['informStatus']) + '</td>\n' +
+                '        <td><button id=index class="w_inform_btn layui-btn-xs layui-btn">警告</button></td>\n' +
                 '    </tr>');
+            //未处理可以点击，已处理则不能点击
+            $tr.children().eq(6).children().removeClass("layui-btn-warm layui-btn-disabled");
+            $tr.children().eq(6).children().addClass(isClick(obj['informStatus']));
 
-            $infoTable.children("tbody").append($tr);
+            $infoTable.children("tbody").prepend($tr);
+
 
         });
     };
+
     //判断是否处理
-    function isDo(obj){
-        return obj==1 ? "未处理":"已处理";
+    function isDo(obj) {
+        return obj == 1 ? "未处理" : "已处理";
     }
+
+    //设置按钮是否可以按
+    function isClick(obj) {
+        return obj == 1 ? "layui-btn-warm" : "layui-btn-disabled";
+    }
+
     //3.消息通知
     //3.1切换表格
     $("#w_inform_manage").click(function (e) {
         e.preventDefault();
+        //加载弹框
+        var loadBlog = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+
+
         $(".w_demo").children().remove();
         $(".w_demo").addClass("w_padding");
 
@@ -612,18 +658,18 @@ $(function () {
                 , layer = layui.layer;
             laypage.render({
                 elem: 'demo'
-                , limit: 11
+                , limit: 10
                 , count: getCount("/EndCountInformServlet")
                 , layout: ['prev', 'page', 'next', 'skip']
                 , jump: function (obj) {
                     var pageNo = obj.curr;
                     var pageSize = obj.limit;
                     $.ajax({
-                        url:"/EndShowInformServlet",
+                        url: "/EndShowInformServlet",
                         type: "post",
-                        data:{"pageNo":pageNo,"pageSize":pageSize},
-                        dataType:"json",
-                        success:function (res) {
+                        data: {"pageNo": pageNo, "pageSize": pageSize},
+                        dataType: "json",
+                        success: function (res) {
                             getInfoJson(res);
                         }
 
@@ -631,18 +677,158 @@ $(function () {
                     });
 
                 }
+
             });
 
-
         });
-
-
+        //关闭加载层
+        layer.close(loadBlog);
 
 
     });
     //3.2通知用户
     $("body").on("click", ".w_inform_btn", function () {
-        $(this).addClass("layui-btn layui-btn-disabled");
+        //获取当前通知ID;
+        var informId = $(this).closest('tr').children().eq(0).text();
+        //获取this,ajax中可以调用
+        var $this = $(this);
+
+        //更改未处理为已处理
+        $.ajax({
+            url: "/EndUpdateStateServlet",
+            data: {"informId": informId},
+            dataType: "text",
+            type: "post",
+            success: function (res) {
+                if (res != 0) {
+                    $this.parent().prev().text("已处理");
+                    $this.addClass("layui-btn-disabled");
+                    layer.msg("通知成功");
+                } else {
+                    layer.msg("通知失败");
+                }
+
+            }
+
+        });
+
+
+    });
+
+    //------------------------------------数据统计------------------------------
+    $("#w_data").click(function (e) {
+        e.preventDefault();
+
+        //加载弹框
+        // var loadBlog = layer.load(1, {
+        //     shade: [0.1, '#fff'] //0.1透明度的白色背景
+        // });
+        $(".w_demo").children().remove();
+        $(".w_demo").addClass("w_padding");
+        $(".w_end_foot").children().remove();
+
+        //--条状图
+        var $div = $('<div id="chartmain" style="width:500px; height: 400px; display: inline-block"></div>');
+        //--饼状图
+        var $divCircular = $('<div id="circular" style="width:500px; height: 400px; display: inline-block"></div>');
+        $(".w_demo").prepend($divCircular);
+        $(".w_demo").prepend($div);
+
+
+        //数据统计------------------------------------------------------
+        //条状图
+        var countUserBytime = 0;
+
+        //查询用户注册时间
+        function selectUserCountByTime(day) {
+            $.ajax({
+                async: false,
+                url: "/selectUserCountByTime",
+                data: {"day": day},
+                dataType: "text",
+                type: "post",
+                success: function (res) {
+                    countUserBytime = res;
+                }
+            });
+            return countUserBytime;
+        }
+
+        var option = {
+            title: {
+                text: '注册用户量'
+            },
+            tooltip: {},
+            legend: {
+                data: []
+            },
+            xAxis: {
+                data: ["前天", "昨天", "今天"]
+            },
+            yAxis: {},
+            series: [{
+                name: '注册量',
+                type: 'line',
+                data: [selectUserCountByTime(2), selectUserCountByTime(1), selectUserCountByTime()]
+            }]
+        };
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chartmain'));
+
+        //使用制定的配置项和数据显示图表
+
+        //定义json对象
+        var hotJson;
+        myChart.setOption(option);
+
+        function getHotName() {
+            $.ajax({
+                async: false,
+                url: "/EndHotServlet",
+                dataType: "json",
+                type: "post",
+                success: function (res) {
+                    hotJson = res;
+                }
+            });
+            return hotJson;
+        }
+
+        var arrName = new Array();
+        var arrCount = new Array();
+        $.each(getHotName(), function (index, obj) {
+            arrName[index] = obj['userName'];
+            arrCount[index] = obj['praNum'];
+        });
+
+
+        //饼状图
+        var option = {
+            title: {
+                text: '网络达人'
+            },
+            series: [{
+                name: '访问量',
+                type: 'pie',
+                radius: '60%',
+                data: [
+                    {value: arrCount[0], name: arrName[0]},
+                    {value: arrCount[1], name: arrName[1]},
+                    {value: arrCount[2], name: arrName[2]},
+                    {value: arrCount[3], name: arrName[3]},
+                    {value: arrCount[4], name: arrName[4]}
+
+                ]
+            }]
+        };
+
+        //初始化echarts实例
+        var myChartCircular = echarts.init(document.getElementById('circular'));
+
+        //使用制定的配置项和数据显示图表
+        myChartCircular.setOption(option);
+
+
     });
 
 });

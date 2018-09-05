@@ -88,7 +88,7 @@ body{
 }
 .guanzhu{
     margin-left: 380px;
-    display: none;
+    /*display: none;*/
     height:34px;
     line-height:35px;
     width: 100px;
@@ -101,7 +101,7 @@ body{
     height: 34px;
     float: left;
     background-color: #646973;
-    display: none;
+    /*display: none;*/
     line-height: 35px;
 }
 .jubao_div{
@@ -266,7 +266,7 @@ body{
 }
 #c_show_div2{
     display: none;
-    height: 300px;
+    height: 500px;
     background-color: white;
 }
 .c_blog_content{
@@ -352,6 +352,7 @@ body{
 /*头部*/
 .c_main{
     overflow: hidden;
+    margin-bottom: 10px;
 }
 .s_header{
     position: fixed;
@@ -407,4 +408,18 @@ body{
     height: 68px;
     margin-left: 20px;
     line-height: 68px;
+}
+.return_top{
+    position: fixed;
+    bottom: 10%;
+    right: 15%;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    line-height: 30px;
+    text-align: center;
+}
+.hideguanzhu{
+    display: none;
 }
