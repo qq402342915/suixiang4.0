@@ -13,10 +13,10 @@
                 type:"post",
                 data:{"userName":name},
                 dataType:"json",
-                success:function (commentList) {
-                    $.each(commentList,function (index,obj) {
-                        var $node=$('<div class="l_fcous"><span>'+obj['userName']+'</span>评论了你的微博</div>');
-                        $("#l_inner2").append($node);
+                success:function (sysInformList) {
+                    $.each(sysInformList,function (index,obj) {
+                        var $node=$('<div class="l_fcous"><span><img style="border-radius:50% 2px" width="40" src='+obj['headP']+'>'+obj['userName']+'在'+obj['comDate']+'&nbsp;&nbsp;&nbsp;'+'</span>评论了你的微博</div>');
+                        $("#l_inner2").append($node);//'&nbsp;&nbsp;&nbsp;在'+obj['comDate']+'&nbsp;&nbsp;&nbsp;'
                     });
                 }
             })
@@ -28,11 +28,11 @@
     <div id="l_inner">
         <div id="l_inner1">
             <ul id="l_nav">
-                <li class="web"><a href="http://localhost:63342/suixiang4.0/src/main/webapp/html/focus.html?_ijt=1f4e8ifk5d1f310d62nsl0g09j">关注</a></li>
-                <li class="web"><a href="http://localhost:63342/suixiang4.0/src/main/webapp/html/praise.html?_ijt=np2scc9oc4ip8e3frbst2aefpq">点赞</a></li>
-                <li class="web"><a href="http://localhost:63342/suixiang4.0/src/main/webapp/html/comment.html?_ijt=bbfshiq2u2j21t6fnq6ja4vnh4">评论</a></li>
-                <li class="web"><a href="http://localhost:63342/suixiang4.0/src/main/webapp/html/transform.html?_ijt=v12akgt2qkap4bp7250tbijb7p">转发</a></li>
-                <li class="web"><a href="http://localhost:63342/suixiang4.0/src/main/webapp/html/inform.html?_ijt=hbpgimq16cdom02h9806ki3g4o">系统通知</a></li>
+                <li class="web"><a href="http://localhost:8080/html/focus.html">关注</a></li>
+                <li class="web"><a href="http://localhost:8080/html/praise.html">点赞</a></li>
+                <li class="web"><a href="http://localhost:8080/html/comment.html">评论</a></li>
+                <li class="web"><a href="http://localhost:8080/html/transform.html">转发</a></li>
+                <li class="web"><a href="http://localhost:8080/html/inform.html">系统通知</a></li>
             </ul>
         </div>
         <div id="l_inner2">
