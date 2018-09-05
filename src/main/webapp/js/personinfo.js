@@ -222,16 +222,31 @@ $(function () {
     //点击举报
     $("#w_Report").click(function () {
         layer.msg('确定要举报吗？', {
-            time: 5000, //5s后自动关闭
+            /*time: 5000, //5s后自动关闭*/
             btn: ['确定', '再想想'],
             yes:function () {
-                $.ajax({
-                    url:"/ReportUserServlet",
-                    data:{"userId":currentUserId},
-                    dataType:"text",
-                    type:"post",
-                    success:function (res) {
-
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    title:"请填写举报信息",
+                    content: '<textarea class="c_report"></textarea>',
+                    btn: ['提交','取消'],
+                    yes:function () {
+                        $.ajax({
+                            url:"/ReportUserServlet",
+                            data:{"userId":currentUserId,"content":$(".c_report").val()},
+                            dataType:"text",
+                            type:"post",
+                            success:function (res) {
+                                if (res == 1) {
+                                    layer.closeAll();
+                                    layer.msg("举报成功！");
+                                    $("#w_Report").html("&nbsp&nbsp&nbsp已举报");
+                                    $(".jubao_div").hide();
+                                }
+                            }
+                        });
                     }
                 });
             }
