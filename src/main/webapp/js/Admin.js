@@ -712,17 +712,7 @@ $(function () {
                                 $this.parent().prev().text("已处理");
                                 $this.addClass("layui-btn-disabled");
                                 layer.msg("通知成功");
-                                //三小时后自动解锁
-                                $.ajax({
-                                    url:"/EndUnlockServlet",
-                                    type:"post",
-                                    data:{"userId":isUserId},
-                                    dataType:"text",
-                                    success:function () {
 
-                                    }
-
-                                });
                             }
                             else {
                                 layer.msg("通知失败");

@@ -35,10 +35,11 @@ public class UserLoginServlet extends HttpServlet {
         }else if(!code.equalsIgnoreCase(word)){
             //验证码不正确
             response.getWriter().write("codeFalse");
-        }else if(userInfoDao.getUserIsLock(telNum)){
-            //用户被锁定
-            response.getWriter().write("isLock");
         }
+//        else if(userInfoDao.getUserIsLock(telNum)){
+//            //用户被锁定
+//            response.getWriter().write("isLock");
+//        }
         else{
             //登陆成功
             //将用户信息保存在session里
