@@ -1,7 +1,23 @@
 /*图片预览*/
 .preview_div{
-    width:530px;
+    width:540px;
     margin: 10px auto;
+}
+#s_delete{
+    float: right;
+    margin: 10px 100px 0 0;
+    display: none;
+}
+#s_add{
+    display: none;
+}
+#s_vdelete{
+    float: right;
+    margin: 10px 100px 0 0;
+    display: none;
+}
+#s_vadd{
+    display: none;
 }
 .s_main{
     background-color: #c81623;

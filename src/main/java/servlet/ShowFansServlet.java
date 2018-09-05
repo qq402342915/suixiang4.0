@@ -44,6 +44,10 @@ public class ShowFansServlet extends HttpServlet {
             cancelFollow(request,response);
         }else if (method.equals("showTopIfFollow")){
             showTopIfFollow(request,response);
+        }else if (method.equals("addTopFollow")){
+            addTopFollow(request,response);
+        }else if (method.equals("cancelTopFollow")){
+            cancelTopFollow(request,response);
         }
     }
 
@@ -130,7 +134,7 @@ public class ShowFansServlet extends HttpServlet {
         boolean result = fansInfoDao.getIfFollow(userId,Integer.parseInt(nowId));
         PrintWriter out = response.getWriter();
         out.print(result);
-        System.out.println(result);
+        System.out.println("Top:"+result);
         out.flush();
         out.close();
     }
@@ -152,6 +156,35 @@ public class ShowFansServlet extends HttpServlet {
         String fansId = request.getParameter("fansId");
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
         int result = fansInfoDao.cancelFollow(userId,Integer.parseInt(fansId));
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
+    }
+
+    private void addTopFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        int userId = user.getUserId();
+        String nowId = request.getParameter("nowId");
+        Fansuser fansuser = new Fansuser(userId,Integer.parseInt(nowId));
+        FansInfoDao fansInfoDao = new FansInfoDaoImpl();
+        int result = fansInfoDao.addFollow(fansuser);
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
+    }
+
+    private void cancelTopFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        int userId = user.getUserId();
+        String nowId = request.getParameter("nowId");
+        FansInfoDao fansInfoDao = new FansInfoDaoImpl();
+        int result = fansInfoDao.cancelFollow(userId,Integer.parseInt(nowId));
         PrintWriter out = response.getWriter();
         out.print(result);
         out.flush();

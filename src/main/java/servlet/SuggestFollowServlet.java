@@ -15,33 +15,38 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
-@WebServlet("/ShowInformation")
-public class ShowInformationServlet extends HttpServlet {
+@WebServlet("/SuggestFollow")
+public class SuggestFollowServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin","*");
-        HttpSession session=request.getSession();
-        User user= (User) session.getAttribute("user");
-        int userId=28;
-//                user.getUserId();
         UserInfoDao userInfoDao = new UserInfoDaoImpl();
+        User user = new User();
+        HttpSession Session = request.getSession();
+        user = (User) Session.getAttribute("user");
 
-        //获取当前用户信息
-        List<User> userList = userInfoDao.getUser(userId);
-        JsonConfig jsonConfig =new JsonConfig();
-        JsonDate jd=new JsonDate();
-        jsonConfig.registerJsonValueProcessor(Date.class,jd);
+//        List<User> userList=userInfoDao.getNotFansId(8);
+//        Integer.parseInt(request.getParameter("page"));
+        List<User> userList2 = userInfoDao.getNotFansId(user.getUserId());
+        int i=new Random().nextInt(userList2.size()/4)+1;
+        List<User> userList = userInfoDao.getNotFansId(user.getUserId(),i,4);
+        JsonConfig jsonConfig = new JsonConfig();
+        JsonDate jd = new JsonDate();
+        jsonConfig.registerJsonValueProcessor(Date.class, jd);
+
 
 
         PrintWriter out = response.getWriter();
-        out.print(String.valueOf(JSONArray.fromObject(userList,jsonConfig)));
+        out.print(String.valueOf(JSONArray.fromObject(userList, jsonConfig)));
         out.flush();
         out.close();
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        doPost(request, response);
     }
 }

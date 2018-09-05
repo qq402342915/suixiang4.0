@@ -67,9 +67,14 @@
                     <i class="layui-icon">&#xe6ed;</i>视频
                 </button>
                 <button class="layui-btn layui-btn-sm layui-btn-normal" id="publish">发布</button>
+                <button id="s_delete" class="layui-btn layui-btn-xs layui-btn-danger">取消</button>
+                <button id="s_add" class="layui-btn layui-btn-xs layui-btn-normal">上传</button>
+                <button id="s_vdelete" class="layui-btn layui-btn-xs layui-btn-danger">取消</button>
+                <button id="s_vadd" class="layui-btn layui-btn-xs layui-btn-normal">上传</button>
                 <!--上传图片视频-->
                 <div class="preview_div">
-                    <div class="preview" style="margin-top:20px;"></div>
+                    <div class="preview" style="margin-top:20px;">
+                    </div>
                 </div>
             </div>
         </div>
@@ -164,23 +169,23 @@
                 <h2>推荐关注</h2>
             </div>
             <div class="s_body_guanzhu_person">
-                <a href=""><img src="../images/logo.png" alt="">666666</a>
-                <button class="layui-btn layui-btn-normal layui-btn-xs">+关注</button>
+                <a href=""><img id="y_img1" src="../images/logo.png" alt=""><span id="y_a1">cql</span></a>
+                <button  class="y_follow layui-btn layui-btn-normal layui-btn-xs">+关注</button>
             </div>
             <div class="s_body_guanzhu_person">
-                <a href=""><img src="../images/logo.png" alt="">666666</a>
-                <button class="layui-btn layui-btn-normal layui-btn-xs">+关注</button>
+                <a  href=""><img id="y_img2" src="../images/logo.png" alt=""><span id="y_a2">wsj</span></a>
+                <button class="y_follow layui-btn layui-btn-normal layui-btn-xs">+关注</button>
             </div>
             <div class="s_body_guanzhu_person">
-                <a href=""><img src="../images/logo.png" alt="">666666</a>
-                <button class="layui-btn layui-btn-normal layui-btn-xs">+关注</button>
+                <a href=""><img  id="y_img3"src="../images/logo.png" alt=""><span id="y_a3" >lhm</span></a>
+                <button class="y_follow layui-btn layui-btn-normal layui-btn-xs">+关注</button>
             </div>
             <div class="s_body_guanzhu_person">
-                <a href=""><img src="../images/logo.png" alt="">666666</a>
-                <button class="layui-btn layui-btn-normal layui-btn-xs">+关注</button>
+                <a href=""><img id="y_img4"src="../images/logo.png" alt=""><span id="y_a4">sjx</span></a>
+                <button class="y_follow layui-btn layui-btn-normal layui-btn-xs">+关注</button>
             </div>
             <div class="s_body_guanzhu_change">
-                <span>换一批</span>
+                <span id="y_change">换一批</span>
             </div>
         </div>
     </div>

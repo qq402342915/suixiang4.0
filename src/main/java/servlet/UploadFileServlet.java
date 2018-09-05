@@ -2,6 +2,7 @@ package servlet;
 
 import dao.UserInfoDao;
 import dao.UserInfoDaoImpl;
+import entity.User;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import util.UploadFile;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,18 +30,10 @@ public class UploadFileServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<String> fileSrcList = UploadFile.upload(request);
+        //ReadVideo.readVideoTime(request.getServletContext().getRealPath("/")+fileSrcList.get(0));//获得影片时长
         JSONObject obj = new JSONObject();
-
         obj.put("errno",0);
-        obj.put("data", JSONArray.fromObject(fileSrcList));
-        String str=obj.toString();
-        int begin=str.indexOf("upload");
-
-        int end=str.indexOf("]")-1;
-        System.out.println(str.substring(begin,end));
-        String url="../"+str.substring(begin,end);
-        String telNum="13333333333";
-        new UserInfoDaoImpl().UpdateHeadP(url,telNum);
+        obj.put("data",JSONArray.fromObject(fileSrcList));
         response.getWriter().print(obj.toString());
         System.out.println("666"+obj.toString());
     }
