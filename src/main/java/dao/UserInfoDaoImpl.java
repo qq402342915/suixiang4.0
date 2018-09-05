@@ -77,8 +77,12 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
         return executeUpdate("update t_user set bgId=? where telNum = ?",new Object[]{bgId,telNum});
     }
     @Override
-    public List<User> getNotFansId(int userId) {
+    public List<User> getNotFansId(int userId ) {
         return executeQuery("select * From t_user WHERE userId not in (select userId FROM t_fansuser where fansId=?)",new Object[]{userId});
+    }
+    @Override
+    public List<User> getNotFansId(int userId,int num,int size ) {
+        return executeQuery("select * from (select * From t_user WHERE userId not in (select userId FROM t_fansuser where fansId=?))as n limit ?,?",new Object[]{userId,(num-1)*size,size});
     }
 
     @Override

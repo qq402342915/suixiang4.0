@@ -36,8 +36,9 @@ public interface UserInfoDao {
     int UpdateHeadP(String headp,String telNum);
     //更新背景
     int UpdateBg(int bgId,String telNum);
+    List<User> getNotFansId(int userId );
     //查询未关注的人
-    List<User> getNotFansId(int userId);
+    List<User> getNotFansId(int userId,int num,int size);
     //根据用户名查找
     List<User> getUserId(String username);
 }

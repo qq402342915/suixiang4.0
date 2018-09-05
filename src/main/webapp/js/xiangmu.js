@@ -93,7 +93,7 @@ $(function () {
     // tlogDate=getDate(tlogDate);
 
     //展示用户信息
-   show();
+    show();
 
 
 //更换头像
@@ -156,21 +156,21 @@ $(function () {
             data: $("#y_information").serializeArray(),
             dataType: "json",
             success: function (ret) {
-
+                layer.alert('更新成功', {
+                    skin: 'layui-layer-lan'
+                    , closeBtn: 0
+                })
             }
 
         })
-        layer.alert('更新成功', {
-            skin: 'layui-layer-lan'
-            , closeBtn: 0
-        })
-show();
+
+        show();
 
     })
 
 
-
 })
+
 function show() {
     $.ajax({
         url: "/ShowInformation",
