@@ -1,7 +1,7 @@
 package servlet;
 
 import dao.*;
-import entity.BlogContext;
+import entity.UserBlog;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -16,8 +16,8 @@ import java.util.List;
 @WebServlet("/ShowHotBlog")
 public class ShowHotBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserBlogDao userBlogDao = new UserBlogDaoImpl();
-        List<BlogContext> userblogList= userBlogDao.searchDayBlog();
+        NewUserBlogDao userBlogDao = new NewUserBlogDaoImpl();
+        List<UserBlog> userblogList= userBlogDao.searchDayBlog();
         JSONArray userblog = JSONArray.fromObject(userblogList);
         PrintWriter out = response.getWriter();
         out.print(userblog);

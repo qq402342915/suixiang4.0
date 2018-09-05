@@ -1,5 +1,6 @@
 package dao;
 
+import entity.BlogContext;
 import entity.User;
 
 import java.sql.Timestamp;
@@ -10,12 +11,6 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     public List<User> getAllUser() {
         return executeQuery("select * from t_user");
     }
-
-    /*@Override
-    public List<User> getAllFans(int userId) {
-        return executeQuery("select headP,userName,userId from t_user where userId in(select fansId from t_fansuser where userId = ?)",new Object[]{userId});
-    }*/
-
     @Override
     public List<User> getUser(int userId) {
         return executeQuery("select * from t_user where userId = ?",new Object[]{userId});
@@ -73,6 +68,16 @@ public class UserInfoDaoImpl extends BaseDao<User> implements UserInfoDao {
     public int UpdateHeadP(String headp,String telNum) {
         return executeUpdate("update t_user set headP=? where telNum = ?",new Object[]{headp,telNum});
     }
+    @Override
+    public int countToday(){
+        return getRecordCount("SELECT count(*) FROM t_user WHERE TO_DAYS(regDate) = TO_DAYS(NOW())");
+    }
+    @Override
+    public int countPreDay(int day){//1为昨天，2为前天
+        return getRecordCount("SELECT count(*) FROM t_user WHERE TO_DAYS(now()) - TO_DAYS(regDate) <= ?",new Object[]{day});
+    }
+
+
     public int UpdateBg(int bgId,String telNum){
         return executeUpdate("update t_user set bgId=? where telNum = ?",new Object[]{bgId,telNum});
     }

@@ -1,10 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>404—OUR</title>
+
+    <script src="../js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="../css/su_our.css" type="text/css">
+    <link rel="stylesheet" href="../layui-master/layui-master/dist/css/layui.css">
+    <script src="../layui-master/layui-master/dist/layui.js"></script>
+    <script src="../layer/layer.js"></script>
 </head>
+<script>
+    layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            ,width: '100%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    });
+    $(function () {
+        $("#pic_1").click(function () {
+            // layer.msg("你好！", {time: 2000});
+            layer.open({
+                type:1,
+                // closeBtn: false,
+                // shift: 2,
+                // shadeClose: true,
+                content: $("#open_one"),
+                time:4000
+            })
+        })
+    })
+
+</script>
 <body>
 <div id="su_our">
     <div id="su_top">
@@ -17,9 +49,32 @@
         </div>
     </div>
     <div id="su_body">
-        <div>
-
+        <div id="su_body_left">
+            <br>
+            <h1>About</h1>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h1>随 &nbsp;享</h1>
+            <br><br><br><br>
+            <h1>From 404</h1>
         </div>
+        <div id="su_body_right" >
+            <div class="layui-carousel" id="test1">
+                <div id="lunbo" carousel-item>
+                    <div><img id="pic_1" src="../images/lunboone.png"> </div>
+                    <div><img id="pic_2" src="../images/headpic2.jpg"></div>
+                    <div><img id="pic_3" src="../images/headpic3.jpg"></div>
+                    <div><img id="pic_4" src="../images/headpic4.jpg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="open">
+        <img id="open_one" src="../images/hai.jpg" height="400" width="450">
+    </div>
+    <div>
 
     </div>
 </div>

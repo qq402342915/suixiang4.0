@@ -40,6 +40,7 @@ public class ShowPraiseServlet extends HttpServlet {
         JsonDate jd=new JsonDate();
         jsonConfig.registerJsonValueProcessor(Date.class,jd);
         PrintWriter out=response.getWriter();
+
         out.print(String.valueOf(JSONArray.fromObject(userList,jsonConfig)));
         out.flush();
         out.close();

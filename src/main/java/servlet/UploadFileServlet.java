@@ -35,6 +35,6 @@ public class UploadFileServlet extends HttpServlet {
         obj.put("errno",0);
         obj.put("data",JSONArray.fromObject(fileSrcList));
         response.getWriter().print(obj.toString());
-
+        System.out.println("666"+obj.toString());
     }
 }

@@ -38,14 +38,18 @@ public class ShowFansServlet extends HttpServlet {
             showMyFansInfo(request, response);
         }else if (method.equals("showIfFollow")) {
             showIfFollow(request,response);
+        }else if (method.equals("addFollow")){
+            addFollow(request,response);
+        }else if (method.equals("cancelFollow")){
+            cancelFollow(request,response);
+        }else if (method.equals("showTopIfFollow")){
+            showTopIfFollow(request,response);
         }
     }
 
     private void showMyFollowCount(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
-        userId = user.getUserId();
+        userId = Integer.parseInt(request.getParameter("userId"));
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
         int myFollowCount = fansInfoDao.getFollowCount(userId);
         PrintWriter out = response.getWriter();
@@ -113,6 +117,43 @@ public class ShowFansServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.print(result);
         System.out.println(result);
+        out.flush();
+        out.close();
+    }
+    private void showTopIfFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        int userId = user.getUserId();
+        String nowId = request.getParameter("nowId");
+        FansInfoDao fansInfoDao = new FansInfoDaoImpl();
+        boolean result = fansInfoDao.getIfFollow(userId,Integer.parseInt(nowId));
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        System.out.println(result);
+        out.flush();
+        out.close();
+    }
+
+    private void addFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        String fansId = request.getParameter("fansId");
+        Fansuser fansuser = new Fansuser(userId,Integer.parseInt(fansId));
+        FansInfoDao fansInfoDao = new FansInfoDaoImpl();
+        int result = fansInfoDao.addFollow(fansuser);
+        PrintWriter out = response.getWriter();
+        out.print(result);
+        out.flush();
+        out.close();
+    }
+
+    private void cancelFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        String fansId = request.getParameter("fansId");
+        FansInfoDao fansInfoDao = new FansInfoDaoImpl();
+        int result = fansInfoDao.cancelFollow(userId,Integer.parseInt(fansId));
+        PrintWriter out = response.getWriter();
+        out.print(result);
         out.flush();
         out.close();
     }

@@ -19,10 +19,13 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
     public List<Blog> getAllBlog(int userId) {
         return executeQuery("select * from t_blog where userId = ?",new Object[]{userId});
     }
+    public  int getOneBlog(int userId){
+        return  executeUpdate("select blogId from t_blog where userid=?",new Object[]{userId});
+    }
 
     @Override
     public int insertBlog(Blog blog) {
-        return executeUpdate("insert into t_blog value(?,?,?,?,?,?,?)",new Object[]{blog.getContext(),blog.getSendDate(),blog.getSendAddr(),blog.getUserId(),blog.getIp(),blog.getTsNum()});
+        return executeUpdate("insert into t_blog(context,userId,blogPic,blogVideo) value(?,?,?,?)",new Object[]{blog.getContext(),blog.getUserId(),blog.getBlogPic(),blog.getBlogVideo()});
     }
 
     @Override
@@ -38,7 +41,7 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
 
     @Override
     public List<Blog> getBlogByKey(int userId, String key) {
-        return executeQuery("select * from t_blog where userId = ? and context like ?",new Object[]{userId,"%" + key + "%"});
+        return executeQuery("select * from t_blog where userId = ? and context like ? order by sendDate desc",new Object[]{userId,"%" + key + "%"});
     }
 
     @Override
@@ -57,9 +60,7 @@ public class BlogInfoDaoImpl extends BaseDao<Blog> implements BlogInfoDao{
 
     @Override
     public int getCountBlog(int userId) {
-        int count1 = getRecordCount("select count(*) from t_blog where userId = ?",new Object[]{userId});
-        int count2 = getRecordCount("select count(*) from t_transpond where userId = ?",new Object[]{userId});
-        return count1 + count2;
+        return getRecordCount("select count(*) from t_blog where userId = ?",new Object[]{userId});
     }
 
     @Override

@@ -1,9 +1,9 @@
 package servlet;
 
-import dao.UserBlogDao;
-import dao.UserBlogDaoImpl;
-import entity.BlogContext;
+import dao.NewUserBlogDao;
+import dao.NewUserBlogDaoImpl;
 import entity.User;
+import entity.UserBlog;
 import net.sf.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -20,8 +20,8 @@ import java.util.List;
 public class ShowLikeDayBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        UserBlogDao userBlogDao = new UserBlogDaoImpl();
-        List<BlogContext> userblogList= userBlogDao.searchLikeDayBlog(((User)session.getAttribute("user")).getUserId());
+        NewUserBlogDao userBlogDao = new NewUserBlogDaoImpl();
+        List<UserBlog> userblogList= userBlogDao.searchLikeDayBlog(((User)session.getAttribute("user")).getUserId());
         JSONArray userblog = JSONArray.fromObject(userblogList);
         PrintWriter out = response.getWriter();
         out.print(userblog);

@@ -21,7 +21,6 @@ public class addUserServlet extends HttpServlet {
         //1.获得表单数据
         String userName=request.getParameter("userName");
         String telNum=request.getParameter("telNum");
-//        String telNum="17788654321";
         String password=request.getParameter("password");
         //2. 封装对象
         User user=new User(userName,telNum,password);
