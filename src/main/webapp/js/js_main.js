@@ -167,7 +167,7 @@ $(function () {
                                                     '<span class="s_showcomment_time">'+format(comment[i].comDate.time)+'</span>'+
                                                     '<div class="s_showcomment_footer_right">'+
                                                     '<span class="s_showcomment_footer_right_hui">回复</span>'+
-                                                    '<span class="s_showcomment_footer_right_pra"><i class="layui-icon layui-icon-praise"></i><span>'+comment[i].num+'</span></span>'+
+                                                    '<span class="s_showcomment_footer_right_pra"><i class="layui-icon layui-icon-praise" id="praise"></i><span>'+comment[i].num+'</span></span>'+
                                                 '</div>'+
                                             '</div>'+
                                         '</div>';
@@ -177,6 +177,54 @@ $(function () {
         })
     })
     //点赞
+    $(".s_mynode").on("click",".s_body_content_func_3",function () {
+        var $node = $(this).parents(".s_mynode");
+        var $comment = $node.children(".s_comment");
+        $comment.children(".s_comment_publish").nextAll().remove();
+        // alert();
+        if($($comment).css("display") != "none"){
+            $comment.hide();
+        }else{
+            $comment.show();
+        }
+        $.ajax({
+            url: "/SShowComment",
+            type:"post",
+            data:{"blogId":$node.attr("blogId")},
+            dataType:"json",
+            success:function (comment) {
+                for(var i = 0; i < comment.length;i++){
+                    var $newcomment = '<div class="s_showcomment">'+
+                        '<img src="../images/logo.png" alt="">'+
+                        '<span class="s_showcomment_name">我不爱吃西红柿</span>'+
+                        '<div class="s_showcomment_text">:'+comment[i].comContent+'</div>'+
+                        '<div class="s_showcomment_footer">'+
+                        '<span class="s_showcomment_time">'+format(comment[i].comDate.time)+'</span>'+
+                        '<div class="s_showcomment_footer_right">'+
+                        '<span class="s_showcomment_footer_right_hui">回复</span>'+
+                        '<span class="s_showcomment_footer_right_pra"><i class="layui-icon layui-icon-praise" id="praise"></i><span>'+comment[i].num+'</span></span>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>';
+                    $comment.append($newcomment);
+                }
+            }
+        })
+    })
+
+
+
+    //获得点赞数
+    $(".s_mynode").on("click",".s_body_content_func_3",function () {
+        var $node=$(this).parents(".s_mynode");
+        var $countPraise = $node.children(".s_comment");
+
+
+
+    })
+
+
+
     var $node = $(".s_mynode").detach();
 function showContent(url,node) {
     $.ajax({
@@ -312,7 +360,6 @@ function showContent(url,node) {
 
         //登录时自动添加用户名和密码
         $(document).ready(function () {
-
             var username= $.cookie('cookieUserName');
             var password= $.cookie('cookiePass');
             $("#w_telId").val(username);
@@ -323,11 +370,7 @@ function showContent(url,node) {
             }else{
                 $("#w_rememberMe").attr("checked",true);
             }
-
-
         });
-
-
         //点击登录按钮验证
         $("#w_login_btn").click(function () {
             //如果用户名为空
@@ -376,10 +419,7 @@ function showContent(url,node) {
 
                 });
             }
-
-
-        });
-
+            });
     });
 
 
@@ -391,6 +431,11 @@ function showContent(url,node) {
         icons: emojiLists   // 注：详见 js/emoji.list.js
     });
 });
+
+//点赞
+
+
+
 })
 function add0(m){return m<10?'0'+m:m }
 function format(timestamp)
