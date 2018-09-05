@@ -12,4 +12,6 @@ public interface TranspondInfoDao {
     int deleteTranspond(int tsId);
     //查看该微博的转发记录
     List<Transpond> getAllTranpond(int blogId);
+    //查询转发次数
+    int searchTransNum(int blogId);
 }

@@ -19,9 +19,10 @@ import java.util.List;
 @WebServlet("/ShowLikeDayBlog")
 public class ShowLikeDayBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int page = Integer.parseInt(request.getParameter("page"));
         HttpSession session = request.getSession();
         NewUserBlogDao userBlogDao = new NewUserBlogDaoImpl();
-        List<UserBlog> userblogList= userBlogDao.searchLikeDayBlog(((User)session.getAttribute("user")).getUserId());
+        List<UserBlog> userblogList= userBlogDao.searchLikeDayBlog(((User)session.getAttribute("user")).getUserId(),page);
         JSONArray userblog = JSONArray.fromObject(userblogList);
         PrintWriter out = response.getWriter();
         out.print(userblog);

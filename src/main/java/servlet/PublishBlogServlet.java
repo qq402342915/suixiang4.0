@@ -2,7 +2,10 @@ package servlet;
 
 import dao.BlogInfoDao;
 import dao.BlogInfoDaoImpl;
+import dao.TranspondInfoDao;
+import dao.TranspondInfoDaoImpl;
 import entity.Blog;
+import entity.Transpond;
 import entity.User;
 
 import javax.servlet.ServletException;
@@ -20,8 +23,12 @@ public class PublishBlogServlet extends HttpServlet {
         String s_photo = request.getParameter("s_photo");
         String s_text = request.getParameter("s_text");
         String s_video = request.getParameter("s_video");
+        int blogId = Integer.parseInt(request.getParameter("blogId"));
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
+        TranspondInfoDao transpondInfoDao = new TranspondInfoDaoImpl();
+        Transpond transpond = new Transpond(blogId,user.getUserId());
+        transpondInfoDao.insertTranspond(transpond);
         Blog blog = new Blog();
         blog.setUserId(user.getUserId());
         if(s_photo != null){

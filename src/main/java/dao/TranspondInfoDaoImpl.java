@@ -19,4 +19,9 @@ public class TranspondInfoDaoImpl extends BaseDao<Transpond> implements Transpon
     public List<Transpond> getAllTranpond(int blogId) {
         return executeQuery("select * from t_transpond where blogId=?",new Object[]{blogId});
     }
+
+    @Override
+    public int searchTransNum(int blogId) {
+        return getRecordCount("select count(userId) from t_transpond where blogId = ?",new Object[]{blogId});
+    }
 }

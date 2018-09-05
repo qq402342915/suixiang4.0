@@ -145,66 +145,96 @@ layui.use(['flow','upload',"layer","element"], function() {
 
 
 $(function () {
+    //登录标志
+    var login_flag = 0;
     //转发
     $(".s_mynode").on("click",".s_body_content_func_1",function () {
-        var $node = $(this);
-        var userName = $node.parent().siblings(".s_body_content_personinfo").children().eq(1).children("a").text();
-        // alert(userName);
-        layer.open({
-            type: 1 //Page层类型
-            , area: ['500px', '343px']
-            , title:"转发"
-            , shade: 0.6 //遮罩透明度
-            , maxmin: true //允许全屏最小化
-            , anim: 1 //0-6的动画形式，-1不开启
-            , content: '<div class="s_trans_body">'+
-                            '<span class="s_trans_body_at">@'+userName+'</span>'+
-                            '<div class="s_trans_body_text">'+
-                                '<textarea id="s_trans_body_text"></textarea>'+
-                            '</div>'+
-                            '<div class="s_trans_body_trans">'+
-                                '<button class="layui-btn layui-btn-sm layui-btn-normal" id="s_trans">转发</button>'+
-                            '</div>'+
-                        '</div>'
-        })
-        $("#s_trans").click(function () {
-            // $.ajax({
-            //     url: "/SInsertComment",
-            //     type:"post",
-            //     data:{"userId":$(".s_body").attr("userId"),"blogId":$node_push.closest("li").attr("blogId"),"comContent":$node_text.val()},
-            //     dataType:"text",
-            //     success:function () {
-            //
-            //     }
-            // })
-        })
+        if(login_flag == 0){
+            layer.msg("请先登录");
+        }else {
+            var $node = $(this);
+            var userName = $node.parent().siblings(".s_body_content_personinfo").children().eq(1).children("a").text();
+            // alert(userName);
+            layer.open({
+                type: 1 //Page层类型
+                , area: ['500px', '343px']
+                , title:"转发"
+                , shade: 0.6 //遮罩透明度
+                , maxmin: true //允许全屏最小化
+                , anim: 1 //0-6的动画形式，-1不开启
+                , content: '<div class="s_trans_body">'+
+                    '<span class="s_trans_body_at">'+'@'+userName+'</span>'+
+                    '<div class="s_trans_body_text">'+
+                    '<textarea id="s_trans_body_text"></textarea>'+
+                    '</div>'+
+                    '<div class="s_trans_body_trans">'+
+                    '<button class="layui-btn layui-btn-sm layui-btn-normal" id="s_trans">转发</button>'+
+                    '</div>'+
+                    '</div>'
+            })
+            $("#s_trans").click(function () {
+                // alert(($("#s_trans_body_text").val() != ""));
+                var regv = /\w+(?:\.mp4)/;
+                var video = regv.exec($node.parent().prev().children("video").prop("src"));
+                var reg = /\w+(?:\.jpg|\.png)/;
+                var photoList = $node.parent().prev().children("img");
+                var photo = "";
+                for(var i = 0;i<photoList.length;i++){
+                    photo = photo + reg.exec(reg.exec($node.parent().prev().children("img").eq(i).prop("src")))+","
+                }
+                if($("#s_trans_body_text").val() != ""){
+                    var text = "#"+$("#s_trans_body_text").val()+"#"+$(".s_trans_body_at").text()+$node.parent().prev().text();
+                }else{
+                    var text = "#"+"转发的微博"+"#"+$(".s_trans_body_at").text()+$node.parent().prev().text();
+                }
+                $.ajax({
+                    url: "/PublishBlogServlet",
+                    type:"post",
+                    data:{"s_photo":photo,"s_text":text,"s_video":video,"blogId":$node.closest("li").attr("blogId")},
+                    dataType:"text",
+                    success:function (result1) {
+                        if(result1 == 1){
+                            var num = parseInt($node.parents(".s_comment").prev().children(".s_body_content_func_1").children("span").html()) + 1;
+                            $node.parents(".s_comment").prev().children(".s_body_content_func_1").children("span").html(num);
+                            layer.closeAll();
+                            layer.msg("转发成功");
+                            $("#LAY_demo1").empty();
+                            showContent("/ShowHotBlog","#LAY_demo1");
+                        }
+                    }
+                })
+            })
+        }
     });
     //发表评论
     $(".s_comment_publish_push").click(function () {
-        var $node_push = $(this);
-        var $node_text = $node_push.parent().prev().children(".s_comment_publish_text");
-        var $node = $node_push.closest(".s_comment_publish");
-        // alert($node_text.val());
-        // alert($node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html())
-        $.ajax({
-            url: "/SInsertComment",
-            type:"post",
-            data:{"userId":$(".s_body").attr("userId"),"blogId":$node_push.closest("li").attr("blogId"),"comContent":$node_text.val()},
-            dataType:"text",
-            success:function (ret) {
-                if(ret == "1"){
-                    layer.msg("评论成功");
-                    $(".s_comment_publish_text").val("");
-                    var num = parseInt($node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html()) + 1;
-                    $node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html(num);
-                    $.ajax({
-                        async: false,
-                        url: "/SShowComment",
-                        type:"post",
-                        data:{"blogId":$node_push.closest("li").attr("blogId")},
-                        dataType:"json",
-                        success:function (comment) {
-                            // alert(comment.length);
+        if(login_flag == 0){
+            layer.msg("请先登录");
+        }else{
+            var $node_push = $(this);
+            var $node_text = $node_push.parent().prev().children(".s_comment_publish_text");
+            var $node = $node_push.closest(".s_comment_publish");
+            // alert($node_text.val());
+            // alert($node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html())
+            $.ajax({
+                url: "/SInsertComment",
+                type:"post",
+                data:{"userId":$(".s_body").attr("userId"),"blogId":$node_push.closest("li").attr("blogId"),"comContent":$node_text.val()},
+                dataType:"text",
+                success:function (ret) {
+                    if(ret == "1"){
+                        layer.msg("评论成功");
+                        $(".s_comment_publish_text").val("");
+                        var num = parseInt($node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html()) + 1;
+                        $node_push.parents(".s_comment").prev().children(".s_body_content_func_2").children("span").html(num);
+                        $.ajax({
+                            async: false,
+                            url: "/SShowComment",
+                            type:"post",
+                            data:{"blogId":$node_push.closest("li").attr("blogId")},
+                            dataType:"json",
+                            success:function (comment) {
+                                // alert(comment.length);
                                 var $newcomment;
                                 $.ajax({
                                     async: false,
@@ -218,59 +248,75 @@ $(function () {
                                         $node.after($newcomment);
                                     }
                                 })
-                        }
-                    })
-                }
-            }
-        })
-    })
-    //显示评论
-    $(".s_mynode").on("click",".s_body_content_func_2",function () {
-        var $node = $(this).parents(".s_mynode");
-        var $comment = $node.children(".s_comment");
-        $comment.children(".s_comment_publish").nextAll().remove();
-        // alert();
-        if($($comment).css("display") != "none"){
-            $comment.hide();
-        }else{
-            $(".s_comment_publish_header img").prop("src",$(".s_body").attr("headP"));
-            // alert($(".s_body").attr("headP"));
-            $comment.show();
-            $.ajax({
-                async: false,
-                url: "/SShowComment",
-                type:"post",
-                data:{"blogId":$node.attr("blogId")},
-                dataType:"json",
-                success:function (comment) {
-                    // alert(comment.length);
-                    for(var i = 0; i < comment.length;i++){
-                        var $newcomment;
-                        $.ajax({
-                            async: false,
-                            url: "/SShowUserInfoServlet",
-                            type:"post",
-                            data:{"userId":comment[i].userId},
-                            dataType:"json",
-                            success:function (s_user) {
-                                // alert(comment[0].comContent)
-                                $newcomment = '<div class="s_showcomment"> <img src="'+s_user[0].headP+'" alt=""> <span class="s_showcomment_name">'+s_user[0].userName+'</span> <div class="s_showcomment_text">:'+comment[i].comContent+'</div> <div class="s_showcomment_footer"> <span class="s_showcomment_time">'+format(comment[i].comDate.time)+'</span> <div class="s_showcomment_footer_right"> <span class="s_showcomment_footer_right_hui">回复</span> <span class="s_showcomment_footer_right_pra"><i class="layui-icon layui-icon-praise"></i><span>'+comment[i].num+'</span></span> </div> </div> </div>';
                             }
                         })
-                        $comment.append($newcomment);
                     }
                 }
             })
         }
     })
+    //评论回复
+    $(".s_mynode").on("click",".s_showcomment_footer_right_hui",function () {
+        var $node_push_reply = $(this);
+        var $node_push_reply_who = $node_push_reply.parents(".s_showcomment_footer").siblings(".s_showcomment_name").text();
+        $node_push_reply.parents(".s_showcomment").siblings(".s_comment_publish").children(".s_comment_publish_header").children().eq(1).val("@"+$node_push_reply_who+":");
+        // alert($node_push_reply.parents(".s_showcomment").siblings(".s_comment_publish").children(".s_comment_publish_header").children().eq(1).text())
+    });
+    //显示评论
+    $(".s_mynode").on("click",".s_body_content_func_2",function () {
+        if(login_flag == 0){
+            layer.msg("请先登录");
+        }else{
+            var $node = $(this).parents(".s_mynode");
+            var $comment = $node.children(".s_comment");
+            $comment.children(".s_comment_publish").nextAll().remove();
+            // alert();
+            if($($comment).css("display") != "none"){
+                $comment.hide();
+            }else{
+                $(".s_comment_publish_header img").prop("src",$(".s_body").attr("headP"));
+                // alert($(".s_body").attr("headP"));
+                $comment.show();
+                $.ajax({
+                    async: false,
+                    url: "/SShowComment",
+                    type:"post",
+                    data:{"blogId":$node.attr("blogId")},
+                    dataType:"json",
+                    success:function (comment) {
+                        // alert(comment.length);
+                        for(var i = 0; i < comment.length;i++){
+                            var $newcomment;
+                            $.ajax({
+                                async: false,
+                                url: "/SShowUserInfoServlet",
+                                type:"post",
+                                data:{"userId":comment[i].userId},
+                                dataType:"json",
+                                success:function (s_user) {
+                                    // alert(comment[0].comContent)
+                                    $newcomment = '<div class="s_showcomment"> <img src="'+s_user[0].headP+'" alt=""> <span class="s_showcomment_name">'+s_user[0].userName+'</span> <div class="s_showcomment_text">:'+comment[i].comContent+'</div> <div class="s_showcomment_footer"> <span class="s_showcomment_time">'+format(comment[i].comDate.time)+'</span> <div class="s_showcomment_footer_right"> <span class="s_showcomment_footer_right_hui">回复</span> <span class="s_showcomment_footer_right_pra"><i class="layui-icon layui-icon-praise"></i><span>'+comment[i].num+'</span></span> </div> </div> </div>';
+                                }
+                            })
+                            $comment.append($newcomment);
+                        }
+                    }
+                })
+            }
+        }
+    })
     //点赞
     var $node = $(".s_mynode").detach();
 function showContent(url,node) {
+    //滑轮滚动事件
+    var pages = 0;
     $.ajax({
         url: url,
         type:"post",
+        data:{"page":pages},
         dataType:"json",
         success:function (userblog) {
+            // alert(userblog.length);
             var $mynode;
             // alert((userblog[0].blogPic == ""));
             // var mypage = 5;
@@ -299,7 +345,7 @@ function showContent(url,node) {
                         data:{"blogId":userblog[i].blogId},
                         dataType:"json",
                         success:function (Num) {
-                            $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+userblog[i].tsNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                            $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                         }
                     })
                 }else if(userblog[i].blogVideo != ""){
@@ -310,10 +356,10 @@ function showContent(url,node) {
                         data:{"blogId":userblog[i].blogId},
                         dataType:"json",
                         success:function (Num) {
-                            $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+userblog[i].tsNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                            $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"> your browser does not support the video tag </video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                         }
                     })
-                }else if(userblog[i].blogPic == "" && userblog[i].blogVideo == ""){
+                }else if(userblog[i].blogPic == "" && userblog[i].blogVideo == "" && userblog[i].context != ""){
                     $.ajax({
                         async: false,
                         url: "/SShowNumServlet",
@@ -322,7 +368,7 @@ function showContent(url,node) {
                         dataType:"json",
                         success:function (Num) {
                             // alert(Num[0].comNum);
-                            $newnode= '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+userblog[i].tsNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                            $newnode= '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                         }
                     })
                 }
@@ -330,8 +376,97 @@ function showContent(url,node) {
                 $mynode.prepend($newnode);
                 $(node).append($mynode);
             }
+            if(userblog.length < 5){
+                $(window).off('scroll');
+                pages = 0;
+                $(node).append('<div class="s_xinxijiazaitishi">没有更多了</div>');
+            }
         }
-    })
+    });
+    pages = pages + 5;
+    $(window).scroll(function () {
+        // var now_height = $(window).scrollTop();
+        // var now_window = $(window).height();
+        // var now_document = $(document).height();
+        // alert(now_height);
+        var bot = 180;
+        if ((bot + $(window).scrollTop()) > ($(document).height() - $(window).height()) + 20) {
+            $.ajax({
+                url: url,
+                type:"post",
+                data:{"page":pages},
+                dataType:"json",
+                success:function (userblog) {
+                    // alert(userblog.length);
+                    var $mynode;
+                    // alert((userblog[0].blogPic == ""));
+                    // var mypage = 5;
+                    // var mypages = Math.floor(userblog.length/5);
+                    for (var i = 0; i < userblog.length; i++) {
+                        $mynode = $node.clone(true);
+                        var $newnode;
+                        // i = (page-1)*5 + j;
+                        if(userblog[i].blogPic != ""){
+                            var patt1=new RegExp("\\w+(?:\\.jpg|\\.png)","g");
+                            // var reg = /\w+(?:\.jpg|\.png)/;
+                            // var pic = patt1.exec(userblog[i].blogPic);
+                            var pic = "";
+                            do
+                            {
+                                result=patt1.exec(userblog[i].blogPic);
+                                if(result != null){
+                                    pic = pic + '<img src="../images/'+result+'" alt="">';
+                                }
+                            }
+                            while (result!=null)
+                            $.ajax({
+                                async: false,
+                                url: "/SShowNumServlet",
+                                type:"post",
+                                data:{"blogId":userblog[i].blogId},
+                                dataType:"json",
+                                success:function (Num) {
+                                    $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                }
+                            })
+                        }else if(userblog[i].blogVideo != ""){
+                            $.ajax({
+                                async: false,
+                                url: "/SShowNumServlet",
+                                type:"post",
+                                data:{"blogId":userblog[i].blogId},
+                                dataType:"json",
+                                success:function (Num) {
+                                    $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"> your browser does not support the video tag </video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                }
+                            })
+                        }else if(userblog[i].blogPic == "" && userblog[i].blogVideo == "" && userblog[i].context != ""){
+                            $.ajax({
+                                async: false,
+                                url: "/SShowNumServlet",
+                                type:"post",
+                                data:{"blogId":userblog[i].blogId},
+                                dataType:"json",
+                                success:function (Num) {
+                                    // alert(Num[0].comNum);
+                                    $newnode= '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim layui-anim-scaleSpring" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                }
+                            })
+                        }
+                        $mynode.attr("blogId",userblog[i].blogId);
+                        $mynode.prepend($newnode);
+                        $(node).append($mynode);
+                    }
+                    if(userblog.length < 5){
+                        $(window).off('scroll');
+                        pages = 0;
+                        $(node).append('<div class="s_xinxijiazaitishi">没有更多了</div>');
+                    }
+                }
+            });
+            pages = pages + 5;
+        }
+    });
 }
     showContent("/ShowHotBlog","#LAY_demo1");
     //登录成功后，显示用户信息，关注微博等
@@ -348,6 +483,7 @@ function showContent(url,node) {
                 $("#s_userName").html(user[0].userName);
                 $(".s_body").attr("headP",user[0].headP);
                 $(".s_body").attr("userId",user[0].userId);
+                login_flag = 1;
             }
         })
         // alert($("#personInfo").attr("userId"));
@@ -359,9 +495,13 @@ function showContent(url,node) {
             $("#LAY_demo2").empty();
             showContent("/ShowLikeDayBlog","#LAY_demo2");
         })
-        //发布功能
-        // $("#s_publish_test").
-        $("#publish").click(function () {
+    }
+    //发布功能
+    // $("#s_publish_test").
+    $("#publish").click(function () {
+        if(login_flag == 0){
+            layer.msg("请先登录");
+        }else{
             $.ajax({
                 url:"/PublishBlogServlet",
                 type:"post",
@@ -375,10 +515,8 @@ function showContent(url,node) {
                     // $("#LAY_demo2").append($mynode);
                 }
             })
-        })
-
-
-    }
+        }
+    })
     // $("#LAY_demo1").hide();
     $.ajax({
         url:"/ShowMy",
@@ -392,7 +530,6 @@ function showContent(url,node) {
         }
     })
     $("#s_login").click(function () {
-
         layer.open({
             type: 1 //Page层类型
             , area: ['400px', '390px']
@@ -523,6 +660,16 @@ function showContent(url,node) {
         animation: 'fade',
         basePath: '../images/emoji',
         icons: emojiLists   // 注：详见 js/emoji.list.js
+    });
+    $("#s_quit").click(function () {
+        $.ajax({
+            url:"/SQuit",
+            type:"post",
+            dataType:"text",
+            success:function (quit) {
+                login_flag = 0;
+            }
+        });
     });
 });
 })

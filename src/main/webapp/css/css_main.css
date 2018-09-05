@@ -216,6 +216,15 @@
     background-color: #FFFFFF;
     float: left;
 }
+.s_xinxijiazaitishi{
+    width: 640px;
+    height: 20px;
+    padding: 0px 20px 0px 20px;
+    float: left;
+    background-color: #CCCCCC;
+    text-align: center;
+    line-height: 20px;
+}
 /*.s_body_content_li{*/
 /*display: block;*/
 /*margin-top: 20px;*/
@@ -256,6 +265,10 @@
     width: 110px;
     height: 110px;
 }
+.s_body_content_text video{
+    width: 300px;
+    height: 200px;
+}
 .s_body_content_func{
     height: 40px;
 }
@@ -276,10 +289,11 @@
 .s_body_guanzhu{
     width: 240px;
     height: 300px;
-    margin-right: 20px;
-    margin-top: 20px;
+    margin-left: 240px;
+    margin-top: 220px;
     background-color: #FFFFFF;
-    float: right;
+    position: absolute;
+    left: 50%;
 }
 .s_body_guanzhu_title{
     width: 240px;
