@@ -157,8 +157,8 @@
             dataType:"text",
             success:function (ret) {
                 if(ret=="1") {
-                    layer.msg('注册成功！', {time: 5000}, function () {
-                            location.reload();
+                    layer.msg('注册成功，三秒后跳转到主页面！', {time: 3000}, function () {
+                        window.location.href="main.html";
                         }
                     );
                 } else {

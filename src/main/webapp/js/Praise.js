@@ -1,6 +1,6 @@
 $(function () {
-    $(".s_mynode").on("click",".s_body_content_func_3 i",function (e) {
-        $su = $(this).parent().parent().parent();
+    $(".s_mynode").on("click",".s_body_content_func_3",function (e) {
+        $su = $(this).closest("li");
         var t =$su.attr("blogid");
         $su1 = $(this);
         $.ajax({
@@ -15,6 +15,6 @@ $(function () {
                     $su1.css("color","black");
                 }
             }
-        })
-    })
+        });
+    });
 })
