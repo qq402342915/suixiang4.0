@@ -10,6 +10,7 @@ var rsCount = 1;
 var pageSize = 3;
 var maxPage1 = 1;
 var rsCount1 = 1;
+var from_userId;
 $(function () {
     ///////////////////////////
     //转发
@@ -60,8 +61,7 @@ $(function () {
                         $node.parents(".s_comment").prev().children(".s_body_content_func_1").children("span").html(num);
                         layer.closeAll();
                         layer.msg("转发成功");
-                        $("#LAY_demo1").empty();
-                        showContent("/ShowHotBlog","#LAY_demo1");
+                        showContent("/ShowHotBlog",".c_content_right2");
                     }
                 }
             })
@@ -184,6 +184,7 @@ $(function () {
         dataType:"json",
         success:function (user) {
             userId = user[0].userId;
+            from_userId = userId;
         }
     });
     var flag=-1;
@@ -324,8 +325,8 @@ $(function () {
     })
     //删除微博
     $(".c_content_right2").on('click',".c_blog_del",function () {
-        var blogId = $(this).prop("id");
-        var $blogdiv = $(this).parents(".c_content");
+        var blogId = $(this).closest("li").attr("blogId");
+        var $blogdiv = $(this).closest("li");
         layer.msg('确认要删除这条微博吗？', {
             time: 5000, //5s后自动关闭
             btn: ['确定', '取消'],
@@ -631,7 +632,7 @@ function showFollowList() {
 //显示自己微博
 function showMyBlogInfo() {
 
-        showContent("/ShowBlogInfo?method=showMyBlogInfo",$(".c_content_right2"));
+        showContent("/ShowBlogInfo?method=showMyBlogInfo",$(".c_content_right2"),1);
    /* $.ajax({
         url:"/ShowBlogInfo?method=showMyBlogInfo",
         type:"post",
@@ -669,44 +670,46 @@ function showMyBlogInfo() {
 }
 //显示搜索微博
 function showSearchBlog() {
-    $.ajax({
-        url:"/ShowBlogInfo?method=showSearchBlog",
-        type:"post",
-        data:{"key":key},
-        dataType:"json",
-        success:function (bloglist) {
-            $(".c_content_right2").children().remove();
-            if (bloglist.length == 0) layer.msg("无符合内容的微博！")
-            else layer.msg("查询成功！共"+bloglist.length+"条");
-            for (var i = 0; i < bloglist.length; i ++){
-                var $node = $('<div class="c_content">'+
-                    '<div class="c_content_top" >'+
-                    '<img src="'+userhead+'">'+
-                    '<div class="c_content_name"><a>'+username+'</a><i class="layui-icon layui-icon-close c_blog_del" id="'+bloglist[i].blogId+'"></i></div>'+
-                    '<div class="c_content_date"><a>'+bloglist[i].sendDate+'</a><a><i class="layui-icon layui-icon-location"></i><span>天津</span></a></div>'+
-                    '</div> <div class="c_content_content">'+bloglist[i].context+'</div>'+
-                    '<div class="c_content_img"> <ul>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '<li><img src="../images/head.jpg"></li>'+
-                    '</ul>'+
-                    '</div>'+
-                    '<div class="c_content_bottom">'+
-                    '<a><i class="layui-icon layui-icon-release" style="font-size: 20px"></i><span>6</span></a>'+
-                    '<a><i class="layui-icon layui-icon-reply-fill" style="font-size: 20px"></i><span>66</span></a>'+
-                    '<a><i class="layui-icon layui-icon-praise" style="font-size: 20px"></i><span>666</span></a>'+
-                    '</div>'+
-                    '</div>');
-                $(".c_content_right2").append($node);
-            }
-            $(".c_search").val("");
-        }
-    });
+    $(".c_content_right2").empty();
+    showContent("/ShowBlogInfo?method=showSearchBlog",$(".c_content_right2"),2);
+    // $.ajax({
+    //     url:"/ShowBlogInfo?method=showSearchBlog",
+    //     type:"post",
+    //     data:{"key":key},
+    //     dataType:"json",
+    //     success:function (bloglist) {
+    //         $(".c_content_right2").children().remove();
+    //         if (bloglist.length == 0) layer.msg("无符合内容的微博！")
+    //         else layer.msg("查询成功！共"+bloglist.length+"条");
+    //         for (var i = 0; i < bloglist.length; i ++){
+    //             var $node = $('<div class="c_content">'+
+    //                 '<div class="c_content_top" >'+
+    //                 '<img src="'+userhead+'">'+
+    //                 '<div class="c_content_name"><a>'+username+'</a><i class="layui-icon layui-icon-close c_blog_del" id="'+bloglist[i].blogId+'"></i></div>'+
+    //                 '<div class="c_content_date"><a>'+bloglist[i].sendDate+'</a><a><i class="layui-icon layui-icon-location"></i><span>天津</span></a></div>'+
+    //                 '</div> <div class="c_content_content">'+bloglist[i].context+'</div>'+
+    //                 '<div class="c_content_img"> <ul>'+
+    //                 '<li><img src="../images/head.jpg"></li>'+
+    //                 '<li><img src="../images/head.jpg"></li>'+
+    //                 '<li><img src="../images/head.jpg"></li>'+
+    //                 '<li><img src="../images/head.jpg"></li>'+
+    //                 '<li><img src="../images/head.jpg"></li>'+
+    //                 '<li><img src="../images/head.jpg"></li>'+
+    //                 '<li><img src="../images/head.jpg"></li>'+
+    //                 '<li><img src="../images/head.jpg"></li>'+
+    //                 '</ul>'+
+    //                 '</div>'+
+    //                 '<div class="c_content_bottom">'+
+    //                 '<a><i class="layui-icon layui-icon-release" style="font-size: 20px"></i><span>6</span></a>'+
+    //                 '<a><i class="layui-icon layui-icon-reply-fill" style="font-size: 20px"></i><span>66</span></a>'+
+    //                 '<a><i class="layui-icon layui-icon-praise" style="font-size: 20px"></i><span>666</span></a>'+
+    //                 '</div>'+
+    //                 '</div>');
+    //             $(".c_content_right2").append($node);
+    //         }
+    //         $(".c_search").val("");
+    //     }
+    // });
 }
 //显示用户所有信息
     function showUserInfo() {
@@ -736,15 +739,19 @@ function showSearchBlog() {
     }
 
     /////////////////////////////////////////////////////////////
-    function showContent(url,node) {
+    function showContent(url,node,mytype) {
         //滑轮滚动事件
         var pages = 0;
         $.ajax({
             url: url,
             type:"post",
-            data:{"page":pages},
+            data:{"page":pages,"key":key},
             dataType:"json",
             success:function (userblog) {
+                if(mytype == 2){
+                            if (userblog.length == 0) layer.msg("无符合内容的微博！");
+                            else layer.msg("查询成功！共"+userblog.length+"条");
+                }
                 // alert(userblog.length);
                 var $mynode;
                 // alert((userblog[0].blogPic == ""));
@@ -774,7 +781,7 @@ function showSearchBlog() {
                             data:{"blogId":userblog[i].blogId},
                             dataType:"json",
                             success:function (Num) {
-                                $newnode = '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                $newnode = '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a><i class="layui-icon layui-icon-close c_blog_del"></i><span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                             }
                         })
                     }else if(userblog[i].blogVideo != ""){
@@ -785,7 +792,7 @@ function showSearchBlog() {
                             data:{"blogId":userblog[i].blogId},
                             dataType:"json",
                             success:function (Num) {
-                                $newnode = '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"> your browser does not support the video tag </video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                $newnode = '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a><i class="layui-icon layui-icon-close c_blog_del"></i> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"> your browser does not support the video tag </video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                             }
                         })
                     }else if(userblog[i].blogPic == "" && userblog[i].blogVideo == "" && userblog[i].context != ""){
@@ -797,7 +804,7 @@ function showSearchBlog() {
                             dataType:"json",
                             success:function (Num) {
                                 // alert(Num[0].comNum);
-                                $newnode= '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                $newnode= '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a> <i class="layui-icon layui-icon-close c_blog_del"></i><span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                                 // praise(userblog[i].blogId,$($newnode).siblings(".s_body_content_func").children().eq(2).children().eq(0),"/SPraiseShow");
                             }
                         })
@@ -805,6 +812,10 @@ function showSearchBlog() {
                     $mynode.attr("blogId",userblog[i].blogId);
                     $mynode.prepend($newnode);
                     praise(userblog[i].blogId,$mynode.children().eq(2).children().eq(2).children().eq(0),"/SPraiseShow");
+                    // alert($mynode.children().eq(0).children().eq(1).children().eq(1).html())
+                    if(userId != from_userId){
+                        $mynode.children().eq(0).children().eq(1).children().eq(1).remove();
+                    }
                     $(node).append($mynode);
                 }
                 if(userblog.length < 5){
@@ -857,7 +868,7 @@ function showSearchBlog() {
                                     data:{"blogId":userblog[i].blogId},
                                     dataType:"json",
                                     success:function (Num) {
-                                        $newnode = '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                        $newnode = '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a><i class="layui-icon layui-icon-close c_blog_del"></i> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                                     }
                                 })
                             }else if(userblog[i].blogVideo != ""){
@@ -868,7 +879,7 @@ function showSearchBlog() {
                                     data:{"blogId":userblog[i].blogId},
                                     dataType:"json",
                                     success:function (Num) {
-                                        $newnode = '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"> your browser does not support the video tag </video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                        $newnode = '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a><i class="layui-icon layui-icon-close c_blog_del"></i> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'<br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"> your browser does not support the video tag </video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                                     }
                                 })
                             }else if(userblog[i].blogPic == "" && userblog[i].blogVideo == "" && userblog[i].context != ""){
@@ -880,7 +891,7 @@ function showSearchBlog() {
                                     dataType:"json",
                                     success:function (Num) {
                                         // alert(Num[0].comNum);
-                                        $newnode= '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                        $newnode= '<div class="s_body_content_personinfo"> <img src='+userhead+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+username+'</a><i class="layui-icon layui-icon-close c_blog_del"></i> <span>'+userblog[i].sendDate+'</span> </div> </div> <div class="s_body_content_text">'+ userblog[i].context +'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                                         // praise(userblog[i].blogId,$($newnode).siblings(".s_body_content_func").children().eq(2).children().eq(0),"/SPraiseShow");
                                     }
                                 })
@@ -888,6 +899,9 @@ function showSearchBlog() {
                             $mynode.attr("blogId",userblog[i].blogId);
                             $mynode.prepend($newnode);
                             praise(userblog[i].blogId,$mynode.children().eq(2).children().eq(2).children().eq(0),"/SPraiseShow");
+                            if(userId != from_userId){
+                                $mynode.children().eq(0).children().eq(1).children().eq(1).remove();
+                            }
                             $(node).append($mynode);
                         }
                         if(userblog.length < 5){

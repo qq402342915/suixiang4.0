@@ -22,25 +22,27 @@ public class PublishBlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s_photo = request.getParameter("s_photo");
         String s_text = request.getParameter("s_text");
-        String s_video = request.getParameter("s_video");
-        int blogId = Integer.parseInt(request.getParameter("blogId"));
+//        String s_video = request.getParameter("s_video");
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
-        TranspondInfoDao transpondInfoDao = new TranspondInfoDaoImpl();
-        Transpond transpond = new Transpond(blogId,user.getUserId());
-        transpondInfoDao.insertTranspond(transpond);
+        if(request.getParameter("blogId") != null && request.getParameter("blogId") != ""){
+            int blogId = Integer.parseInt(request.getParameter("blogId"));
+            TranspondInfoDao transpondInfoDao = new TranspondInfoDaoImpl();
+            Transpond transpond = new Transpond(blogId,user.getUserId());
+            transpondInfoDao.insertTranspond(transpond);
+        }
         Blog blog = new Blog();
         blog.setUserId(user.getUserId());
+        System.out.println(s_photo+""+s_text);
         if(s_photo != null){
             blog.setBlogPic(s_photo);
         }else {blog.setBlogPic(null);}
         if(s_text != null){
             blog.setContext(s_text);
         }else{blog.setContext(null);}
-        if(s_video != null){
-            blog.setBlogVideo(s_photo);
-        }else{blog.setBlogVideo(null);}
-        System.out.println(s_photo+""+s_text+""+s_video);
+//        if(s_video != null){
+//            blog.setBlogVideo(s_photo);
+//        }else{blog.setBlogVideo(null);}
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
         int ret = blogInfoDao.insertBlog(blog);
         PrintWriter out = response.getWriter();

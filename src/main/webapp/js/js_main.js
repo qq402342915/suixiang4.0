@@ -4,10 +4,10 @@ layui.use(['flow','upload',"layer","element"], function() {
         layer = layui.layer,
         element = layui.element;
     //发布的内容
-    var s_photo;
-    var s_video;
-    var s_text;
-    //执行实例
+    var s_photo = "";
+    var s_video = "";
+    var s_text = "";
+    //上传图片
     var uploadInst = upload.render({
         elem: '#s_picture',      //绑定元素
         url: "/uploadFile", //上传接口
@@ -15,10 +15,15 @@ layui.use(['flow','upload',"layer","element"], function() {
         auto: false, //选择文件后不自动上传
         multiple: true, //允许多文件上传
         drag:true,
-        bindAction: '#publish', //指向一个按钮触发上传
+        bindAction: '#s_add', //指向一个按钮触发上传
         dataType: 'json',//服务器返回的数据类型
         //选中图片之后触发
         choose: function (obj) {
+            $("#s_delete").show();
+            $("#s_add").show();
+            $("#s_vdelete").hide();
+            $("#s_vadd").hide();
+            $(".preview_div").children().remove();
             //将每次选择的文件追加到文件队列
             var files = obj.pushFile();
             //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
@@ -33,6 +38,10 @@ layui.use(['flow','upload',"layer","element"], function() {
                 $("#upload_img_" + index).click(function () {
                     delete files[index];
                     $("#container"+index).remove();
+                    if ($(".preview_div").children().length == 0) {
+                        $("#s_delete").hide();
+                        $("#s_add").hide();
+                    }
                     uploadInst.config.elem.next()[0].value = '';
                 });
                 //某图片放大预览
@@ -62,7 +71,9 @@ layui.use(['flow','upload',"layer","element"], function() {
 
         done: function(res, index, upload){
             alert("上传成功");
-            s_photo = res.data;
+            s_photo = res.data + "," +s_photo;
+            $("#s_add").hide();
+            $("#s_delete").hide();
             layer.closeAll('loading'); //关闭loading
             $('.preview_div').children().remove();
         },
@@ -82,27 +93,29 @@ layui.use(['flow','upload',"layer","element"], function() {
         }
     });
 
-
     /*上传视频多文件*/
     var uploadListIns = upload.render({
         elem: '#s_video',
         url: '/uploadFile',
         accept: 'video',
         multiple: false,
-        auto: true,
+        auto: false,
         drag:true,
-        dataType: 'json',
+        dataType:'json',
+        bindAction: '#s_vadd',
         choose: function(obj){
             var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+            $("#s_vdelete").show();
+            $("#s_vadd").show();
+            $("#s_delete").hide();
+            $("#s_add").hide();
+            $(".preview_div").children().remove();
             //读取本地文件
             obj.preview(function(index, file, result){
                 var tr = $(['<tr id="upload-'+ index +'">'
                     ,'<td>'+ file.name +'</td>'
                     ,'<td>&nbsp;&nbsp;&nbsp;'+ (file.size/1014).toFixed(1) +'kb</td>'
-                    ,'<td>'
-                    ,'<button class="layui-btn layui-btn-xs layui-btn-normal video_publish">上传</button>'
-                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                    ,'</td>'
+                    ,'<td>等待上传</td>'
                     ,'<td><button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button></td>'
                     ,'</tr>'].join(''));
 
@@ -122,6 +135,7 @@ layui.use(['flow','upload',"layer","element"], function() {
             });
         }
         ,done: function(res, index, upload){
+            $("#s_vadd").hide();
             if(res.errno == 0){ //上传成功
                 s_video = res.data;
                 setTimeout( "$('.preview_div').children().remove()",3000);
@@ -140,11 +154,25 @@ layui.use(['flow','upload',"layer","element"], function() {
             tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
         }
     });
-
-
-
-
 $(function () {
+
+    $("#s_vdelete").click(function () {
+        $(this).hide();
+        $("#s_vadd").hide();
+        layer.msg("取消上传成功！");
+        uploadInst.config.elem.next()[0].value = '';
+        $(".preview_div").children().remove();
+    })
+
+    $("#s_delete").click(function () {
+        $(this).hide();
+        $("#s_add").hide();
+        layer.msg("取消上传成功！");
+        uploadInst.config.elem.next()[0].value = '';
+        $(".preview_div").children().remove();
+    })
+
+
     //登录标志
     var login_flag = 0;
     //转发
@@ -387,6 +415,10 @@ function showContent(url,node) {
                 $mynode.prepend($newnode);
                 praise(userblog[i].blogId,$mynode.children().eq(2).children().eq(2).children().eq(0),"/SPraiseShow");
                 $(node).append($mynode);
+                $(".s_biaoqing").emojiParse({
+                    basePath: 'images/emoji',
+                    icons: emojiLists   // 注：详见 js/emoji.list.js
+                });
             }
             if(userblog.length < 5){
                 $(window).off('scroll');
@@ -469,6 +501,10 @@ function showContent(url,node) {
                         $mynode.prepend($newnode);
                         praise(userblog[i].blogId,$mynode.children().eq(2).children().eq(2).children().eq(0),"/SPraiseShow");
                         $(node).append($mynode);
+                        $(".s_biaoqing").emojiParse({
+                            basePath: 'images/emoji',
+                            icons: emojiLists   // 注：详见 js/emoji.list.js
+                        });
                     }
                     if(userblog.length < 5){
                         $(window).off('scroll');
@@ -482,10 +518,6 @@ function showContent(url,node) {
     });
 }
     showContent("/ShowHotBlog","#LAY_demo1");
-    $(".s_biaoqing").emojiParse({
-        basePath: 'images/emoji',
-        icons: emojiLists   // 注：详见 js/emoji.list.js
-    });
     //登录成功后，显示用户信息，关注微博等
     function showUser() {
         $.ajax({
@@ -525,17 +557,39 @@ function showContent(url,node) {
         });
     }
     //发布功能
+    $("#s_emoji").click(function () {
+        if(login_flag == 0){
+            layer.msg("请先登录");
+        }else{
+            //表情
+            $("#s_publish_test").emoji({
+                button:"#s_emoji",
+                showTab: true,
+                animation: 'fade',
+                basePath: '../images/emoji',
+                icons: emojiLists   // 注：详见 js/emoji.list.js
+            });
+        }
+    });
     // $("#s_publish_test").
     $("#publish").click(function () {
         if(login_flag == 0){
             layer.msg("请先登录");
         }else{
+            reg = /\w+(?:\.jpg|\.png)/;
+            var a = reg.exec(s_photo);
+            alert(a);
             $.ajax({
-                url:"/PublishBlogServlet",
+                async:true,
+                url:"/PublishBlogServlet?s_photo",
                 type:"post",
-                data:{"s_photo":s_photo,"s_text":$("#s_publish_test").val(),"s_video":s_video},
+                data:{"s_photo":a,"s_text":$("#s_publish_test").val()},
                 success:function (result) {
+                    layer.msg("发布成功");
                     $("#s_publish_test").val("");
+                    s_photo = "";
+                    s_video = "";
+                    s_text = "";
                     // var $newnode;
                     //
                     // var $mynode = $node.clone(true);
@@ -735,16 +789,6 @@ function showContent(url,node) {
     $("#s_register").click(function () {
         window.location.href="su_register.html";
     });
-    //表情
-    $("#s_publish_test").emoji({
-        button:"#s_emoji",
-        showTab: true,
-        animation: 'fade',
-        basePath: '../images/emoji',
-        icons: emojiLists   // 注：详见 js/emoji.list.js
-    });
-    //表情解析
-
     //退出登录
     $("#s_quit").click(function () {
         $.ajax({
