@@ -136,6 +136,7 @@ layui.use(['flow','upload',"layer","element"], function() {
         }
         ,done: function(res, index, upload){
             $("#s_vadd").hide();
+            $("#s_vdelete").hide();
             if(res.errno == 0){ //上传成功
                 s_video = res.data;
                 // alert(s_video);
@@ -381,7 +382,7 @@ function showContent(url,node) {
                 $mynode = $node.clone(true);
                 var $newnode;
                 // i = (page-1)*5 + j;
-                if(userblog[i].blogPic != ""){
+                if(userblog[i].blogPic != "" && userblog[i].blogPic != null){
                     var patt1=new RegExp("\\w+(?:\\.jpg|\\.png)","g");
                     // var reg = /\w+(?:\.jpg|\.png)/;
                     // var pic = patt1.exec(userblog[i].blogPic);
@@ -404,7 +405,7 @@ function showContent(url,node) {
                             $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text"><span class="s_biaoqing">'+ userblog[i].context +'</span><br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                         }
                     })
-                }else if(userblog[i].blogVideo != ""){
+                }else if(userblog[i].blogVideo != "" && userblog[i].blogVideo != null){
                     $.ajax({
                         async: false,
                         url: "/SShowNumServlet",
@@ -468,7 +469,7 @@ function showContent(url,node) {
                         $mynode = $node.clone(true);
                         var $newnode;
                         // i = (page-1)*5 + j;
-                        if(userblog[i].blogPic != ""){
+                        if(userblog[i].blogPic != "" && userblog[i].blogPic != null){
                             var patt1=new RegExp("\\w+(?:\\.jpg|\\.png)","g");
                             // var reg = /\w+(?:\.jpg|\.png)/;
                             // var pic = patt1.exec(userblog[i].blogPic);
@@ -491,7 +492,7 @@ function showContent(url,node) {
                                     $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text"><span class="s_biaoqing">'+ userblog[i].context +'</span><br>'+pic+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                                 }
                             })
-                        }else if(userblog[i].blogVideo != ""){
+                        }else if(userblog[i].blogVideo != "" && userblog[i].blogVideo != null){
                             $.ajax({
                                 async: false,
                                 url: "/SShowNumServlet",
@@ -607,13 +608,14 @@ function showContent(url,node) {
             while (result!=null);
             var reg = /\w+(?:\.mp4)/;
             var myvideo = reg.exec(s_video);
+            alert(myvideo);
             // alert(myvideo);
             // alert(pic);
             $.ajax({
                 async:true,
                 url:"/PublishBlogServlet?s_video="+myvideo,
                 type:"get",
-                data:{"s_text":$("#s_publish_test").val(),"s_photo":myvideo},
+                data:{"s_text":$("#s_publish_test").val(),"s_photo":pic},
                 success:function (result) {
                     layer.msg("发布成功");
                     $("#LAY_demo1").empty();

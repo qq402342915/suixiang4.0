@@ -34,13 +34,13 @@ public class PublishBlogServlet extends HttpServlet {
         Blog blog = new Blog();
         blog.setUserId(user.getUserId());
         System.out.println(s_text+""+s_video);
-        if(s_photo != null){
+        if(s_photo != "null" && s_photo != ""){
             blog.setBlogPic(s_photo);
         }else {blog.setBlogPic(null);}
-        if(s_text != null){
+        if(s_text != null && s_text != ""){
             blog.setContext(s_text);
         }else{blog.setContext(null);}
-        if(s_video != null){
+        if(!("null".equals(s_video)) && s_video != ""){
             blog.setBlogVideo(s_video);
         }else{blog.setBlogVideo(null);}
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
