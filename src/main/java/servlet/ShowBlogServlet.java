@@ -2,8 +2,11 @@ package servlet;
 
 import dao.BlogInfoDao;
 import dao.BlogInfoDaoImpl;
+import dao.NewUserBlogDao;
+import dao.NewUserBlogDaoImpl;
 import entity.Blog;
 import entity.User;
+import entity.UserBlog;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -97,11 +100,10 @@ public class ShowBlogServlet extends HttpServlet {
     private void showSearchAllBlog(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
         String key = request.getParameter("key");
-        BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
-        List<Blog> mySearchBlog = blogInfoDao.getBlogByKey(key);
-        JsonConfig jsonConfig = new JsonConfig();
-        jsonConfig.registerJsonValueProcessor(Date.class , new JsonDate());
-        JSONArray array = JSONArray.fromObject(mySearchBlog,jsonConfig);
+        int page = Integer.parseInt(request.getParameter("page"));
+        NewUserBlogDao newUserBlogDao = new NewUserBlogDaoImpl();
+        List<UserBlog> userBlogList = newUserBlogDao.searchByLike(key,page);
+        JSONArray array = JSONArray.fromObject(userBlogList);
         PrintWriter out = response.getWriter();
         out.print(array);
         out.flush();

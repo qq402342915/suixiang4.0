@@ -264,6 +264,7 @@
     height: 50px;
     margin-top: 15px;
     float: left;
+    cursor:pointer;
 }
 .s_body_content_personinfo_nt{
     width: 570px;

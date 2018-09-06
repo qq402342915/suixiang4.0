@@ -9,4 +9,6 @@ public interface NewUserBlogDao{
     public List<UserBlog> searchDayBlog(int page);
     //显示用户关注的人的当天微博
     public List<UserBlog> searchLikeDayBlog(int myId,int page);
+    //显示搜索微博
+    public List<UserBlog> searchByLike(String key,int page);
 }
