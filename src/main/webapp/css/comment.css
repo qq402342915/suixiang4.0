@@ -1,13 +1,14 @@
-/*.l_border{*/
+.l_border{
     /*width: 100%;*/
     /*height: auto;*/
     /*position: relative;*/
-/*}*/
+    background-image: url("../images/informBack.png");
+}
 #l_out{
     width: 500px;
     /*height: 500px;*/
     position: absolute;
-    left: 50%;
+    left: 75%;
     margin-left: -250px;
     top: 100px;
     /*margin: 200px auto;*/
