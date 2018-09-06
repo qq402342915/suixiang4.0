@@ -145,6 +145,7 @@ layui.use(['flow','upload',"layer","element"], function() {
 
 
 $(function () {
+
     //登录标志
     var login_flag = 0;
     //转发

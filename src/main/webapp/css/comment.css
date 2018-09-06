@@ -1,13 +1,16 @@
-.l_border{
-    width: 100%;
-    height: auto;
-    position: relative;
-}
+/*.l_border{*/
+    /*width: 100%;*/
+    /*height: auto;*/
+    /*position: relative;*/
+/*}*/
 #l_out{
     width: 500px;
     /*height: 500px;*/
     position: absolute;
-    /*margin: 100px 0 0 300px;*/
+    left: 50%;
+    margin-left: -250px;
+    top: 100px;
+    /*margin: 200px auto;*/
     -webkit-box-shadow: -2px 10px 5px rgba(0,0,0,0.4);
 }
 #l_inner{
