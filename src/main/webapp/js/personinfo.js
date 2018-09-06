@@ -316,7 +316,7 @@ $(function () {
         e.preventDefault();
         e.stopPropagation();
         currentUserId = $(this).attr("id");
-        window.open("../html/personinfo.html?userId="+currentUserId);
+        window.location.href="../html/personinfo.html?userId="+currentUserId;
     });
     //搜索微博
     $(".c_search_img").click(function () {
@@ -489,6 +489,7 @@ function updateFansCount() {
         async:false,
         url:"/ShowFans?method=showMyFansCount",
         type:"post",
+        data:{"userId":userId},
         dataType:"json",
         success:function (result) {
             $("#c_str2").text(result);
@@ -631,7 +632,7 @@ function showFollowList() {
 
 //显示自己微博
 function showMyBlogInfo() {
-
+        $(".c_content_right2").empty();
         showContent("/ShowBlogInfo?method=showMyBlogInfo",$(".c_content_right2"),1);
    /* $.ajax({
         url:"/ShowBlogInfo?method=showMyBlogInfo",
@@ -745,7 +746,7 @@ function showSearchBlog() {
         $.ajax({
             url: url,
             type:"post",
-            data:{"page":pages,"key":key},
+            data:{"page":pages,"key":key,"userId":userId},
             dataType:"json",
             success:function (userblog) {
                 if(mytype == 2){
@@ -836,7 +837,7 @@ function showSearchBlog() {
                 $.ajax({
                     url: url,
                     type:"post",
-                    data:{"page":pages},
+                    data:{"page":pages,"userId":userId},
                     dataType:"json",
                     success:function (userblog) {
                         // alert(userblog.length);

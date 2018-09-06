@@ -35,7 +35,10 @@ public class ShowBlogServlet extends HttpServlet {
             showSearchBlog(request,response);
         }else if (method.equals("deleteBlog")) {
             deleteBlog(request, response);
+        }else if (method.equals("showSearchAllBlog")){
+            showSearchAllBlog(request,response);
         }
+
     }
 
     private void showMyBlogCount(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
@@ -51,6 +54,7 @@ public class ShowBlogServlet extends HttpServlet {
 
     private void showMyBlogInfo(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+        userId = Integer.parseInt(request.getParameter("userId"));
         String ip = request.getHeader("x-forwarded-for");
         if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
@@ -77,6 +81,7 @@ public class ShowBlogServlet extends HttpServlet {
 
     private void showSearchBlog(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         String key = request.getParameter("key");
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
         List<Blog> mySearchBlog = blogInfoDao.getBlogByKey(userId,key);
@@ -89,8 +94,23 @@ public class ShowBlogServlet extends HttpServlet {
         out.close();
     }
 
+    private void showSearchAllBlog(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
+    {
+        String key = request.getParameter("key");
+        BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
+        List<Blog> mySearchBlog = blogInfoDao.getBlogByKey(key);
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.registerJsonValueProcessor(Date.class , new JsonDate());
+        JSONArray array = JSONArray.fromObject(mySearchBlog,jsonConfig);
+        PrintWriter out = response.getWriter();
+        out.print(array);
+        out.flush();
+        out.close();
+    }
+
     private void deleteBlog(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         String blogId = request.getParameter("blogId");
         BlogInfoDao blogInfoDao = new BlogInfoDaoImpl();
         int result = blogInfoDao.deleteBlog(Integer.parseInt(blogId));

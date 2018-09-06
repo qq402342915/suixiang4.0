@@ -67,6 +67,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void showMyFansCount(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+        userId = Integer.parseInt(request.getParameter("userId"));
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
         int myFansCount = fansInfoDao.getFansCount(userId);
         PrintWriter out = response.getWriter();
@@ -77,6 +78,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void showMyFollowInfo(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         int pageNum = 1;
         String num = request.getParameter("num");
         if (num !=null && !num.equals("")) pageNum = Integer.parseInt(num);
@@ -100,6 +102,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void showMyFansInfo(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         int pageNum = 1;
         String num = request.getParameter("num");
         if (num !=null && !num.equals("")) pageNum = Integer.parseInt(num);
@@ -130,6 +133,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void showIfFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         String fansId = request.getParameter("fansId");
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
         boolean result = fansInfoDao.getIfFollow(userId,Integer.parseInt(fansId));
@@ -141,6 +145,7 @@ public class ShowFansServlet extends HttpServlet {
     }
     private void showTopIfFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         int userId = user.getUserId();
@@ -156,6 +161,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void addFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         String fansId = request.getParameter("fansId");
         Fansuser fansuser = new Fansuser(userId,Integer.parseInt(fansId));
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
@@ -168,6 +174,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void cancelFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         String fansId = request.getParameter("fansId");
         FansInfoDao fansInfoDao = new FansInfoDaoImpl();
         int result = fansInfoDao.cancelFollow(userId,Integer.parseInt(fansId));
@@ -179,6 +186,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void addTopFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         int userId = user.getUserId();
@@ -194,6 +202,7 @@ public class ShowFansServlet extends HttpServlet {
 
     private void cancelTopFollow(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
+//        userId = Integer.parseInt(request.getParameter("userId"));
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         int userId = user.getUserId();

@@ -70,7 +70,7 @@ layui.use(['flow','upload',"layer","element"], function() {
         },
 
         done: function(res, index, upload){
-            alert("上传成功");
+            layer.msg("上传成功");
             s_photo = res.data + "," +s_photo;
             $("#s_add").hide();
             $("#s_delete").hide();
@@ -138,6 +138,7 @@ layui.use(['flow','upload',"layer","element"], function() {
             $("#s_vadd").hide();
             if(res.errno == 0){ //上传成功
                 s_video = res.data;
+                // alert(s_video);
                 setTimeout( "$('.preview_div').children().remove()",3000);
                 var tr = $(".preview_div").find('tr#upload-'+ index)
                     ,tds = tr.children();
@@ -155,6 +156,23 @@ layui.use(['flow','upload',"layer","element"], function() {
         }
     });
 $(function () {
+
+    //点击搜索微博
+    $(".s_header_searchp").click(function () {
+        $.ajax({
+            url:"/ShowBlogInfo?method=showSearchAllBlog",
+            type:"post",
+            data:{"key":$(".s_header_search").val()},
+            dataType:"json",
+            success:function (bloglist) {
+                if (bloglist.length == 0) layer.msg("无符合内容的微博！")
+                else layer.msg("查询成功！共"+bloglist.length+"条");
+                $(".c_search").val("");
+            }
+        });
+    })
+
+
 
     $("#s_vdelete").click(function () {
         $(this).hide();
@@ -216,9 +234,9 @@ $(function () {
                     var text = "#"+"转发的微博"+"#"+$(".s_trans_body_at").text()+$node.parent().prev().text();
                 }
                 $.ajax({
-                    url: "/PublishBlogServlet",
+                    url: "/PublishBlogServlet?s_video="+video,
                     type:"post",
-                    data:{"s_photo":photo,"s_text":text,"s_video":video,"blogId":$node.closest("li").attr("blogId")},
+                    data:{"s_photo":photo,"s_text":text,"blogId":$node.closest("li").attr("blogId")},
                     dataType:"text",
                     success:function (result1) {
                         if(result1 == 1){
@@ -372,10 +390,10 @@ function showContent(url,node) {
                     {
                         result=patt1.exec(userblog[i].blogPic);
                         if(result != null){
-                            pic = pic + '<img src="../images/'+result+'" alt="">';
+                            pic = pic + '<img src="../upload/'+result+'" alt="">';
                         }
                     }
-                    while (result!=null)
+                    while (result!=null);
                     $.ajax({
                         async: false,
                         url: "/SShowNumServlet",
@@ -394,7 +412,7 @@ function showContent(url,node) {
                         data:{"blogId":userblog[i].blogId},
                         dataType:"json",
                         success:function (Num) {
-                            $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text"><span class="s_biaoqing">'+ userblog[i].context +'</span><br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"> your browser does not support the video tag </video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                            $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text"><span class="s_biaoqing">'+ userblog[i].context +'</span><br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"></video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                         }
                     })
                 }else if(userblog[i].blogPic == "" && userblog[i].blogVideo == "" && userblog[i].context != ""){
@@ -459,7 +477,7 @@ function showContent(url,node) {
                             {
                                 result=patt1.exec(userblog[i].blogPic);
                                 if(result != null){
-                                    pic = pic + '<img src="../images/'+result+'" alt="">';
+                                    pic = pic + '<img src="../upload/'+result+'" alt="">';
                                 }
                             }
                             while (result!=null)
@@ -481,7 +499,7 @@ function showContent(url,node) {
                                 data:{"blogId":userblog[i].blogId},
                                 dataType:"json",
                                 success:function (Num) {
-                                    $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text"><span class="s_biaoqing">'+ userblog[i].context +'</span><br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"> your browser does not support the video tag </video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
+                                    $newnode = '<div class="s_body_content_personinfo"> <img src='+userblog[i].headP+' alt=""> <div class="s_body_content_personinfo_nt"> <a href="">'+userblog[i].userName+'</a> <span>'+format(userblog[i].sendDate.time)+'</span> </div> </div> <div class="s_body_content_text"><span class="s_biaoqing">'+ userblog[i].context +'</span><br>'+'<video src="../upload/'+userblog[i].blogVideo+'" controls="controls"></video>'+'</div> <div class="s_body_content_func"> <div class="s_body_content_func_1"><i class="layui-icon layui-icon-release" style="font-size: 25px"></i><span>'+Num[0].transNum+'</span></div> <div class="s_body_content_func_2"><i class="layui-icon layui-icon-reply-fill" style="font-size: 25px"></i><span>'+Num[0].comNum+'</span></div> <div class="s_body_content_func_3"><i class="layui-icon layui-icon-praise layui-anim" style="font-size: 25px"></i><span>'+Num[0].praNum+'</span></div> </div>';
                                 }
                             })
                         }else if(userblog[i].blogPic == "" && userblog[i].blogVideo == "" && userblog[i].context != ""){
@@ -543,6 +561,7 @@ function showContent(url,node) {
                         $(".s_main").css("background-image","url(" + bgPath + ")");
                     }
                 });
+                showAllNum(user[0].userId);
                 login_flag = 1;
             }
         })
@@ -576,27 +595,35 @@ function showContent(url,node) {
         if(login_flag == 0){
             layer.msg("请先登录");
         }else{
-            reg = /\w+(?:\.jpg|\.png)/;
-            var a = reg.exec(s_photo);
-            alert(a);
+            var patt1=new RegExp("\\w+(?:\\.jpg|\\.png)","g");
+            var pic = "";
+            do
+            {
+                result=patt1.exec(s_photo);
+                if(result != null){
+                    pic = pic + result+",";
+                }
+            }
+            while (result!=null);
+            var reg = /\w+(?:\.mp4)/;
+            var myvideo = reg.exec(s_video);
+            // alert(myvideo);
+            // alert(pic);
             $.ajax({
                 async:true,
-                url:"/PublishBlogServlet?s_photo",
-                type:"post",
-                data:{"s_photo":a,"s_text":$("#s_publish_test").val()},
+                url:"/PublishBlogServlet?s_video="+myvideo,
+                type:"get",
+                data:{"s_text":$("#s_publish_test").val(),"s_photo":myvideo},
                 success:function (result) {
                     layer.msg("发布成功");
+                    $("#LAY_demo1").empty();
+                    showContent("/ShowHotBlog","#LAY_demo1");
                     $("#s_publish_test").val("");
                     s_photo = "";
                     s_video = "";
                     s_text = "";
-                    // var $newnode;
-                    //
-                    // var $mynode = $node.clone(true);
-                    // $mynode.append($newnode);
-                    // $("#LAY_demo2").append($mynode);
                 }
-            })
+            });
         }
     })
     // $("#LAY_demo1").hide();
@@ -680,7 +707,6 @@ function showContent(url,node) {
 
         });
 
-
         //点击登录按钮验证
         $("#w_login_btn").click(function () {
             //如果用户名为空
@@ -695,36 +721,51 @@ function showContent(url,node) {
             }
             //用户名和密码都不为空
             else{
-                $.ajax({
-                    url:"/UserLoginServlet",
-                    type:"post",
-                    data:{"w_tel":$("#w_telId").val(),"w_pass":$("#w_passId").val(),
-                        "rememberMe":$("#w_rememberMe").is(":checked"),"w_code":$("#w_codeId").val()},
-                    dataType:"text",
-                    success:function (res) {
-                        if(res=="true"){
-                            if($("#w_rememberMe").is(":checked")){
-                                $.cookie('cookieUserName',$("#w_telId").val(), { expires: 7, path: '/' });
-                                $.cookie('cookiePass',$("#w_passId").val(), { expires: 7, path: '/' });
-                            }else{
-                                //删除cookie
-                                $.removeCookie('cookieUserName',{ path: '/' });
-                                $.removeCookie('cookiePass',{path: '/' });
-                            }
-                            //登录成功
-                            $("#w_wrongInfo span").css("display","none");
-                            layer.closeAll();
-                            layer.msg("登录成功");
-                            showUser();
-                        }else if(res=="false"){
-                            $("#w_wrongInfo span").text("您输入的用户名或密码不正确");
-                            $("#w_wrongInfo span").css("display","inline-block");
-                        }else if(res=="codeFalse"){
-                            $("#w_wrongInfo span").text("验证码错误");
-                            $("#w_wrongInfo span").css("display","inline-block");
-                        }else {
 
-                            // layer.msg("您因被举报锁定三个小时");
+                //检查用户是否被锁定
+                $.ajax({
+                    url:"/EndUnlockServlet",
+                    type:"post",
+                    data:{"telNum":$("#w_telId").val()},
+                    dataType:"text",
+                    success:function (islock) {
+                        //可以登录
+                        if(islock==1){
+                            $.ajax({
+                                url:"/UserLoginServlet",
+                                type:"post",
+                                data:{"w_tel":$("#w_telId").val(),"w_pass":$("#w_passId").val(),
+                                    "rememberMe":$("#w_rememberMe").is(":checked"),"w_code":$("#w_codeId").val()},
+                                dataType:"text",
+                                success:function (res) {
+                                    if(res=="true"){
+                                        if($("#w_rememberMe").is(":checked")){
+                                            $.cookie('cookieUserName',$("#w_telId").val(), { expires: 7, path: '/' });
+                                            $.cookie('cookiePass',$("#w_passId").val(), { expires: 7, path: '/' });
+                                        }else{
+                                            //删除cookie
+                                            $.removeCookie('cookieUserName',{ path: '/' });
+                                            $.removeCookie('cookiePass',{path: '/' });
+                                        }
+                                        $("#w_wrongInfo span").css("display","none");
+                                        //登录成功
+                                        $("#w_wrongInfo span").css("display","none");
+                                        layer.closeAll();
+                                        layer.msg("登录成功");
+                                        showUser();
+                                    }else if(res=="false"){
+                                        $("#w_wrongInfo span").text("您输入的用户名或密码不正确");
+                                        $("#w_wrongInfo span").css("display","inline-block");
+                                    }else if(res=="codeFalse"){
+                                        $("#w_wrongInfo span").text("验证码错误");
+                                        $("#w_wrongInfo span").css("display","inline-block");
+                                    }
+                                }
+
+                            });
+
+                        }else {
+                            // 被锁定
                             //显示剩余时间
                             $.ajax({
                                 url:"/UserGetLockServlet",
@@ -770,17 +811,16 @@ function showContent(url,node) {
 
                                     },1000);
 
-
-
-
                                 }
                             });
                         }
+
                     }
 
                 });
-            }
 
+
+            }
 
         });
 
@@ -905,6 +945,38 @@ function showContent(url,node) {
             $(".y_follow").text("+关注");
         }
     });
+    function showAllNum(userId) {
+        //显示粉丝数
+        $.ajax({
+            url: "/ShowFans",
+            type: "post",
+            data: {"method":"showMyFansCount","userId":userId},
+            dataType: "text",
+            success:function (ret) {
+                $(".s_gzNum").text(ret);
+            }
+        });
+        //显示关注数
+        $.ajax({
+            url: "/ShowFans",
+            type: "post",
+            data: {"method":"showMyFollowCount","userId":userId},
+            dataType: "text",
+            success:function (ret) {
+                $(".s_fsNum").text(ret);
+            }
+        });
+        //显示微博数
+        $.ajax({
+            url: "/ShowBlogInfo",
+            type: "post",
+            data: {"method":"showMyBlogCount","userId":userId},
+            dataType: "text",
+            success:function (ret) {
+                $(".s_wbNum").text(ret);
+            }
+        });
+    }
  });
 });
 function add0(m){return m<10?'0'+m:m }

@@ -1,7 +1,7 @@
 document.writeln("<div class=\'s_header\'>");
 document.writeln("        <img src=\'../images/logo.png\' alt=\'\'>");
 document.writeln("        <span class=\'s_header_name\'>随享</span>");
-document.writeln("        <input type=\'text\' class=\'s_header_search\'>");
+document.writeln("        <input type=\'text\' class=\'s_header_search\' placeholder=\'搜索你想要的微博\'>");
 document.writeln("        <span class=\'s_header_searchp\'><i class=\'layui-icon layui-icon-search\' style=\'font-size: 30px;\'></i></span>");
 document.writeln("        <ul class=\'layui-nav s_header_right\' id=\'s_header_right\' style=\'background-color: #FFFFFF\'>");
 document.writeln("            <li class=\'layui-nav-item\'>");
