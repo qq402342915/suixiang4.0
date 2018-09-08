@@ -188,7 +188,7 @@ $(function () {
         }
     });
     var flag=-1;
-    var currentUserId=window.location.search.substring(8,10);
+    var currentUserId=window.location.search.substring(8,11);
     if(userId==currentUserId){
         userId=userId;
         flag=1;
@@ -771,7 +771,7 @@ function showSearchBlog() {
                         {
                             result=patt1.exec(userblog[i].blogPic);
                             if(result != null){
-                                pic = pic + '<img src="../images/'+result+'" alt="">';
+                                pic = pic + '<img src="../upload/'+result+'" alt="">';
                             }
                         }
                         while (result!=null)
@@ -858,7 +858,7 @@ function showSearchBlog() {
                                 {
                                     result=patt1.exec(userblog[i].blogPic);
                                     if(result != null){
-                                        pic = pic + '<img src="../images/'+result+'" alt="">';
+                                        pic = pic + '<img src="../upload/'+result+'" alt="">';
                                     }
                                 }
                                 while (result!=null)

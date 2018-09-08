@@ -26,7 +26,7 @@ document.writeln("                    <span>");
 document.writeln("                    关于我们");
 document.writeln("                    </span>");
 document.writeln("                    <ul>");
-document.writeln("                        <li><a href=\'\'>关于我们</a></li>");
+document.writeln("                        <li><a href=\'../html/su_our.html\'>关于我们</a></li>");
 document.writeln("                        <li><a href=\'\'>加入我们</a></li>");
 document.writeln("                        <li><a href=\'\'>联系我们</a></li>");
 document.writeln("                    </ul>");

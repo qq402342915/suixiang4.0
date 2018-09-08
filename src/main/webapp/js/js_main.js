@@ -582,7 +582,7 @@ function showContent(url,node,j) {
             }
         })
         // alert($("#personInfo").attr("userId"));
-        $("#personInfo").prop("href","personinfo.html?userid="+($("#personInfo").attr("userId")));
+        $("#personInfo").prop("href","html/personinfo.html?userid="+($("#personInfo").attr("userId")));
         $(".s_headphoto_nologin").hide();
         $(".s_headphoto_login").show();
         $("#s_header_right").show();
@@ -848,7 +848,7 @@ function showContent(url,node,j) {
     });
     //注册
     $("#s_register").click(function () {
-        window.location.href="su_register.html";
+        window.location.href="html/su_register.html";
     });
     //退出登录
     $("#s_quit").click(function () {
